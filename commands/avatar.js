@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const { prefix } = require("../config.json");
 
 module.exports = {
   name: "avatar",
@@ -10,8 +11,13 @@ module.exports = {
       .setDescription(`${message.author.username}'s Avatar`)
       .setURL(message.author.displayAvatarURL)
       .setImage(message.author.displayAvatarURL);
-    if (!message.mentions.users.size) {
-      return message.channel.send(profileEmbed);
+
+    const args = message.content.slice(prefix.length).split(/ +/);
+    
+    if (!message.mentions.users.size && args[1]) {
+      if (args[1][0] !== "@") {
+        return message.reply("You need to mention that user!");
+      }
     } else if (message.mentions.users.size === 1) {
       message.mentions.users.map(user => {
         const profileEmbed = new Discord.RichEmbed()
@@ -23,7 +29,7 @@ module.exports = {
         return message.channel.send(profileEmbed);
       });
     } else {
-      return;
+      return message.channel.send(profileEmbed);
     }
   }
 };
