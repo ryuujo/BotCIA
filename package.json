@@ -1,0 +1,13 @@
+{
+  "name": "discord-js",
+  "version": "1",
+  "main": "main.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "fs": "^0.0.1-security"
+  }
+}
