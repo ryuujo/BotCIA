@@ -24,6 +24,22 @@ client.on("message", message => {
   const args = message.content.slice(prefix.length).split(/ +/);
   const command = args.shift().toLowerCase();
 
+  if (message.content === `${prefix}help`) {
+    const commandFiles = fs
+      .readdirSync("./commands")
+      .filter(file => file.endsWith(".js"));
+    let listCommand = [];
+    commandFiles.map(c => {
+      const com = require(`./commands/${c}`);
+      listCommand.push(com);
+    });
+    message.channel.send(
+      "```" +
+        listCommand.map((c, i) => `${i + 1}. ${c.name} -> ${c.description}\n`) +
+        "```"
+    );
+  }
+
   if (!client.commands.has(command)) return;
 
   try {
