@@ -1,7 +1,12 @@
+const Discord = require('discord.js');
+const client = new Discord.Client();
+
 module.exports = {
-  name: "beep",
-  description: "Beep!",
+  name: 'beep',
+  description: 'Beep!',
   execute(message) {
-    message.channel.send("*Boop.*");
+    //const channel = client.channels.get('668781548203671552');
+    //channel.send('Yahoo');
+    message.channel.send('Boop!');
   }
 };
