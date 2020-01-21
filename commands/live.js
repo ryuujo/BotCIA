@@ -21,12 +21,12 @@ module.exports = {
       const dateSplit = args[1].split('/');
       const date =
         dateSplit[1] + '/' + dateSplit[0] + '/' + moment().format('YYYY');
-      const vliverFirstName = args[0].toLowerCase();
       const livestreamDateTime = moment(
         Date.parse(`${date} ${args[2]}`)
       ).format('Do MMMM YYYY, HH:mm');
-      const youtubeId = args[3];
+      const vliverFirstName = args[0].toLowerCase();
       const vData = vliver[vliverFirstName];
+      const youtubeId = args[3];
 
       const youtubeData = await fetchYoutube(youtubeId);
 
