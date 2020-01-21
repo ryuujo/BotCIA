@@ -1,7 +1,9 @@
+const Discord = require('discord.js');
+
 module.exports = {
   name: 'beep',
   description: 'Beep!',
   execute(message) {
-    message.channel.send('Boop.');
+    message.author.send('Boop!');
   }
 };
