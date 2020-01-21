@@ -1,3 +1,4 @@
+const { RichEmbed } = require('discord.js');
 const vliver = require('../constants/vliver');
 
 module.exports = {
@@ -5,16 +6,18 @@ module.exports = {
   description: 'Announces Upcoming live immediately',
   args: true,
   execute(message, args) {
+    if (args.length !== 4) {
+      message.reply(
+        'Please type these arguments: `Vliver First Name`, `Livestream Date (DD/MM/YYYY)`, `Livestream Time (HH:MM)`, `Youtube Link (https://)`'
+      );
+      return setTimeout(() => message.channel.bulkDelete(2), 5000);
+    }
+
     message.channel.bulkDelete(1).catch(err => {
       console.error(err);
       return message.channel.send('I need permission to delete your message');
     });
 
-    if (args.length !== 4) {
-      return message.reply(
-        'Please type these arguments: `Vliver First Name`, `Livestream Date (DD/MM/YYYY)`, `Livestream Time (HH:MM)`, `Youtube Link (https://)`'
-      );
-    }
     const vliverFirstName = args[0].toLowerCase();
     const livestreamDate = args[1];
     const livestreamTime = args[2];
@@ -22,8 +25,16 @@ module.exports = {
 
     const vData = vliver[vliverFirstName];
 
-    message.channel.send(
-      `Here's your arguments:\nVliver First Name: ${vData.fullName}\nLivestream Date: ${livestreamDate}\nLivestream Time: ${livestreamTime}\nYoutube Link: ${youtubeLink}`
-    );
+    const liveEmbed = new RichEmbed()
+      .setColor(vData.color)
+      .setAuthor(vData.fullName, vData.avatarURL, vData.channelURL)
+      .setTitle(`${vData.fullName} akan melakukan live!`)
+      .setURL(youtubeLink)
+      .setThumbnail(vData.avatarURL)
+      .addField('Link Video Youtube', youtubeLink)
+      .addField('Tanggal Livestream', livestreamDate, true)
+      .addField('Jam Livestream', livestreamTime, true);
+
+    message.channel.send(liveEmbed);
   }
 };
