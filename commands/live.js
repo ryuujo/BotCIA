@@ -34,7 +34,7 @@ module.exports = {
       const liveEmbed = new RichEmbed()
         .setColor(vData.color)
         .setAuthor(vData.fullName, vData.avatarURL, vData.channelURL)
-        .setTitle(`${vData.fullName} akan melakukan live!`)
+        .setTitle(`${vData.fullName} akan melakukan Livestream!`)
         .setURL('https://youtube.com/watch?v=' + youtubeId)
         .setDescription(
           `Stream akan dimulai ${moment(
@@ -47,8 +47,8 @@ module.exports = {
         .addField('Link Video Youtube', youtubeData.url, true)
         .addField('Judul Livestream', youtubeData.title)
         .setImage(youtubeData.thumbnailUrl);
-      await message.channel.send(liveEmbed);
       await message.channel.stopTyping();
+      await message.channel.send(liveEmbed);
     } catch (err) {
       console.error(err);
       await message.channel.stopTyping();
