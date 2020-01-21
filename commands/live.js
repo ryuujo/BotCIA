@@ -10,10 +10,13 @@ module.exports = {
     moment.locale('id');
     if (args.length !== 4) {
       message.reply(
-        'Please type these arguments: `Vliver First Name`, `Livestream Date (MM/DD/YYYY)`, `Livestream Time (HH:MM)`, `Youtube Link (https://)`'
+        'Please type these arguments: `Vliver First Name`, `Livestream Date (DD/MM/YYYY)`, `Livestream Time (HH:MM)`, `Youtube Link (https://)`'
       );
       return setTimeout(() => message.channel.bulkDelete(2), 5000);
     }
+
+    const dateSplit = args[1].split('/');
+    const date = dateSplit[1] + '/' + dateSplit[0] + '/' + dateSplit[2];
 
     message.channel.bulkDelete(1).catch(err => {
       console.error(err);
@@ -21,9 +24,9 @@ module.exports = {
     });
 
     const vliverFirstName = args[0].toLowerCase();
-    const livestreamDateTime = moment(
-      Date.parse(`${args[1]} ${args[2]}`)
-    ).format('Do MMMM YYYY, HH:mm');
+    const livestreamDateTime = moment(Date.parse(`${date} ${args[2]}`)).format(
+      'Do MMMM YYYY, HH:mm'
+    );
     const youtubeLink = args[3];
 
     const vData = vliver[vliverFirstName];
