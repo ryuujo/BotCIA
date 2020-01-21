@@ -11,14 +11,16 @@ module.exports = {
     moment.locale('id');
     if (args.length !== 4) {
       message.reply(
-        'Please type these arguments:\n```!live Vliver [First Name] [Livestream Date (DD/MM/YYYY)] [Livestream Time (HH:MM)] [Video ID (https://www.youtube.com/watch?v={.....})]```'
+        'Please type these arguments:\n```!live Vliver [First Name] [Livestream Date (DD/MM)] [Livestream Time (HH:MM)] [Video ID (https://www.youtube.com/watch?v={.....})]```'
       );
       return setTimeout(() => message.channel.bulkDelete(2), 5000);
     }
 
     try {
+      await message.channel.startTyping();
       const dateSplit = args[1].split('/');
-      const date = dateSplit[1] + '/' + dateSplit[0] + '/' + dateSplit[2];
+      const date =
+        dateSplit[1] + '/' + dateSplit[0] + '/' + moment().format('YYYY');
       const vliverFirstName = args[0].toLowerCase();
       const livestreamDateTime = moment(
         Date.parse(`${date} ${args[2]}`)
@@ -46,8 +48,10 @@ module.exports = {
         .addField('Judul Livestream', youtubeData.title)
         .setImage(youtubeData.thumbnailUrl);
       await message.channel.send(liveEmbed);
+      await message.channel.stopTyping();
     } catch (err) {
       console.error(err);
+      await message.channel.stopTyping();
       return message.channel.send('Something error in here: ', err.message);
     }
   }
