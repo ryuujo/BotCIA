@@ -3,11 +3,11 @@ module.exports = {
   description: 'Tag a member and kick them (but not really).',
   execute(message) {
     if (!message.mentions.users.size) {
-      return message.reply('you need to tag a user in order to kick them!');
+      return message.reply('Kamu harus mention user tersebut!');
     }
 
     const taggedUser = message.mentions.users.first();
 
-    message.channel.send(`You wanted to kick: ${taggedUser.username}`);
+    message.channel.send(`Tendangan maut untuk: ${taggedUser.username}`);
   }
 };

@@ -11,7 +11,7 @@ module.exports = {
     moment.locale('id');
     if (args.length !== 4) {
       message.reply(
-        'Please type these arguments:\n```!live Vliver [First Name] [Livestream Date (DD/MM)] [Livestream Time (HH:MM)] [Video ID (https://www.youtube.com/watch?v={.....})]```'
+        'Tulis formatnya seperti ini ya:\n```!live [Nama depan vliver] [Tanggal Livestream (DD/MM)] [Waktu Livestream (HH:MM)] [Video ID (https://www.youtube.com/watch?v={.....})]```'
       );
       return setTimeout(() => message.channel.bulkDelete(2), 5000);
     }
@@ -52,7 +52,10 @@ module.exports = {
     } catch (err) {
       console.error(err);
       await message.channel.stopTyping();
-      return message.channel.send('Something error in here: ', err.message);
+      return message.channel.send(
+        'Ada sesuatu yang salah, tapi itu bukan kamu: ',
+        err.message
+      );
     }
   }
 };

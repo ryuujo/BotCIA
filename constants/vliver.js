@@ -1,5 +1,4 @@
 const Vliver = require('../model/Vliver');
-const { Attachment } = require('discord.js');
 
 module.exports = {
   hana: new Vliver(
