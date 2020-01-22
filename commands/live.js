@@ -47,10 +47,9 @@ module.exports = {
           .setImage(youtubeData.thumbnailUrl);
         const channel = message.guild.channels.get(textChannelID);
         await channel.send(liveEmbed);
-        await message.reply(
+        return await message.reply(
           'Informasi live sudah dikirim ke text channel tujuan'
         );
-        return setTimeout(() => message.channel.bulkDelete(2), 5000);
       } catch (err) {
         console.log(err);
         message.reply(
