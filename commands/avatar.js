@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const { prefix } = require('../config.json');
 
 module.exports = {
   name: 'avatar',
@@ -12,7 +11,7 @@ module.exports = {
       .setURL(message.author.displayAvatarURL)
       .setImage(message.author.displayAvatarURL);
 
-    const args = message.content.slice(prefix.length).split(/ +/);
+    const args = message.content.slice(process.env.PREFIX.length).split(/ +/);
 
     if (!message.mentions.users.size && args[1]) {
       if (args[1][0] !== '@') {

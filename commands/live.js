@@ -10,52 +10,56 @@ module.exports = {
   async execute(message, args) {
     moment.locale('id');
     if (args.length !== 4) {
-      message.reply(
+      return message.reply(
         'Tulis formatnya seperti ini ya:\n```!live [Nama depan vliver] [Tanggal Livestream (DD/MM)] [Waktu Livestream (HH:MM)] [Video ID (https://www.youtube.com/watch?v={.....})]```'
       );
-      return setTimeout(() => message.channel.bulkDelete(2), 5000);
     }
 
     try {
-      await message.channel.startTyping();
       const dateSplit = args[1].split('/');
       const date =
         dateSplit[1] + '/' + dateSplit[0] + '/' + moment().format('YYYY');
-      const vliverFirstName = args[0].toLowerCase();
       const livestreamDateTime = moment(
         Date.parse(`${date} ${args[2]}`)
       ).format('Do MMMM YYYY, HH:mm');
-      const youtubeId = args[3];
+      const vliverFirstName = args[0].toLowerCase();
       const vData = vliver[vliverFirstName];
-
-      const youtubeData = await fetchYoutube(youtubeId);
-
-      await message.channel.bulkDelete(1);
-      const liveEmbed = new RichEmbed()
-        .setColor(vData.color)
-        .setAuthor(vData.fullName, vData.avatarURL, vData.channelURL)
-        .setTitle(`${vData.fullName} akan melakukan Livestream!`)
-        .setURL('https://youtube.com/watch?v=' + youtubeId)
-        .setDescription(
-          `Stream akan dimulai ${moment(
-            livestreamDateTime,
-            'Do MMMM YYYY, HH:mm'
-          ).fromNow()}`
-        )
-        .setThumbnail(vData.avatarURL)
-        .addField('Tanggal & Waktu Livestream', livestreamDateTime, true)
-        .addField('Link Video Youtube', youtubeData.url, true)
-        .addField('Judul Livestream', youtubeData.title)
-        .setImage(youtubeData.thumbnailUrl);
-      await message.channel.stopTyping();
-      await message.channel.send(liveEmbed);
+      const youtubeId = args[3];
+      try {
+        const youtubeData = await fetchYoutube(youtubeId);
+        const liveEmbed = new RichEmbed()
+          .setColor(vData.color)
+          .setAuthor(vData.fullName, vData.avatarURL, vData.channelURL)
+          .setTitle(`${vData.fullName} akan melakukan Livestream!`)
+          .setURL('https://youtube.com/watch?v=' + youtubeId)
+          .setDescription(
+            `Stream akan dimulai ${moment(
+              livestreamDateTime,
+              'Do MMMM YYYY, HH:mm'
+            ).fromNow()}`
+          )
+          .setThumbnail(vData.avatarURL)
+          .addField('Tanggal & Waktu Livestream', livestreamDateTime, true)
+          .addField('Link Video Youtube', youtubeData.url, true)
+          .addField('Judul Livestream', youtubeData.title)
+          .setImage(youtubeData.thumbnailUrl);
+        const channel = message.guild.channels.get(process.env.TEXT_CHANNEL_ID);
+        await channel.send(liveEmbed);
+        return await message.reply(
+          'Informasi live sudah dikirim ke text channel tujuan'
+        );
+      } catch (err) {
+        console.log(err);
+        message.reply(
+          `Ada sesuatu yang salah, tapi itu bukan kamu: ${err.message}`
+        );
+        return setTimeout(() => message.channel.bulkDelete(2), 5000);
+      }
     } catch (err) {
-      console.error(err);
-      await message.channel.stopTyping();
-      return message.channel.send(
-        'Ada sesuatu yang salah, tapi itu bukan kamu: ',
-        err.message
+      message.reply(
+        `Ada sesuatu yang salah, tapi itu bukan kamu: ${err.message}`
       );
+      return setTimeout(() => message.channel.bulkDelete(2), 5000);
     }
   }
 };

@@ -1,6 +1,7 @@
+require('dotenv').config();
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, token, activity } = require('./config.json');
+const { roles, activity } = require('./config.json');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -15,24 +16,28 @@ for (const file of commandFiles) {
 }
 
 client.once('ready', () => {
-  client.user.setActivity(activity);
+  client.user.setActivity(process.env.ACTIVITY);
   console.log('Ready!');
 });
 
 client.on('message', message => {
-  if (!message.content.startsWith(prefix) || message.author.bot) return;
+  if (!message.content.startsWith(process.env.PREFIX) || message.author.bot)
+    return;
 
-  const args = message.content.slice(prefix.length).split(/ +/);
+  const args = message.content.slice(process.env.PREFIX.length).split(/ +/);
   const command = args.shift().toLowerCase();
-
   if (!client.commands.has(command)) return;
 
-  try {
-    client.commands.get(command).execute(message, args);
-  } catch (error) {
-    console.error(error);
-    message.reply('there was an error trying to execute that command!');
+  if (message.member.roles.some(r => roles.includes(r.name))) {
+    try {
+      client.commands.get(command).execute(message, args);
+    } catch (error) {
+      console.error(error);
+      message.reply('there was an error trying to execute that command!');
+    }
+  } else {
+    message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
   }
 });
 
-client.login(token);
+client.login(process.env.TOKEN);

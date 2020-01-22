@@ -1,9 +1,10 @@
-const Discord = require('discord.js');
-
 module.exports = {
   name: 'beep',
   description: 'Beep!',
   execute(message) {
-    message.author.send('Boop!');
+    if (message.channel.type === 'dm') return;
+    const channel = message.guild.channels.get(process.env.TEXT_CHANNEL_ID);
+    if (!channel) return;
+    channel.send('Yahoo');
   }
 };
