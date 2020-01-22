@@ -1,7 +1,6 @@
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 const fs = require('fs');
 const Discord = require('discord.js');
-const { roles, activity } = require('./config.json');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -28,15 +27,11 @@ client.on('message', message => {
   const command = args.shift().toLowerCase();
   if (!client.commands.has(command)) return;
 
-  if (message.member.roles.some(r => roles.includes(r.name))) {
-    try {
-      client.commands.get(command).execute(message, args);
-    } catch (error) {
-      console.error(error);
-      message.reply('there was an error trying to execute that command!');
-    }
-  } else {
-    message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
+  try {
+    client.commands.get(command).execute(message, args);
+  } catch (error) {
+    console.error(error);
+    message.reply('there was an error trying to execute that command!');
   }
 });
 
