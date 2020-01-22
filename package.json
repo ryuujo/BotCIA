@@ -1,5 +1,5 @@
 {
-  "name": "discord-js",
+  "name": "bot-cia",
   "version": "1",
   "main": "main.js",
   "license": "MIT",
@@ -8,8 +8,12 @@
   },
   "dependencies": {
     "discord.js": "^11.5.1",
+    "dotenv": "^8.2.0",
     "fs": "^0.0.1-security",
     "moment": "^2.24.0",
     "youtube-info": "^1.3.2"
-  }
+  },
+  "repository": "https://github.com/ryuujo/BotCIA",
+  "author": "Ryuujo <mirukusheki@gmail.com>",
+  "private": false
 }

@@ -2,7 +2,6 @@ const { RichEmbed } = require('discord.js');
 const moment = require('moment');
 const vliver = require('../constants/vliver');
 const fetchYoutube = require('youtube-info');
-const { textChannelID } = require('../config.json');
 
 module.exports = {
   name: 'live',
@@ -44,7 +43,7 @@ module.exports = {
           .addField('Link Video Youtube', youtubeData.url, true)
           .addField('Judul Livestream', youtubeData.title)
           .setImage(youtubeData.thumbnailUrl);
-        const channel = message.guild.channels.get(textChannelID);
+        const channel = message.guild.channels.get(process.env.TEXT_CHANNEL_ID);
         await channel.send(liveEmbed);
         return await message.reply(
           'Informasi live sudah dikirim ke text channel tujuan'
