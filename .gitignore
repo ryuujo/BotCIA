@@ -5,3 +5,7 @@ package-lock.json
 config.json
 config.dev.json
 config.prod.json
+
+config.js
+config.prod.js
+config.dev.js

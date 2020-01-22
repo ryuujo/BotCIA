@@ -1,4 +1,4 @@
-const { roles } = require('../config.json');
+const { roles, textChannelID } = require('../config.js');
 
 module.exports = {
   name: 'beep',
@@ -6,7 +6,7 @@ module.exports = {
   execute(message) {
     if (message.member.roles.some(r => roles.includes(r.name))) {
       if (message.channel.type === 'dm') return;
-      const channel = message.guild.channels.get(process.env.TEXT_CHANNEL_ID);
+      const channel = message.guild.channels.get(textChannelID);
       if (!channel) return;
       channel.send('Yahoo');
     } else {

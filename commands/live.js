@@ -1,28 +1,28 @@
-const { RichEmbed } = require('discord.js');
-const moment = require('moment');
-const vliver = require('../constants/vliver');
-const fetchYoutube = require('youtube-info');
-const { roles } = require('../config.json');
+const { RichEmbed } = require("discord.js");
+const moment = require("moment");
+const vliver = require("../constants/vliver");
+const fetchYoutube = require("youtube-info");
+const { roles, textChannelID } = require("../config.js");
 
 module.exports = {
-  name: 'live',
-  description: 'Announces Upcoming live immediately',
+  name: "live",
+  description: "Announces Upcoming live immediately",
   args: true,
   async execute(message, args) {
-    moment.locale('id');
+    moment.locale("id");
     if (message.member.roles.some(r => roles.includes(r.name))) {
       if (args.length !== 4) {
         return message.reply(
-          'Tulis formatnya seperti ini ya:\n```!live [Nama depan vliver] [Tanggal Livestream (DD/MM)] [Waktu Livestream (HH:MM)] [Video ID (https://www.youtube.com/watch?v={.....})]```'
+          "Tulis formatnya seperti ini ya:\n```!live [Nama depan vliver] [Tanggal Livestream (DD/MM)] [Waktu Livestream (HH:MM)] [Video ID (https://www.youtube.com/watch?v={.....})]```"
         );
       }
       try {
-        const dateSplit = args[1].split('/');
+        const dateSplit = args[1].split("/");
         const date =
-          dateSplit[1] + '/' + dateSplit[0] + '/' + moment().format('YYYY');
+          dateSplit[1] + "/" + dateSplit[0] + "/" + moment().format("YYYY");
         const livestreamDateTime = moment(
           Date.parse(`${date} ${args[2]}`)
-        ).format('Do MMMM YYYY, HH:mm');
+        ).format("Do MMMM YYYY, HH:mm");
         const vliverFirstName = args[0].toLowerCase();
         const vData = vliver[vliverFirstName];
         const youtubeId = args[3];
@@ -32,24 +32,22 @@ module.exports = {
             .setColor(vData.color)
             .setAuthor(vData.fullName, vData.avatarURL, vData.channelURL)
             .setTitle(`${vData.fullName} akan melakukan Livestream!`)
-            .setURL('https://youtube.com/watch?v=' + youtubeId)
+            .setURL("https://youtube.com/watch?v=" + youtubeId)
             .setDescription(
               `Stream akan dimulai ${moment(
                 livestreamDateTime,
-                'Do MMMM YYYY, HH:mm'
+                "Do MMMM YYYY, HH:mm"
               ).fromNow()}`
             )
             .setThumbnail(vData.avatarURL)
-            .addField('Tanggal & Waktu Livestream', livestreamDateTime, true)
-            .addField('Link Video Youtube', youtubeData.url, true)
-            .addField('Judul Livestream', youtubeData.title)
+            .addField("Tanggal & Waktu Livestream", livestreamDateTime, true)
+            .addField("Link Video Youtube", youtubeData.url, true)
+            .addField("Judul Livestream", youtubeData.title)
             .setImage(youtubeData.thumbnailUrl);
-          const channel = message.guild.channels.get(
-            process.env.TEXT_CHANNEL_ID
-          );
+          const channel = message.guild.channels.get(textChannelID);
           await channel.send(liveEmbed);
           return await message.reply(
-            'Informasi live sudah dikirim ke text channel tujuan'
+            "Informasi live sudah dikirim ke text channel tujuan"
           );
         } catch (err) {
           console.log(err);
@@ -65,7 +63,7 @@ module.exports = {
         return setTimeout(() => message.channel.bulkDelete(2), 5000);
       }
     } else {
-      message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
+      message.reply("", { file: "https://i.imgur.com/4YNSGmG.jpg" });
     }
   }
 };

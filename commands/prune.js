@@ -1,4 +1,4 @@
-const { roles } = require('../config.json');
+const { roles } = require('../config.js');
 
 module.exports = {
   name: 'prune',
