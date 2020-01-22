@@ -2,6 +2,10 @@ node_modules
 
 yarn.lock
 package-lock.json
-.env
-.env.dev
-.env.production
+config.json
+config.dev.json
+config.prod.json
+
+config.js
+config.prod.js
+config.dev.js
