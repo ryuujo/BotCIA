@@ -11,10 +11,9 @@ module.exports = {
   async execute(message, args) {
     moment.locale('id');
     if (args.length !== 4) {
-      message.reply(
+      return message.reply(
         'Tulis formatnya seperti ini ya:\n```!live [Nama depan vliver] [Tanggal Livestream (DD/MM)] [Waktu Livestream (HH:MM)] [Video ID (https://www.youtube.com/watch?v={.....})]```'
       );
-      return setTimeout(() => message.channel.bulkDelete(2), 5000);
     }
 
     try {

@@ -24,9 +24,7 @@ client.on('message', message => {
   if (message.member.roles.some(r => roles.includes(r.name))) {
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
-
     if (!client.commands.has(command)) return;
-
     try {
       client.commands.get(command).execute(message, args);
     } catch (error) {
@@ -34,7 +32,7 @@ client.on('message', message => {
       message.reply('there was an error trying to execute that command!');
     }
   } else {
-    message.reply('Kamu siapa?');
+    message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
   }
 });
 
