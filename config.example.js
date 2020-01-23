@@ -1,7 +1,13 @@
 module.exports = {
   prefix: '!!',
   token: '',
-  roles: ['Moderator', 'Member+', 'Pawang BotCIA', 'Owner'],
+  roles: {
+    live: ['Moderator', 'Member+', 'Pawang BotCIA', 'Owner'],
+    nh: ['Moderator', 'Degen', 'Pawang BotCIA', 'Owner']
+  },
   activity: "Use !! to start command",
-  textChannelID: ''
+  textChannelID: {
+    live: '',
+    nh: ''
+  }
 };

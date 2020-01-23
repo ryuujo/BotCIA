@@ -1,9 +1,9 @@
 const { RichEmbed } = require('discord.js');
 const moment = require('moment');
-const momentTz = require('moment-timezone');
 const vliver = require('../constants/vliver');
 const fetchYoutube = require('youtube-info');
 const { roles, textChannelID } = require('../config.js');
+const { name, version } = require('../package.json');
 
 module.exports = {
   name: 'live',
@@ -11,7 +11,7 @@ module.exports = {
   args: true,
   async execute(message, args) {
     moment.locale('id');
-    if (message.member.roles.some(r => roles.includes(r.name))) {
+    if (message.member.roles.some(r => roles.live.includes(r.name))) {
       if (args.length !== 4) {
         return message.reply(
           'Tulis formatnya seperti ini ya:\n```!live [Nama depan vliver] [Tanggal Livestream (DD/MM)] [Waktu Livestream (HH:MM) WIB] [Video ID (https://www.youtube.com/watch?v={.....})]```'
@@ -36,7 +36,7 @@ module.exports = {
             .setColor(vData.color)
             .setAuthor(vData.fullName, vData.avatarURL, vData.channelURL)
             .setTitle(`${vData.fullName} akan melakukan Livestream!`)
-            .setURL('https://youtube.com/watch?v=' + youtubeId)
+            .setURL(youtubeData.url)
             .setThumbnail(vData.avatarURL)
             .addField(
               'Tanggal & Waktu Livestream',
@@ -44,8 +44,13 @@ module.exports = {
             )
             .addField('Link Video Youtube', youtubeData.url)
             .addField('Judul Livestream', youtubeData.title)
-            .setImage(youtubeData.thumbnailUrl);
-          const channel = message.guild.channels.get(textChannelID);
+            .setImage(youtubeData.thumbnailUrl)
+            .setFooter(
+              `${name} v${version} - This message was created on ${moment().format(
+                timeFormat
+              )}`
+            );
+          const channel = message.guild.channels.get(textChannelID.live);
           await channel.send(liveEmbed);
           return await message.reply(
             `Informasi live sudah dikirim ke text channel tujuan.\nNama VLiver: ${vData.fullName}\nJudul Livestream: ${youtubeData.title}\nJadwal live: ${livestreamDateTime}`

@@ -1,25 +1,27 @@
-const fs = require("fs");
-const Discord = require("discord.js");
-const config = require("./config.js");
+const fs = require('fs');
+const Discord = require('discord.js');
+const config = require('./config.js');
+const { version } = require('./package.json');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
 const commandFiles = fs
-  .readdirSync("./commands")
-  .filter(file => file.endsWith(".js"));
+  .readdirSync('./commands')
+  .filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
   client.commands.set(command.name, command);
 }
 
-client.once("ready", () => {
+client.once('ready', () => {
   client.user.setActivity(config.activity);
-  console.log("Ready!");
+  console.log('Ready!');
+  console.log('Bot version: ' + version);
 });
 
-client.on("message", message => {
+client.on('message', message => {
   if (!message.content.startsWith(config.prefix) || message.author.bot) return;
 
   const args = message.content.slice(config.prefix.length).split(/ +/);
@@ -30,7 +32,7 @@ client.on("message", message => {
     client.commands.get(command).execute(message, args);
   } catch (error) {
     console.error(error);
-    message.reply("there was an error trying to execute that command!");
+    message.reply('there was an error trying to execute that command!');
   }
 });
 
