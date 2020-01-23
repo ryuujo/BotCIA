@@ -11,6 +11,7 @@ module.exports = {
   args: true,
   async execute(message, args) {
     moment.locale('id');
+    moment.tz.setDefault('Asia/Jakarta');
     if (message.member.roles.some(r => roles.includes(r.name))) {
       if (args.length !== 4) {
         return message.reply(
