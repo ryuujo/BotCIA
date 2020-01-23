@@ -25,8 +25,8 @@ module.exports = {
           dateSplit[1] + '/' + dateSplit[0] + '/' + moment().format('YYYY');
         const dateTime = Date.parse(`${date} ${args[2]}`);
         const livestreamDateTime = moment(dateTime).format(timeFormat);
-        const livestreamDateTimeJapan = momentTz
-          .tz(dateTime, 'Asia/Tokyo')
+        const livestreamDateTimeJapan = moment(dateTime)
+          .add(2, 'hours')
           .format(timeFormat);
         const vliverFirstName = args[0].toLowerCase();
         const vData = vliver[vliverFirstName];
