@@ -1,7 +1,7 @@
 const axios = require('axios');
 const { RichEmbed } = require('discord.js');
 const moment = require('moment');
-const { roles, textChannelID } = require('../config.js');
+const { roles, textChannelID, prefix } = require('../config.js');
 const { name, version } = require('../package.json');
 
 module.exports = {
@@ -49,7 +49,11 @@ module.exports = {
     if (message.channel.id === textChannelID.nh) {
       if (args.length === 0) {
         return message.reply(
-          'Kamu perlu menulis argumen setelah `!nh`. Lihat `!nh help` untuk pilihan argumen'
+          'Kamu perlu menulis argumen setelah `' +
+            prefix +
+            'nh`. Lihat `' +
+            prefix +
+            'nh help` untuk pilihan argumen'
         );
       }
       if (
