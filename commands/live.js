@@ -1,6 +1,5 @@
 const { RichEmbed } = require('discord.js');
 const moment = require('moment');
-const momentTz = require('moment-timezone');
 const vliver = require('../constants/vliver');
 const fetchYoutube = require('youtube-info');
 const { roles, textChannelID } = require('../config.js');
@@ -37,7 +36,7 @@ module.exports = {
             .setColor(vData.color)
             .setAuthor(vData.fullName, vData.avatarURL, vData.channelURL)
             .setTitle(`${vData.fullName} akan melakukan Livestream!`)
-            .setURL('https://youtube.com/watch?v=' + youtubeId)
+            .setURL(youtubeData.url)
             .setThumbnail(vData.avatarURL)
             .addField(
               'Tanggal & Waktu Livestream',
