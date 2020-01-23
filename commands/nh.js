@@ -37,7 +37,6 @@ module.exports = {
               timeFormat
             )}`
           );
-        await message.channel.bulkDelete(1);
         await message.reply(doujinEmbed);
       } catch (err) {
         console.log(err.message);
