@@ -38,7 +38,7 @@ module.exports = {
             )}`
           );
         await message.channel.bulkDelete(1);
-        await message.channel.send(doujinEmbed);
+        await message.reply(doujinEmbed);
       } catch (err) {
         console.log(err.message);
       }
