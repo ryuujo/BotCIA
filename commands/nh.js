@@ -57,7 +57,7 @@ module.exports = {
         );
       }
       if (
-        message.member.roles.some(r => roles.live.includes(r.name)) ||
+        message.member.roles.some(r => roles.nh.includes(r.name)) ||
         args[0] === 'help'
       ) {
         switch (args[0]) {
