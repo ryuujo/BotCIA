@@ -50,7 +50,7 @@ module.exports = {
                 timeFormat
               )}`
             );
-          const channel = message.guild.channels.get(textChannelID);
+          const channel = message.guild.channels.get(textChannelID.live);
           await channel.send(liveEmbed);
           return await message.reply(
             `Informasi live sudah dikirim ke text channel tujuan.\nNama VLiver: ${vData.fullName}\nJudul Livestream: ${youtubeData.title}\nJadwal live: ${livestreamDateTime}`

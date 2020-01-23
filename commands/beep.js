@@ -6,7 +6,7 @@ module.exports = {
   execute(message) {
     if (message.member.roles.some(r => roles.live.includes(r.name))) {
       if (message.channel.type === 'dm') return;
-      const channel = message.guild.channels.get(textChannelID);
+      const channel = message.guild.channels.get(textChannelID.live);
       if (!channel) return;
       channel.send('Yahoo');
     } else {

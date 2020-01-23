@@ -1,6 +1,7 @@
 const axios = require('axios');
 const { RichEmbed } = require('discord.js');
 const moment = require('moment');
+const { roles, textChannelID } = require('../config.js');
 const { name, version } = require('../package.json');
 
 module.exports = {
@@ -44,34 +45,57 @@ module.exports = {
     };
 
     const timeFormat = 'Do MMMM YYYY, HH:mm';
-    switch (args[0]) {
-      case 'help':
-        return message.channel.send(
-          "```help      : Here's the help then\ninfo <ID> : Fetching the info of the doujin ID\nrandom    : Sent you a random doujin```"
-        );
-      case 'info':
-        if (args[1]) {
-          await message.channel.send(
-            `Mencari data untuk doujin ini... ID: ${args[1]}`
-          );
-          return await getDoujin(args[1], message);
-        } else {
-          return message.reply('Kamu perlu menambahkan 6-digit nuklir.');
-        }
-      case 'random':
-        await message.channel.send(
-          'Mencarikan doujin favorit yang pas untukmu'
-        );
-        const min = 150000;
-        const max = 270000;
-        const rand = min + Math.random() * (max - min);
-        const number = Math.floor(rand);
-        await getDoujin(number, message);
-        return await message.channel.send('Semoga kamu suka ya~');
-      default:
+
+    if (message.channel.id === textChannelID.nh) {
+      if (args.length === 0) {
         return message.reply(
           'Kamu perlu menulis argumen setelah `!nh`. Lihat `!nh help` untuk pilihan argumen'
         );
+      }
+      if (
+        message.member.roles.some(r => roles.live.includes(r.name)) ||
+        args[0] === 'help'
+      ) {
+        switch (args[0]) {
+          case 'help':
+            return message.channel.send(
+              "```help      : Here's the help then\ninfo <ID> : Fetching the info of the doujin ID\nrandom    : Sent you a random doujin\n\nPastikan kamu menggunakan bot ini di Channel Degen. Nanti Cia marah lho```"
+            );
+          case 'info':
+            if (args[1]) {
+              await message.channel.send(
+                `Mencari data untuk doujin ini... ID: ${args[1]}`
+              );
+              return await getDoujin(args[1], message);
+            } else {
+              return message.reply('Kamu perlu menambahkan 6-digit nuklir.');
+            }
+          case 'random':
+            await message.channel.send(
+              'Mencarikan doujin favorit yang pas untukmu'
+            );
+            const min = 150000;
+            const max = 270000;
+            const rand = min + Math.random() * (max - min);
+            const number = Math.floor(rand);
+            await getDoujin(number, message);
+            return await message.channel.send('Semoga kamu suka ya~');
+          default:
+            return message.reply(
+              'Kamu perlu menulis argumen setelah `!nh`. Lihat `!nh help` untuk pilihan argumen'
+            );
+        }
+      } else {
+        return await message.reply('', {
+          file: 'https://i.imgur.com/4YNSGmG.jpg'
+        });
+      }
+    } else {
+      await message.channel.bulkDelete(1);
+      await message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
+      return await message.author.send(
+        'Tolong jangan gunakan tag ini di sembarang tempat ya...'
+      );
     }
   }
 };
