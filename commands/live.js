@@ -4,6 +4,7 @@ const momentTz = require('moment-timezone');
 const vliver = require('../constants/vliver');
 const fetchYoutube = require('youtube-info');
 const { roles, textChannelID } = require('../config.js');
+const { name, version } = require('../package.json');
 
 module.exports = {
   name: 'live',
@@ -44,7 +45,12 @@ module.exports = {
             )
             .addField('Link Video Youtube', youtubeData.url)
             .addField('Judul Livestream', youtubeData.title)
-            .setImage(youtubeData.thumbnailUrl);
+            .setImage(youtubeData.thumbnailUrl)
+            .setFooter(
+              `${name} v${version} - This message was created on ${moment().format(
+                timeFormat
+              )}`
+            );
           const channel = message.guild.channels.get(textChannelID);
           await channel.send(liveEmbed);
           return await message.reply(
