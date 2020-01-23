@@ -12,7 +12,7 @@ module.exports = {
   args: true,
   async execute(message, args) {
     moment.locale('id');
-    if (message.member.roles.some(r => roles.includes(r.name))) {
+    if (message.member.roles.some(r => roles.live.includes(r.name))) {
       if (args.length !== 4) {
         return message.reply(
           'Tulis formatnya seperti ini ya:\n```!live [Nama depan vliver] [Tanggal Livestream (DD/MM)] [Waktu Livestream (HH:MM) WIB] [Video ID (https://www.youtube.com/watch?v={.....})]```'
