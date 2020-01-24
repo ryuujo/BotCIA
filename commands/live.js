@@ -46,9 +46,9 @@ module.exports = {
             .addField('Judul Livestream', youtubeData.title)
             .setImage(youtubeData.thumbnailUrl)
             .setFooter(
-              `${name} v${version} - This message was created on ${moment().format(
-                timeFormat
-              )}`
+              `${name} v${version} - This message was created on ${moment()
+                .add(7, 'hours')
+                .format(timeFormat)}`
             );
           const channel = message.guild.channels.get(textChannelID.live);
           await channel.send(liveEmbed);

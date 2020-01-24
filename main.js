@@ -17,8 +17,7 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
   client.user.setActivity(config.activity);
-  console.log('Ready!');
-  console.log('Bot version: ' + version);
+  console.log('BotCIA version: ' + version + ' is ready and active!');
 });
 
 client.on('message', message => {
@@ -32,7 +31,7 @@ client.on('message', message => {
     client.commands.get(command).execute(message, args);
   } catch (error) {
     console.error(error);
-    message.reply('there was an error trying to execute that command!');
+    message.reply('There was an error trying to execute that command!');
   }
 });
 
