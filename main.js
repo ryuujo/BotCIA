@@ -1,5 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
+const moment = require('moment');
 const config = require('./config.js');
 const { version } = require('./package.json');
 
@@ -18,6 +19,9 @@ for (const file of commandFiles) {
 client.once('ready', () => {
   client.user.setActivity(config.activity);
   console.log('BotCIA version: ' + version + ' is ready and active!');
+  console.log(
+    'My Time Active was on ' + moment().format('dddd DD MMMM YYYY HH:mm:ss Z')
+  );
 });
 
 client.on('message', message => {
