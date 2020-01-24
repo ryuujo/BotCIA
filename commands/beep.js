@@ -8,7 +8,7 @@ module.exports = {
       if (message.channel.type === 'dm') return;
       const channel = message.guild.channels.get(textChannelID.live);
       if (!channel) return;
-      channel.send('Yahoo');
+      channel.send('Yahoo BotCIA di sini!');
     } else {
       message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
     }

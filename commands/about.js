@@ -5,7 +5,11 @@ module.exports = {
   description: 'About this BOT',
   execute(message) {
     message.channel.send(
-      '```Hello my name is ' + name + ' v' + version + '\nAt your Service!```'
+      '```Hello my name is ' +
+        name +
+        ' v' +
+        version +
+        '. At your Service!\nMy master is: RJKuker#3103```'
     );
   }
 };

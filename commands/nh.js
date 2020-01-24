@@ -32,10 +32,12 @@ module.exports = {
             'Tags',
             data.tags.map(tag => `${tag.name}`)
           )
+          .addField('nHentai Link', `https://nhentai.net/g/${data.id}`, true)
+          .addField('View without VPN', `https://nhent.ai/g/${data.id}`, true)
           .setFooter(
-            `${name} v${version} - This message was created on ${moment().format(
-              timeFormat
-            )}`
+            `${name} v${version} - This message was created on ${moment()
+              .add(7, 'hours')
+              .format(timeFormat)}`
           );
         await message.reply(doujinEmbed);
       } catch (err) {
@@ -48,11 +50,11 @@ module.exports = {
     if (message.channel.id === textChannelID.nh) {
       if (args.length === 0) {
         return message.reply(
-          'Kamu perlu menulis argumen setelah `' +
+          'Kamu perlu menulis perintah setelah tanda `' +
             prefix +
             'nh`. Lihat `' +
             prefix +
-            'nh help` untuk pilihan argumen'
+            'nh help` untuk pilihan perintah'
         );
       }
       if (
@@ -85,7 +87,11 @@ module.exports = {
             return await message.channel.send('Semoga kamu suka ya~');
           default:
             return message.reply(
-              'Kamu perlu menulis argumen setelah `!nh`. Lihat `!nh help` untuk pilihan argumen'
+              'Kamu perlu menulis perintah setelah tanda `' +
+                prefix +
+                'nh`. Lihat `' +
+                prefix +
+                'nh help` untuk pilihan perintah'
             );
         }
       } else {
@@ -95,9 +101,9 @@ module.exports = {
       }
     } else {
       await message.channel.bulkDelete(1);
-      await message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
       return await message.author.send(
-        'Tolong jangan gunakan tag ini di sembarang tempat ya...'
+        'Tolong jangan gunakan tag itu di sembarang tempat ya. Nanti ku geplak lho...',
+        { file: 'https://i.imgur.com/FxfX5wL.png' }
       );
     }
   }
