@@ -10,7 +10,8 @@ module.exports = {
   async execute(message, args) {
     const timeFormat = 'Do MMMM YYYY, HH:mm';
     const game = args[0] ? args[0].toLowerCase() : 'none';
-    message.channel.send('Rolling gacha just for you');
+    if (game) message.channel.send('Rolling gacha just for you...');
+
     switch (game) {
       case 'll':
       case 'lovelive':
@@ -71,16 +72,57 @@ module.exports = {
             );
           return await message.reply(embed);
         } catch (err) {
-          return message.reply(
-            'Sepertinya ada sesuatu yang salah. Coba roll lagi. ' + number
+          return await message.reply(
+            'Consider you are not lucky. Please try again' + bandoriNumber
           );
         }
       case 'bandori':
         const bandoriMin = 501;
         const bandoriMax = 1341;
-        const bandoriRand = bandoriMin + Math.random() * (bandoriMax - bandoriMin);
+        const bandoriRand =
+          bandoriMin + Math.random() * (bandoriMax - bandoriMin);
         const bandoriNumber = Math.floor(bandoriRand);
-        return message.reply('Lagi perkembangan');
+        const bandoriColor = {
+          pure: '#61d148',
+          cool: '#596ee8',
+          happy: '#ff9a2e',
+          power: '#ff4f70'
+        };
+        const bandoriStar = ['☆☆☆☆', '★☆☆☆', '★★☆☆', '★★★☆', '★★★★'];
+        try {
+          const { data } = await axios.get(
+            `https://bandori.party/api/cards/${bandoriNumber}`
+          );
+          const member = await axios.get(
+            `https://bandori.party/api/members/${data.member}`
+          );
+          const memberData = member.data;
+          const bandoriEmbed = new RichEmbed()
+            .setColor(bandoriColor[data.i_attribute.toLowerCase()])
+            .setThumbnail(data.image ? data.image : data.image_trained)
+            .setTitle('This is your Card!')
+            .addField('Performance', data.performance_min, true)
+            .addField('Technique', data.technique_min, true)
+            .addField('Visual', data.visual_min, true)
+            .addField('Skills', data.full_skill)
+            .addField('Rarity', bandoriStar[data.i_rarity], true)
+            .addField(
+              'Character',
+              `${memberData.name} (${memberData.i_band})`,
+              true
+            )
+            .setImage(data.art ? data.art : data.art_trained)
+            .setFooter(
+              `${name} v${version} - This message was created on ${moment()
+                .add(7, 'hours')
+                .format(timeFormat)} | ID: ${bandoriNumber}`
+            );
+          return await message.reply(bandoriEmbed);
+        } catch (err) {
+          return await message.reply(
+            'Consider you are not lucky. Please try again' + bandoriNumber
+          );
+        }
       default:
         return message.reply(
           '```Silahkan pilih kartu mana yang mau di roll:\n1. lovelive / ll\n2. bandori```'
