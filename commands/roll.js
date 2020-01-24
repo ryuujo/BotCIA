@@ -10,8 +10,7 @@ module.exports = {
   async execute(message, args) {
     const timeFormat = 'Do MMMM YYYY, HH:mm';
     const game = args[0] ? args[0].toLowerCase() : 'none';
-    if (game) message.channel.send('Rolling gacha just for you...');
-
+    if (args[0]) message.channel.send('Rolling gacha just for you...');
     switch (game) {
       case 'll':
       case 'lovelive':
