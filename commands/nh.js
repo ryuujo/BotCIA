@@ -19,8 +19,7 @@ module.exports = {
           .setColor('#EC2955')
           .setAuthor(
             'nHentai Fetcher by BotCIA',
-            'https://pbs.twimg.com/profile_images/733172726731415552/8P68F-_I_400x400.jpg',
-            'https://nhent.ai'
+            'https://pbs.twimg.com/profile_images/733172726731415552/8P68F-_I_400x400.jpg'
           )
           .setTitle(data.title.english)
           .setURL(`https://nhent.ai/g/${data.id}`)
