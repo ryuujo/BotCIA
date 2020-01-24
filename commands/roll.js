@@ -125,7 +125,7 @@ module.exports = {
         }
       default:
         return message.reply(
-          '```Silahkan pilih kartu mana yang mau di roll:\n' +
+          '```Silahkan pilih kartu mana yang mau di roll:\nKeyword: ' +
             prefix +
             'roll [nama game]\n1. lovelive / ll\n2. bandori```'
         );
