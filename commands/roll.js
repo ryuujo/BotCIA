@@ -78,8 +78,8 @@ module.exports = {
       case 'bandori':
         const bandoriMin = 501;
         const bandoriMax = 1341;
-        const bandoriRand = llMin + Math.random() * (llMax - llMin);
-        const bandoriNumber = Math.floor(rand);
+        const bandoriRand = bandoriMin + Math.random() * (bandoriMax - bandoriMin);
+        const bandoriNumber = Math.floor(bandoriRand);
         return message.reply('Lagi perkembangan');
       default:
         return message.reply(
