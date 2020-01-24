@@ -2,7 +2,7 @@ const { RichEmbed } = require('discord.js');
 const moment = require('moment');
 const vliver = require('../constants/vliver');
 const fetchYoutube = require('youtube-info');
-const { roles, textChannelID } = require('../config.js');
+const { roles, textChannelID, prefix } = require('../config.js');
 const { name, version } = require('../package.json');
 
 module.exports = {
@@ -14,7 +14,9 @@ module.exports = {
     if (message.member.roles.some(r => roles.live.includes(r.name))) {
       if (args.length !== 4) {
         return message.reply(
-          'Tulis formatnya seperti ini ya:\n```!live [Nama depan vliver] [Tanggal Livestream (DD/MM)] [Waktu Livestream (HH:MM) WIB] [Video ID (https://www.youtube.com/watch?v={.....})]```'
+          'Tulis formatnya seperti ini ya:\n```' +
+            prefix +
+            'live [Nama depan vliver] [Tanggal Livestream (DD/MM)] [Waktu Livestream (HH:MM) WIB] [Video ID (https://www.youtube.com/watch?v={.....})]```'
         );
       }
       try {
