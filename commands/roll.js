@@ -1,6 +1,7 @@
 const axios = require('axios');
 const { RichEmbed } = require('discord.js');
 const moment = require('moment');
+const { prefix } = require('../config.js');
 const { name, version } = require('../package.json');
 
 module.exports = {
@@ -124,7 +125,9 @@ module.exports = {
         }
       default:
         return message.reply(
-          '```Silahkan pilih kartu mana yang mau di roll:\n1. lovelive / ll\n2. bandori```'
+          '```Silahkan pilih kartu mana yang mau di roll:\nKeyword: ' +
+            prefix +
+            'roll [nama game]\n1. lovelive / ll\n2. bandori```'
         );
     }
   }
