@@ -7,7 +7,7 @@ module.exports = {
   },
   activity: "Use !! to start command",
   textChannelID: {
-    live: '',
+    live: '668781548203671552',
     nh: ''
   }
 };
