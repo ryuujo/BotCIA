@@ -73,7 +73,7 @@ module.exports = {
           return await message.reply(embed);
         } catch (err) {
           return await message.reply(
-            "Consider you are not lucky. Please try again" + bandoriNumber
+            "Consider you are not lucky. Please try again " + bandoriNumber
           );
         }
       case "bandori":
@@ -120,7 +120,7 @@ module.exports = {
           return await message.reply(bandoriEmbed);
         } catch (err) {
           return await message.reply(
-            "Consider you are not lucky. Please try again" + bandoriNumber
+            "Consider you are not lucky. Please try again " + bandoriNumber
           );
         }
       default:
