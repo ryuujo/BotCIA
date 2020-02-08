@@ -35,13 +35,13 @@ module.exports = {
     "Amicia Michella",
     "#00a21d",
     "https://i.imgur.com/fNkL1hX.jpg",
-    "https://www.youtube.com/channel/UCOmjciHZ8Au3iKMElKXCF_g"
+    "https://www.youtube.com/channel/UCrR7JxkbeLY82e8gsj_I0pQ"
   ),
   rai: new Vliver(
     "Rai Galilei",
     "#9b59b6",
     "https://i.imgur.com/6T2VOhp.jpg",
-    "https://www.youtube.com/channel/UCOmjciHZ8Au3iKMElKXCF_g"
+    "https://www.youtube.com/channel/UC8Snw5i4eOJXEQqURAK17hQ"
   ),
   nijisanji_id: new Vliver(
     "NIJISANJI ID Official",

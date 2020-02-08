@@ -1,13 +1,14 @@
 module.exports = {
-  prefix: '!!',
-  token: '',
+  prefix: "!!",
+  token: "",
   roles: {
-    live: ['Moderator', 'Member+', 'Pawang BotCIA', 'Owner'],
-    nh: ['Moderator', 'Degen', 'Pawang BotCIA', 'Owner']
+    live: ["Moderator", "Member+", "Pawang BotCIA", "Owner"],
+    nh: ["Moderator", "Degen", "Pawang BotCIA", "Owner"],
+    notification: "Notif Squad"
   },
   activity: "Use !! to start command",
   textChannelID: {
-    live: '',
-    nh: ''
+    live: "",
+    nh: ""
   }
 };
