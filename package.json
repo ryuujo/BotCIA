@@ -1,6 +1,6 @@
 {
   "name": "bot-cia",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "main": "main.js",
   "license": "MIT",
   "scripts": {
@@ -10,8 +10,11 @@
     "axios": "^0.19.2",
     "discord.js": "^11.5.1",
     "fs": "0.0.1-security",
+    "mariadb": "^2.2.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",
+    "sequelize": "^5.21.4",
+    "sequelize-cli": "^5.5.1",
     "youtube-info": "^1.3.2"
   },
   "repository": {

@@ -3,6 +3,8 @@ const Discord = require('discord.js');
 const moment = require('moment');
 const config = require('./config.js');
 const { version } = require('./package.json');
+const Sequelize = require('sequelize');
+const database = require('./config/config.json');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -16,11 +18,33 @@ for (const file of commandFiles) {
   client.commands.set(command.name, command);
 }
 
+const sequelize = new Sequelize(
+  database.development.database,
+  database.development.username,
+  database.development.password,
+  {
+    host: database.development.host,
+    dialect: database.development.dialect,
+    logging: false,
+    dialectOptions: {
+      timezone: 'etc/GMT+7'
+    }
+  }
+);
+
 client.once('ready', () => {
   client.user.setActivity(config.activity);
+  sequelize
+    .authenticate()
+    .then(() => {
+      console.log('Connection has been established successfully.');
+    })
+    .catch(err => {
+      console.error('Unable to connect to the database:', err);
+    });
   console.log('BotCIA version: ' + version + ' is ready and active!');
   console.log(
-    'My Time Active was on ' + moment().format('dddd DD MMMM YYYY HH:mm:ss Z')
+    'My Active Time was at ' + moment().format('dddd DD MMMM YYYY HH:mm:ss Z')
   );
 });
 

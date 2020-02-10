@@ -4,10 +4,10 @@ node_modules
 .gitconfig
 .ash_history
 .config
+.env
 
 yarn.lock
 package-lock.json
-config.json
 config.dev.json
 config.prod.json
 
