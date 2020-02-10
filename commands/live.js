@@ -22,100 +22,97 @@ module.exports = {
       if (args.length !== 4) {
         return message.reply(messages);
       }
+      const timeFormat = 'Do MMMM YYYY, HH:mm';
+      const dateSplit = args[1].split('/');
+      const date =
+        dateSplit[1] + '/' + dateSplit[0] + '/' + moment().format('YYYY');
+      const dateTime = Date.parse(`${date} ${args[2]}`);
+      const livestreamDateTime = moment(dateTime).format(timeFormat);
+      const livestreamDateTimeJapan = moment(dateTime)
+        .add(2, 'hours')
+        .format(timeFormat);
+      const vliverFirstName = args[0].toLowerCase();
+      const linkData = args[3].split('/');
+      let youtubeId;
+      if (linkData[0] !== 'https:' || linkData[3] === '') {
+        return message.reply(messages);
+      }
+      switch (linkData[2]) {
+        case 'www.youtube.com':
+          const paramData = linkData[3].split('=');
+          youtubeId = paramData[1].split('&', 1)[0];
+          break;
+        case 'youtu.be':
+          youtubeId = linkData[3];
+          break;
+        default:
+          return message.reply(messages);
+      }
+      if (youtubeId === undefined) {
+        return message.reply(messages);
+      }
       try {
-        const timeFormat = 'Do MMMM YYYY, HH:mm';
-        const dateSplit = args[1].split('/');
-        const date =
-          dateSplit[1] + '/' + dateSplit[0] + '/' + moment().format('YYYY');
-        const dateTime = Date.parse(`${date} ${args[2]}`);
-        const livestreamDateTime = moment(dateTime).format(timeFormat);
-        const livestreamDateTimeJapan = moment(dateTime)
-          .add(2, 'hours')
-          .format(timeFormat);
-        const vliverFirstName = args[0].toLowerCase();
         const vData = await Vliver.findOne({
           where: { name: vliverFirstName }
         });
-        const linkData = args[3].split('/');
-        let youtubeId;
-        if (linkData[0] !== 'https:' || linkData[3] === '') {
-          return message.reply(messages);
-        }
-        switch (linkData[2]) {
-          case 'www.youtube.com':
-            const paramData = linkData[3].split('=');
-            youtubeId = paramData[1].split('&', 1)[0];
-            break;
-          case 'youtu.be':
-            youtubeId = linkData[3];
-            break;
-          default:
-            return message.reply(messages);
-        }
-        if (youtubeId === undefined) {
-          return message.reply(messages);
-        }
-        try {
-          const youtubeData = await fetchYoutube(youtubeId);
-          const liveEmbed = {
-            color: parseInt(vData.dataValues.color),
-            title: `${vData.dataValues.fullName} akan melakukan Livestream!`,
-            author: {
-              name: vData.dataValues.fullName,
-              icon_url: vData.dataValues.avatarURL,
-              url: vData.dataValues.channelURL
-            },
-            thumbnail: {
-              url: vData.dataValues.avatarURL
-            },
-            fields: [
-              {
-                name: 'Tanggal & Waktu Livestream',
-                value: `${livestreamDateTime} GMT+7 / WIB \n${livestreamDateTimeJapan} GMT+9 / JST`
-              },
-              {
-                name: 'Link Video Youtube',
-                value: youtubeData.url
-              },
-              {
-                name: 'Judul Livestream',
-                value: youtubeData.title
-              }
-            ],
-            image: {
-              url: youtubeData.thumbnailUrl
-            },
-            footer: {
-              text: `${name} v${version} - This message was created on ${moment().format(
-                timeFormat
-              )}`
-            }
+        if (!vData) {
+          throw {
+            message: `Kamu menginput ${vliverFirstName} dan itu tidak ada di database kami`
           };
-          let mention = '';
-          if (vData.dataValues.fanName || vData.dataValues.fanName === '') {
-            const roleId = message.guild.roles.find(
-              r => r.name === vData.dataValues.fanName
-            ).id;
-            mention = `<@&${roleId}>`;
-          } else {
-            mention = '@here';
-          }
-          const channel = message.guild.channels.get(textChannelID.live);
-          await channel.send(
-            `${mention}\n**${vData.dataValues.fullName}** akan melakukan Livestream pada **${livestreamDateTime} WIB!**`,
-            { embed: liveEmbed }
-          );
-          return await message.reply(
-            `Informasi live sudah dikirim ke text channel tujuan.\nNama VLiver: ${vData.dataValues.fullName}\nJudul Livestream: ${youtubeData.title}\nJadwal live: ${livestreamDateTime} WIB / GMT+7`
-          );
-        } catch (err) {
-          console.log(err);
-          message.reply(
-            `Ada sesuatu yang salah, tapi itu bukan kamu: ${err.message}`
-          );
         }
+        const youtubeData = await fetchYoutube(youtubeId);
+        const liveEmbed = {
+          color: parseInt(vData.dataValues.color),
+          title: `${vData.dataValues.fullName} akan melakukan Livestream!`,
+          author: {
+            name: vData.dataValues.fullName,
+            icon_url: vData.dataValues.avatarURL,
+            url: vData.dataValues.channelURL
+          },
+          thumbnail: {
+            url: vData.dataValues.avatarURL
+          },
+          fields: [
+            {
+              name: 'Tanggal & Waktu Livestream',
+              value: `${livestreamDateTime} GMT+7 / WIB \n${livestreamDateTimeJapan} GMT+9 / JST`
+            },
+            {
+              name: 'Link Video Youtube',
+              value: youtubeData.url
+            },
+            {
+              name: 'Judul Livestream',
+              value: youtubeData.title
+            }
+          ],
+          image: {
+            url: youtubeData.thumbnailUrl
+          },
+          footer: {
+            text: `${name} v${version} - This message was created on ${moment().format(
+              timeFormat
+            )}`
+          }
+        };
+        let mention = '';
+        if (vData.dataValues.fanName || vData.dataValues.fanName === '') {
+          const roleId = message.guild.roles.find(
+            r => r.name === vData.dataValues.fanName
+          ).id;
+          mention = `<@&${roleId}>`;
+        } else {
+          mention = '@here';
+        }
+        const channel = message.guild.channels.get(textChannelID.live);
+        await channel.send(
+          `${mention}\n**${vData.dataValues.fullName}** akan melakukan Livestream pada **${livestreamDateTime} WIB!**`,
+          { embed: liveEmbed }
+        );
+        return await message.reply(
+          `Informasi live sudah dikirim ke text channel tujuan.\nNama VLiver: ${vData.dataValues.fullName}\nJudul Livestream: ${youtubeData.title}\nJadwal live: ${livestreamDateTime} WIB / GMT+7`
+        );
       } catch (err) {
-        console.log(err);
         message.reply(
           `Ada sesuatu yang salah, tapi itu bukan kamu: ${err.message}`
         );
