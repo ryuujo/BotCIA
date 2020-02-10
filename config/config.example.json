@@ -1,0 +1,13 @@
+{
+  "development": {
+    "username": "",
+    "password": "",
+    "database": "",
+    "host": "",
+    "dialect": "",
+    "logging": false,
+    "dialectOptions": {
+      "timezone": "Etc/GMT+7"
+    }
+  }
+}
