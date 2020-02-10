@@ -24,16 +24,16 @@ const sequelize = new Sequelize(
   database.development.password,
   {
     host: database.development.host,
-    dialect: database.development.dialect
+    dialect: database.development.dialect,
+    logging: false,
+    dialectOptions: {
+      timezone: 'etc/GMT+7'
+    }
   }
 );
 
 client.once('ready', () => {
   client.user.setActivity(config.activity);
-  console.log('BotCIA version: ' + version + ' is ready and active!');
-  console.log(
-    'My Time Active was on ' + moment().format('dddd DD MMMM YYYY HH:mm:ss Z')
-  );
   sequelize
     .authenticate()
     .then(() => {
@@ -42,6 +42,10 @@ client.once('ready', () => {
     .catch(err => {
       console.error('Unable to connect to the database:', err);
     });
+  console.log('BotCIA version: ' + version + ' is ready and active!');
+  console.log(
+    'My Active Time was at ' + moment().format('dddd DD MMMM YYYY HH:mm:ss Z')
+  );
 });
 
 client.on('message', message => {

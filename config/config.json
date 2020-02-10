@@ -5,6 +5,9 @@
     "database": "s20_botcia_dev",
     "host": "107.172.89.215",
     "dialect": "mariadb",
-    "operatorsAliases": false
+    "logging": false,
+    "dialectOptions": {
+      "timezone": "Etc/GMT+7"
+    }
   }
 }
