@@ -27,8 +27,11 @@ module.exports = {
       const date =
         dateSplit[1] + '/' + dateSplit[0] + '/' + moment().format('YYYY');
       const dateTime = Date.parse(`${date} ${args[2]}`);
-      const livestreamDateTime = moment(dateTime).format(timeFormat);
+      const livestreamDateTime = moment(dateTime)
+        .utcOffset('+07:00')
+        .format(timeFormat);
       const livestreamDateTimeJapan = moment(dateTime)
+        .utcOffset('+07:00')
         .add(2, 'hours')
         .format(timeFormat);
       const vliverFirstName = args[0].toLowerCase();
@@ -90,9 +93,9 @@ module.exports = {
             url: youtubeData.thumbnailUrl
           },
           footer: {
-            text: `${name} v${version} - This message was created on ${moment().format(
-              timeFormat
-            )}`
+            text: `${name} v${version} - This message was created on ${moment()
+              .utcOffset('+07:00')
+              .format(timeFormat)}`
           }
         };
         let mention = '';
