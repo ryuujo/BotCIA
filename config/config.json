@@ -1,0 +1,10 @@
+{
+  "development": {
+    "username": "u20_PaWOHZWXD2",
+    "password": "M4Y2xqjIT2iISzJXAij3Zn84",
+    "database": "s20_botcia_dev",
+    "host": "107.172.89.215",
+    "dialect": "mariadb",
+    "operatorsAliases": false
+  }
+}
