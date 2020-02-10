@@ -15,6 +15,9 @@ module.exports = {
       prefix +
       'live [Nama depan vliver] [Tanggal Livestream (DD/MM)] [Waktu Livestream dalam WIB / GMT+7 (HH:MM)] [Link Video Youtube]```';
 
+    message.channel.send(
+      'Mohon tunggu, sedang menyiapkan data untuk dikirimkan'
+    );
     if (message.member.roles.some(r => roles.live.includes(r.name))) {
       if (args.length !== 4) {
         return message.reply(messages);
@@ -88,13 +91,22 @@ module.exports = {
               )}`
             }
           };
-          const roleId = message.guild.roles.find(
-            r => r.name === roles.notification
-          ).id;
+          let mention = '';
+          if (vData.dataValues.fanName || vData.dataValues.fanName === '') {
+            const roleId = message.guild.roles.find(
+              r => r.name === vData.dataValues.fanName
+            ).id;
+            mention = `<@&${roleId}>`;
+          } else {
+            mention = '@here';
+          }
           const channel = message.guild.channels.get(textChannelID.live);
-          await channel.send(`<@&${roleId}>`, { embed: liveEmbed });
+          await channel.send(
+            `${mention}\n**${vData.dataValues.fullName}** akan melakukan Livestream pada **${livestreamDateTime} WIB!**`,
+            { embed: liveEmbed }
+          );
           return await message.reply(
-            `Informasi live sudah dikirim ke text channel tujuan.\nNama VLiver: ${vData.fullName}\nJudul Livestream: ${youtubeData.title}\nJadwal live: ${livestreamDateTime} WIB / GMT+7`
+            `Informasi live sudah dikirim ke text channel tujuan.\nNama VLiver: ${vData.dataValues.fullName}\nJudul Livestream: ${youtubeData.title}\nJadwal live: ${livestreamDateTime} WIB / GMT+7`
           );
         } catch (err) {
           console.log(err);

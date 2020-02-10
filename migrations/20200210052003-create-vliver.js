@@ -16,6 +16,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      fanName: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       color: {
         allowNull: false,
         type: Sequelize.STRING
