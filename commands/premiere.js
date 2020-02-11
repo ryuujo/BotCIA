@@ -2,7 +2,8 @@ const moment = require('moment');
 const fetchYoutube = require('youtube-info');
 const { roles, textChannelID, prefix } = require('../config.js');
 const { name, version } = require('../package.json');
-const Vliver = require('../models/').Vliver;
+const Vliver = require('../models').Vliver;
+const Schedule = require('../models').Schedule;
 
 module.exports = {
   name: 'premiere',
@@ -109,9 +110,16 @@ module.exports = {
         }
         const channel = message.guild.channels.get(textChannelID.live);
         await channel.send(
-          `${mention}\n**${vData.dataValues.fullName}** akan melakukan Livestream pada **${livestreamDateTime} WIB!**`,
+          `${mention}\n**${vData.dataValues.fullName}** akan mengupload video baru pada **${livestreamDateTime} WIB!**`,
           { embed: liveEmbed }
         );
+        await Schedule.create({
+          title: youtubeData.title.replace(/【/g, ' [').replace(/】/g, '] '),
+          youtubeUrl: youtubeData.url,
+          dateTime: new Date(dateTime),
+          vliverID: vData.dataValues.id,
+          type: 'premiere'
+        });
         return await message.reply(
           `Informasi premiere sudah dikirim ke text channel tujuan.\nNama VLiver: ${vData.fullName}\nJudul Premiere: ${youtubeData.title}\nJadwal Premiere: ${livestreamDateTime} WIB / GMT+7`
         );
