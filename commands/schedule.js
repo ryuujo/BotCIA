@@ -28,7 +28,7 @@ module.exports = {
                   (d, i) =>
                     `${i + 1}. **${d.title}** - by **${
                       d['vliver.fullName']
-                    }**\nTanggal dan Waktu: ${moment(data.dateTime)
+                    }**\nTanggal dan Waktu: ${moment(d.dateTime)
                       .utcOffset('+07:00')
                       .format(timeFormat)}\n${d.youtubeUrl}\n\n`
                 )
