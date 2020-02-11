@@ -26,8 +26,6 @@ const sequelize = new Sequelize(
     host: database.development.host,
     dialect: database.development.dialect,
     logging: false,
-    charset: 'utf8',
-    collate: 'utf8_general_ci',
     dialectOptions: {
       timezone: 'etc/GMT+7'
     }
