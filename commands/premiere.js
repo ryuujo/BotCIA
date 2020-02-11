@@ -114,7 +114,7 @@ module.exports = {
           { embed: liveEmbed }
         );
         await Schedule.create({
-          title: youtubeData.title.replace(/【/g, ' [').replace(/】/g, '] '),
+          title: youtubeData.title,
           youtubeUrl: youtubeData.url,
           dateTime: new Date(dateTime),
           vliverID: vData.dataValues.id,
