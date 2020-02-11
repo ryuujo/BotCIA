@@ -101,7 +101,7 @@ module.exports = {
     } else {
       await message.channel.bulkDelete(1);
       return await message.author.send(
-        'Tolong jangan gunakan tag itu di sembarang tempat ya. Nanti ku geplak lho...',
+        'Tolong jangan gunakan tag itu di sembarang tempat ya. Kalo ngelanggar Nanti ku geplak lho...',
         { file: 'https://i.imgur.com/FxfX5wL.png' }
       );
     }
