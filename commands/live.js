@@ -3,6 +3,7 @@ const fetchYoutube = require('youtube-info');
 const { roles, textChannelID, prefix } = require('../config.js');
 const { name, version } = require('../package.json');
 const Vliver = require('../models/').Vliver;
+const Schedule = require('../models').Schedule;
 
 module.exports = {
   name: 'live',
@@ -111,6 +112,13 @@ module.exports = {
           `${mention}\n**${vData.dataValues.fullName}** akan melakukan Livestream pada **${livestreamDateTime} WIB!**`,
           { embed: liveEmbed }
         );
+        await Schedule.create({
+          title: youtubeData.title.replace(/【/g, ' [').replace(/】/g, '] '),
+          youtubeUrl: youtubeData.url,
+          dateTime: new Date(dateTime),
+          vliverID: vData.dataValues.id,
+          type: 'live'
+        });
         return await message.reply(
           `Informasi live sudah dikirim ke text channel tujuan.\nNama VLiver: ${vData.dataValues.fullName}\nJudul Livestream: ${youtubeData.title}\nJadwal live: ${livestreamDateTime} WIB / GMT+7`
         );

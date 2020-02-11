@@ -9,7 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       vliverID: DataTypes.INTEGER,
       type: DataTypes.ENUM('live', 'premiere')
     },
-    {}
+    {
+      charset: 'utf8',
+      collate: 'utf8_unicode_ci'
+    }
   );
   Schedule.associate = function(models) {
     Schedule.belongsTo(models.Vliver, { foreignKey: 'vliverId', as: 'vliver' });

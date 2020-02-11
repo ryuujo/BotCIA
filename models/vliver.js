@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) => {
       avatarURL: DataTypes.STRING,
       channelURL: DataTypes.STRING
     },
-    {}
+    {
+      charset: 'utf8',
+      collate: 'utf8_unicode_ci'
+    }
   );
   Vliver.associate = function(models) {
     // associations can be defined here
