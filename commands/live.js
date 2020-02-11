@@ -1,7 +1,7 @@
 const moment = require('moment');
 const fetchYoutube = require('youtube-info');
-const { roles, textChannelID, prefix } = require('../config.js');
 const { name, version } = require('../package.json');
+const { roles, textChannelID, prefix } = require('../config.js');
 const Vliver = require('../models').Vliver;
 const Schedule = require('../models').Schedule;
 

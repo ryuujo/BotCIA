@@ -1,6 +1,6 @@
 const moment = require('moment');
-const Schedule = require('../models').Schedule;
 const { Op } = require('sequelize');
+const Schedule = require('../models').Schedule;
 const { name, version } = require('../package.json');
 
 module.exports = {
@@ -28,7 +28,7 @@ module.exports = {
                   (d, i) =>
                     `${i + 1}. **${d.title}** - by **${
                       d['vliver.fullName']
-                    }**\nTanggal dan Waktu: ${moment(d.dateTime)
+                    }** (${d.type})\nTanggal dan Waktu: ${moment(d.dateTime)
                       .utcOffset('+07:00')
                       .format(timeFormat)}\n${d.youtubeUrl}\n\n`
                 )
