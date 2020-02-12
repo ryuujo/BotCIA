@@ -10,7 +10,8 @@ module.exports = {
       },
       command: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       response: {
         allowNull: false,

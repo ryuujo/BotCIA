@@ -1,4 +1,5 @@
 const Tag = require('../models').Tag;
+const { roles } = require('../config.js');
 
 module.exports = {
   name: 'tag',
@@ -14,6 +15,8 @@ module.exports = {
                 command: args[1],
                 response: args.slice(2, args.length).join(' '),
                 createdBy:
+                  message.author.username + '#' + message.author.discriminator,
+                updatedBy:
                   message.author.username + '#' + message.author.discriminator
               });
               return await message.channel.send(
@@ -31,15 +34,25 @@ module.exports = {
         case 'search':
           return; // message.channel.send('Searching');
         case 'edit':
-          return message.channel.send('Editing the tag');
-        case 'delete':
           try {
             const tag = await Tag.findOne({ where: { command: args[1] } });
             if (tag) {
-              await Tag.destroy({ where: { command: args[1] } });
-              return await message.channel.send(
-                'Tag `' + args[1] + '` berhasil dihapus'
-              );
+              if (
+                tag.createdBy ===
+                message.author.username + '#' + message.author.discriminator
+              ) {
+                tag.response = args.slice(2, args.length).join(' ');
+                tag.updatedBy =
+                  message.author.username + '#' + message.author.discriminator;
+                await tag.save();
+                return message.channel.send(
+                  'Tag `' + args[1] + '` berhasil diubah!'
+                );
+              } else {
+                return message.reply('', {
+                  file: 'https://i.imgur.com/4YNSGmG.jpg'
+                });
+              }
             } else {
               return message.channel.send(
                 'Tidak ada tag `' + args[1] + '` yang ditemukan'
@@ -48,6 +61,35 @@ module.exports = {
           } catch (err) {
             console.log(err);
           }
+        case 'delete':
+          try {
+            const tag = await Tag.findOne({ where: { command: args[1] } });
+            if (tag) {
+              if (
+                tag.createdBy ===
+                  message.author.username +
+                    '#' +
+                    message.author.discriminator ||
+                message.member.roles.some(r => roles.live.includes(r.name))
+              ) {
+                await Tag.destroy({ where: { command: args[1] } });
+                return await message.channel.send(
+                  'Tag `' + args[1] + '` berhasil dihapus'
+                );
+              } else {
+                return message.reply('', {
+                  file: 'https://i.imgur.com/4YNSGmG.jpg'
+                });
+              }
+            } else {
+              return message.channel.send(
+                'Tidak ada tag `' + args[1] + '` yang ditemukan'
+              );
+            }
+          } catch (err) {
+            console.log(err);
+          }
+
         default:
           try {
             const tag = await Tag.findOne({ where: { command: args[0] } });
