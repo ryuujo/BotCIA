@@ -103,8 +103,12 @@ module.exports = {
         if (vData.dataValues.fanName || vData.dataValues.fanName === '') {
           const roleId = message.guild.roles.find(
             r => r.name === vData.dataValues.fanName
-          ).id;
-          mention = `<@&${roleId}>`;
+          );
+          if (roleId) {
+            mention = `<@&${roleId.id}>`;
+          } else {
+            mention = '@here';
+          }
         } else {
           mention = '@here';
         }
