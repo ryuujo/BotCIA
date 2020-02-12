@@ -7,6 +7,9 @@ module.exports = {
     if (atauIndex > 0) {
       const a = args.slice(0, atauIndex).join(' ');
       const b = args.slice(atauIndex + 1, args.length).join(' ');
+      if (a.toLowerCase() === b.toLowerCase()) {
+        return message.channel.send('Hmm... Maksudnya gimana ya?');
+      }
       const min = 1;
       const max = 12;
       const rand = min + Math.random() * (max - min);
