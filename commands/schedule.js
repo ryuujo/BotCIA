@@ -7,6 +7,7 @@ module.exports = {
   name: 'schedule',
   description: 'Check upcoming schedule',
   async execute(message) {
+    moment.locale('id');
     const timeFormat = 'Do MMMM YYYY, HH:mm';
     try {
       const data = await Schedule.findAll({
@@ -26,11 +27,15 @@ module.exports = {
             ? `${data
                 .map(
                   (d, i) =>
-                    `${i + 1}. **${d.title}** - by **${
-                      d['vliver.fullName']
-                    }** (${d.type})\nTanggal dan Waktu: ${moment(d.dateTime)
+                    `${i + 1}. __**${d['vliver.fullName']}**__ (${
+                      d.type
+                    })\nJudul Stream:**${
+                      d.title
+                    }**\nTanggal dan Waktu: **${moment(d.dateTime)
                       .utcOffset('+07:00')
-                      .format(timeFormat)}\n${d.youtubeUrl}\n\n`
+                      .format(timeFormat)} WIB / GMT+7** (*${moment(
+                      d.dateTime
+                    ).fromNow()}*)\n${d.youtubeUrl}\n\n`
                 )
                 .join('')}`
             : '*Belum ada jadwal livestream untuk saat ini.*',
