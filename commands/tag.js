@@ -105,7 +105,9 @@ module.exports = {
           }
       }
     } else {
-      return message.channel.send('This should be help');
+      return message.channel.send(
+        '```HELP LIST\n1. create [keyword] [content]: Menambahkan keyword baru\n2. edit   [keyword] [content]: Mengupdate keyword\n3. delete [keyword]          : Menghapus keyword\n4. search [keyword]          : Mencari keyword (In development)```'
+      );
     }
   }
 };
