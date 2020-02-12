@@ -4,7 +4,7 @@ module.exports = {
   name: 'prune',
   description: 'Prune up to 99 messages.',
   execute(message, args) {
-    if (message.member.roles.some(r => roles.live.includes(r.name))) {
+    if (message.member.roles.some(r => roles.admin.includes(r.name))) {
       const amount = parseInt(args[0]) + 1;
 
       if (isNaN(amount)) {
