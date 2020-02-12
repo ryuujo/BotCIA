@@ -7,23 +7,20 @@ module.exports = {
     if (args.length > 0) {
       switch (args[0]) {
         case 'create':
-          const command = args[1];
-          const text = args.slice(2, args.length).join(' ');
-          const author =
-            message.author.username + '#' + message.author.discriminator;
           try {
-            const tag = await Tag.findOne({ where: { command: command } });
+            const tag = await Tag.findOne({ where: { command: args[1] } });
             if (!tag) {
               await Tag.create({
-                command: command,
-                response: text,
-                createdBy: author
+                command: args[1],
+                response: args.slice(2, args.length).join(' '),
+                createdBy:
+                  message.author.username + '#' + message.author.discriminator
               });
               return await message.channel.send(
-                'Tag `' + command + '` berhasil dibuat!'
+                'Tag `' + args[1] + '` berhasil dibuat!'
               );
             } else {
-              return message.reply('Tagnya sudah ada');
+              return message.channel.send('Tag `' + args[1] + '` sudah ada');
             }
           } catch (err) {
             console.log(err);
@@ -36,7 +33,21 @@ module.exports = {
         case 'edit':
           return message.channel.send('Editing the tag');
         case 'delete':
-          return message.channel.send('Deleting the tag');
+          try {
+            const tag = await Tag.findOne({ where: { command: args[1] } });
+            if (tag) {
+              await Tag.destroy({ where: { command: args[1] } });
+              return await message.channel.send(
+                'Tag `' + args[1] + '` berhasil dihapus'
+              );
+            } else {
+              return message.channel.send(
+                'Tidak ada tag `' + args[1] + '` yang ditemukan'
+              );
+            }
+          } catch (err) {
+            console.log(err);
+          }
         default:
           try {
             const tag = await Tag.findOne({ where: { command: args[0] } });
