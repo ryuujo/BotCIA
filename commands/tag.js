@@ -7,7 +7,7 @@ module.exports = {
   description: 'Just like Nadeko or Dyno, saving your tag for memes',
   async execute(message, args) {
     const help =
-      '```HELP LIST\n1. create [keyword] [content]: Menambahkan tag baru\n2. edit [keyword] [content]: Mengupdate tag\n3. delete [keyword] : Menghapus tag\n4. list : Menampilkan list tag yang sudah dibuat olehmu\n5. tags: Menampilkan keseluruhan tag\n6. search [keyword] : Mencari tag berdasarkan keyword```';
+      '```HELP LIST\n1. create/add [keyword] [content]: Menambahkan tag baru\n2. edit [keyword] [content]: Mengupdate tag\n3. delete [keyword] : Menghapus tag\n4. list : Menampilkan list tag yang sudah dibuat olehmu\n5. tags: Menampilkan keseluruhan tag\n6. search [keyword] : Mencari tag berdasarkan keyword```';
     if (args.length > 0) {
       switch (args[0]) {
         case 'create':

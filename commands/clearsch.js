@@ -9,10 +9,10 @@ module.exports = {
     if (message.member.roles.some(r => roles.live.includes(r.name))) {
       try {
         const totalData = await Schedule.findAndCountAll({
-          where: { dateTime: { [Op.lt]: new Date() } }
+          where: { dateTime: { [Op.lt]: new Date().getMinutes() - 30 } }
         });
         await Schedule.destroy({
-          where: { dateTime: { [Op.lt]: new Date() } }
+          where: { dateTime: { [Op.lt]: new Date().getMinutes() - 30 } }
         });
         await message.channel.send(
           `Removed ${totalData.count} ${totalData.count === 1 ? 'row' : 'rows'}`

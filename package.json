@@ -1,6 +1,6 @@
 {
   "name": "bot-cia",
-  "version": "1.8.4",
+  "version": "1.8.5",
   "main": "main.js",
   "license": "MIT",
   "scripts": {
