@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       command: DataTypes.STRING,
       response: DataTypes.TEXT('long'),
-      createdBy: DataTypes.STRING
+      createdBy: DataTypes.STRING,
+      count: DataTypes.INTEGER
     },
     {
       charset: 'utf8',
