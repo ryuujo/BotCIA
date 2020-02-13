@@ -10,6 +10,7 @@ module.exports = {
     if (args.length > 0) {
       switch (args[0]) {
         case 'create':
+        case 'add':
           try {
             const tag = await Tag.findOne({ where: { command: args[1] } });
             if (!tag) {
@@ -39,26 +40,17 @@ module.exports = {
               where: {
                 createdBy:
                   message.author.username + '#' + message.author.discriminator
-              }
+              },
+              order: [['command', 'ASC']]
             });
             const listEmbed = {
-              title:
-                message.author.username +
-                '#' +
-                message.author.discriminator +
-                ' Tag Lists',
+              title: message.author.username + ' Tag Lists',
               description:
                 lists.length !== 0
                   ? lists.map(list => list.dataValues.command).join(', ')
                   : '*Tidak ada tags yang ditampilkan*'
             };
-            message.channel.send(
-              message.author.username +
-                '#' +
-                message.author.discriminator +
-                ' tag list',
-              { embed: listEmbed }
-            );
+            message.reply('tag list', { embed: listEmbed });
           } catch (err) {
             console.log(err);
             message.reply(

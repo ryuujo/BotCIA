@@ -5,7 +5,9 @@ module.exports = {
   description: 'Show all tags',
   async execute(message) {
     try {
-      const tag = await Tag.findAll();
+      const tag = await Tag.findAll({
+        order: [['command', 'ASC']]
+      });
       const listEmbed = {
         title: 'Tag Lists',
         description:
