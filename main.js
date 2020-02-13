@@ -49,6 +49,9 @@ client.once('ready', () => {
 });
 
 client.on('message', message => {
+  if (message.content.toLowerCase() === 'trax') {
+    return message.channel.send('Halunya Kurangin');
+  }
   if (!message.content.startsWith(config.prefix) || message.author.bot) return;
 
   const args = message.content.slice(config.prefix.length).split(/ +/);

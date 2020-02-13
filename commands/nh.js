@@ -94,7 +94,7 @@ module.exports = {
               'Mencarikan doujin favorit yang pas untukmu'
             );
             const min = 150000;
-            const max = 270000;
+            const max = 301000;
             const rand = min + Math.random() * (max - min);
             const number = Math.floor(rand);
             await getDoujin(number, message);
@@ -112,7 +112,7 @@ module.exports = {
                   icon_url:
                     'https://pbs.twimg.com/profile_images/733172726731415552/8P68F-_I_400x400.jpg'
                 },
-                title: `Your Results of ${query}`,
+                title: `Results of ${query}`,
                 description:
                   data.result.length !== 0
                     ? data.result
