@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const Tag = require('../models').Tag;
 const { roles } = require('../config.js');
 
@@ -53,13 +54,33 @@ module.exports = {
             message.reply('tag list', { embed: listEmbed });
           } catch (err) {
             console.log(err);
-            message.reply(
+            return message.reply(
               'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
             );
           }
           return;
         case 'search':
-          return; // message.channel.send('Searching');
+          try {
+            const result = await Tag.findAll({
+              where: {
+                command: { [Op.like]: `%${args[1]}%` }
+              },
+              order: [['command', 'ASC']]
+            });
+            const resultEmbed = {
+              title: 'Tag Search Results',
+              description:
+                result.length !== 0
+                  ? result.map(res => res.dataValues.command).join(', ')
+                  : '*Tidak ada hasil yang ditampilkan*'
+            };
+            return message.channel.send({ embed: resultEmbed });
+          } catch (err) {
+            console.log(err);
+            return message.reply(
+              'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
+            );
+          }
         case 'edit':
           try {
             const tag = await Tag.findOne({ where: { command: args[1] } });
@@ -87,7 +108,7 @@ module.exports = {
             }
           } catch (err) {
             console.log(err);
-            message.reply(
+            return message.reply(
               'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
             );
           }
@@ -103,7 +124,7 @@ module.exports = {
                 message.member.roles.some(r => roles.live.includes(r.name))
               ) {
                 await Tag.destroy({ where: { command: args[1] } });
-                return await message.channel.send(
+                return message.channel.send(
                   'Tag `' + args[1] + '` berhasil dihapus'
                 );
               } else {
@@ -118,7 +139,7 @@ module.exports = {
             }
           } catch (err) {
             console.log(err);
-            message.reply(
+            return message.reply(
               'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
             );
           }
@@ -138,7 +159,7 @@ module.exports = {
             }
           } catch (err) {
             console.log(err);
-            message.reply(
+            return message.reply(
               'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
             );
           }
