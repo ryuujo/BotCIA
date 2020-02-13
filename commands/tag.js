@@ -31,6 +31,36 @@ module.exports = {
               `Ada sesuatu yang salah, tapi itu bukan kamu: ${err.message}`
             );
           }
+        case 'list':
+          try {
+            const lists = await Tag.findAll({
+              where: {
+                createdBy:
+                  message.author.username + '#' + message.author.discriminator
+              }
+            });
+            const listEmbed = {
+              title:
+                message.author.username +
+                '#' +
+                message.author.discriminator +
+                ' Tag Lists',
+              description:
+                lists.length !== 0
+                  ? lists.map(list => list.dataValues.command).join(', ')
+                  : '*Tidak ada tags yang ditampilkan*'
+            };
+            message.channel.send(
+              message.author.username +
+                '#' +
+                message.author.discriminator +
+                ' tag list',
+              { embed: listEmbed }
+            );
+          } catch (err) {
+            console.log(err);
+          }
+          return;
         case 'search':
           return; // message.channel.send('Searching');
         case 'edit':
@@ -106,7 +136,7 @@ module.exports = {
       }
     } else {
       return message.channel.send(
-        '```HELP LIST\n1. create [keyword] [content]: Menambahkan keyword baru\n2. edit   [keyword] [content]: Mengupdate keyword\n3. delete [keyword]          : Menghapus keyword\n4. search [keyword]          : Mencari keyword (In development)```'
+        '```HELP LIST\n1. create [keyword] [content]: Menambahkan keyword baru\n2. edit [keyword] [content]: Mengupdate keyword\n3. delete [keyword] : Menghapus keyword\n4. list : Menampilkan list tag yang sudah dibuat olehmu\n5. search [keyword] : Mencari keyword (In development)```'
       );
     }
   }
