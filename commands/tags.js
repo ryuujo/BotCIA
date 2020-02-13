@@ -8,12 +8,19 @@ module.exports = {
       const tag = await Tag.findAll({
         order: [['command', 'ASC']]
       });
+      const total = await Tag.findAndCountAll();
       const listEmbed = {
         title: 'Tag Lists',
         description:
           tag.length !== 0
             ? tag.map(list => list.dataValues.command).join(', ')
-            : '*Tidak ada tags yang ditampilkan*'
+            : '*Tidak ada tags yang ditampilkan*',
+        fields: [
+          {
+            name: 'Total Tags',
+            value: total.count
+          }
+        ]
       };
       message.channel.send({ embed: listEmbed });
     } catch (err) {
