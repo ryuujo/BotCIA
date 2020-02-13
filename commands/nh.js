@@ -15,30 +15,45 @@ module.exports = {
         );
         const cover_type = { j: 'jpg', p: 'png' };
         const this_type = data.images.thumbnail.t;
-        const doujinEmbed = new RichEmbed()
-          .setColor('#EC2955')
-          .setAuthor(
-            'nHentai Fetcher by BotCIA',
-            'https://pbs.twimg.com/profile_images/733172726731415552/8P68F-_I_400x400.jpg'
-          )
-          .setTitle(data.title.english)
-          .setURL(`https://nhent.ai/g/${data.id}`)
-          .setThumbnail(
-            `https://t.nhent.ai/galleries/${data.media_id}/cover.${cover_type[this_type]}`
-          )
-          .addField('ID', data.id)
-          .addField(
-            'Tags',
-            data.tags.map(tag => `${tag.name}`)
-          )
-          .addField('nHentai Link', `https://nhentai.net/g/${data.id}`, true)
-          .addField('View without VPN', `https://nhent.ai/g/${data.id}`, true)
-          .setFooter(
-            `${name} v${version} - This message was created on ${moment()
+        const djEmbed = {
+          color: 0xec2955,
+          author: {
+            name: 'nHentai Fetcher by BotCIA',
+            icon_url:
+              'https://pbs.twimg.com/profile_images/733172726731415552/8P68F-_I_400x400.jpg'
+          },
+          title: data.title.english,
+          url: `https://nhent.ai/g/${data.id}`,
+          thumbnail: {
+            url: `https://t.nhent.ai/galleries/${data.media_id}/cover.${cover_type[this_type]}`
+          },
+          fields: [
+            {
+              name: 'ID',
+              value: data.id
+            },
+            {
+              name: 'Tags',
+              value: data.tags.map(tag => `${tag.name}`).join(', ')
+            },
+            {
+              name: 'nHentai Link',
+              value: `https://nhentai.net/g/${data.id}`,
+              inline: true
+            },
+            {
+              name: 'View without VPN',
+              value: `https://nhent.ai/g/${data.id}`,
+              inline: true
+            }
+          ],
+          footer: {
+            text: `${name} v${version} - This message was created on ${moment()
               .utcOffset('+07:00')
               .format(timeFormat)}`
-          );
-        await message.reply(doujinEmbed);
+          }
+        };
+        await message.reply({ embed: djEmbed });
       } catch (err) {
         console.log(err.message);
       }
@@ -63,7 +78,7 @@ module.exports = {
         switch (args[0]) {
           case 'help':
             return message.channel.send(
-              "```help      : Here's the help then\ninfo <ID> : Fetching the info of the doujin ID\nrandom    : Sent you a random doujin\n\nPastikan kamu menggunakan bot ini di Channel Degen. Nanti Cia marah lho```"
+              "```help: Here's the help then\ninfo <ID>: Fetching the info of the doujin ID\nrandom: Sent you a random doujin\nsearch <keyword>: Finding your doujin based on your keyword\n\nPastikan kamu menggunakan bot ini di Channel Degen. Nanti Cia marah lho```"
             );
           case 'info':
             if (args[1]) {
@@ -84,6 +99,44 @@ module.exports = {
             const number = Math.floor(rand);
             await getDoujin(number, message);
             return await message.channel.send('Semoga kamu suka ya~');
+          case 'search':
+            const query = args.slice(1, args.length).join(' ');
+            try {
+              const { data } = await axios.get(
+                `https://nhtai-api.glitch.me/api/search?query=${query}&page=1`
+              );
+              const queryEmbed = {
+                color: 0xec2955,
+                author: {
+                  name: 'nHentai Fetcher by BotCIA',
+                  icon_url:
+                    'https://pbs.twimg.com/profile_images/733172726731415552/8P68F-_I_400x400.jpg'
+                },
+                title: `Your Results of ${query}`,
+                description:
+                  data.result.length !== 0
+                    ? data.result
+                        .slice(0, 10)
+                        .map(
+                          (dj, i) =>
+                            `${i + 1}. ${
+                              dj.title.english
+                            }\nhttps://nhentai.net/g/${
+                              dj.id
+                            } | https://nhent.ai/g/${dj.id}`
+                        )
+                        .join('\n\n')
+                    : '*No Doujins Found*',
+                footer: {
+                  text: `${name} v${version} - This message was created on ${moment()
+                    .utcOffset('+07:00')
+                    .format(timeFormat)}`
+                }
+              };
+              return message.channel.send({ embed: queryEmbed });
+            } catch (err) {
+              console.log(err.message);
+            }
           default:
             return message.reply(
               'Kamu perlu menulis perintah setelah tanda `' +
