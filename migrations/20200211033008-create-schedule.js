@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Schedules', {
+    return queryInterface.createTable("Schedules", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -24,14 +24,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Vlivers',
-          key: 'id'
+          model: "Vlivers",
+          key: "id"
         }
       },
       type: {
         allowNull: false,
-        type: Sequelize.ENUM('live', 'premiere'),
-        defaultValue: 'live'
+        type: Sequelize.ENUM("live", "premiere"),
+        defaultValue: "live"
       },
       createdAt: {
         allowNull: false,
@@ -44,6 +44,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Schedules');
+    return queryInterface.dropTable("Schedules");
   }
 };

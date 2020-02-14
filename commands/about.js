@@ -1,15 +1,15 @@
-const { name, version } = require('../package.json');
+const { name, version } = require("../package.json");
 
 module.exports = {
-  name: 'about',
-  description: 'About this BOT',
+  name: "about",
+  description: "About this BOT",
   execute(message) {
     message.channel.send(
-      '```Hello my name is ' +
+      "```Hello my name is " +
         name +
-        ' v' +
+        " v" +
         version +
-        '. At your Service!\nMy master is: RJKuker#3103```'
+        ". At your Service!\nMy master is: RJKuker#3103```"
     );
   }
 };

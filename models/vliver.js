@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 module.exports = (sequelize, DataTypes) => {
   const Vliver = sequelize.define(
-    'Vliver',
+    "Vliver",
     {
       name: DataTypes.STRING,
       fullName: DataTypes.STRING,
@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
       channelURL: DataTypes.STRING
     },
     {
-      charset: 'utf8',
-      collate: 'utf8_unicode_ci'
+      charset: "utf8",
+      collate: "utf8_unicode_ci"
     }
   );
   Vliver.associate = function(models) {
