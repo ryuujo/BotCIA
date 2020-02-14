@@ -44,12 +44,19 @@ module.exports = {
               },
               order: [["command", "ASC"]]
             });
+            const listRes = await Tag.findAndCountAll({
+              where: {
+                createdBy:
+                  message.author.username + "#" + message.author.discriminator
+              }
+            });
             const listEmbed = {
               title: message.author.username + " Tag Lists",
               description:
                 lists.length !== 0
                   ? lists.map(list => list.dataValues.command).join(", ")
-                  : "*Tidak ada tags yang ditampilkan*"
+                  : "*Tidak ada tags yang ditampilkan*",
+              fields: [{ name: "Total Tags", value: listRes.count }]
             };
             message.reply("tag list", { embed: listEmbed });
           } catch (err) {
@@ -67,12 +74,19 @@ module.exports = {
               },
               order: [["command", "ASC"]]
             });
+            const totalRes = await Tag.findAndCountAll({
+              where: {
+                command: { [Op.like]: `%${args[1]}%` }
+              },
+              order: [["command", "ASC"]]
+            });
             const resultEmbed = {
               title: "Tag Search Results",
               description:
                 result.length !== 0
                   ? result.map(res => res.dataValues.command).join(", ")
-                  : "*Tidak ada hasil yang ditampilkan*"
+                  : "*Tidak ada hasil yang ditampilkan*",
+              fields: [{ name: "Total Tags", value: totalRes.count }]
             };
             return message.channel.send({ embed: resultEmbed });
           } catch (err) {
