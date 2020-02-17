@@ -10,6 +10,9 @@ module.exports = {
   activity: "Use !! to start command",
   textChannelID: {
     live: "",
-    nh: ""
+    nh: "",
+    rules: "",
+    welcome: "",
+    roles: ""
   }
 };
