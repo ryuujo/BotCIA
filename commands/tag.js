@@ -68,6 +68,9 @@ module.exports = {
           return;
         case "search":
           try {
+            if (!args[1]) {
+              return message.channel.send("Mau nyari apa hayoo?");
+            }
             const result = await Tag.findAll({
               where: {
                 command: { [Op.like]: `%${args[1]}%` }
