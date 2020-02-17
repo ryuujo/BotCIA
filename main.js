@@ -49,6 +49,16 @@ client.once("ready", () => {
 });
 
 client.on("message", message => {
+  if (
+    message.content === "!verify" &&
+    message.channel.id === config.textChannelID.rules
+  ) {
+    const channel = message.guild.channels.get(config.textChannelID.welcome);
+    channel.send(
+      `Selamat datang dan selamat bergabung di server kami, <@${message.author.id}>! Jangan lupa untuk ambil role di <#${config.textChannelID.roles}> ya...`
+    );
+  }
+
   if (!message.content.startsWith(config.prefix) || message.author.bot) return;
 
   const args = message.content.slice(config.prefix.length).split(/ +/);
