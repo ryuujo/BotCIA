@@ -55,7 +55,7 @@ client.on("message", message => {
   ) {
     const channel = message.guild.channels.get(config.textChannelID.welcome);
     channel.send(
-      `Selamat datang dan selamat bergabung di server kami, <@${message.author.id}>! Jangan lupa untuk ambil role di <#${config.textChannelID.roles}> ya...`
+      `Selamat datang dan selamat bergabung di server kami, <@${message.author.id}>! Jangan lupa untuk ambil role di <#${config.textChannelID.roles}> ya...\n\nWelcome abroad to our Server! Don't forget to take roles at <#${config.textChannelID.roles}>`
     );
   }
 
