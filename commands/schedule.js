@@ -33,7 +33,7 @@ module.exports = {
                   (d, i) =>
                     `${i + 1}. __**${d["vliver.fullName"]}**__ (${
                       d.type
-                    })\nJudul Stream:**${
+                    })\nJudul Stream:** ${
                       d.title
                     }**\nTanggal dan Waktu: **${moment(d.dateTime)
                       .utcOffset("+07:00")
