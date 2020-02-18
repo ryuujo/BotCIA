@@ -14,14 +14,13 @@ module.exports = {
       "Tulis formatnya seperti ini ya:\n> ```" +
       prefix +
       "live [Nama depan vliver] [Tanggal Livestream (DD/MM)] [Waktu Livestream dalam WIB / GMT+7 (HH:MM)] [Link Video Facebook]```";
-
-    message.channel.send(
-      "Mohon tunggu, sedang menyiapkan data untuk dikirimkan"
-    );
     if (message.member.roles.some(r => roles.live.includes(r.name))) {
       if (args.length !== 4) {
         return message.reply(messages);
       }
+      message.channel.send(
+        "Mohon tunggu, sedang menyiapkan data untuk dikirimkan"
+      );
       const timeFormat = "Do MMMM YYYY, HH:mm";
       const dateSplit = args[1].split("/");
       const date =
