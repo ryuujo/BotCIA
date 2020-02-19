@@ -42,7 +42,7 @@ module.exports = {
               inline: true
             },
             {
-              name: "View without VPN",
+              name: "Mirror Link",
               value: `https://nhent.ai/g/${data.id}`,
               inline: true
             }
@@ -127,6 +127,14 @@ module.exports = {
                         )
                         .join("\n\n")
                     : "*No Doujins Found*",
+                fields: [
+                  {
+                    name: "More Results",
+                    value: `https://nhent.ai/search/${query
+                      .split(" ")
+                      .join("%20")}`
+                  }
+                ],
                 footer: {
                   text: `${name} v${version} - This message was created on ${moment()
                     .utcOffset("+07:00")
@@ -154,7 +162,7 @@ module.exports = {
     } else {
       await message.channel.bulkDelete(1);
       return await message.author.send(
-        "Tolong jangan gunakan tag itu di sembarang tempat ya. Ku geplak kamu...",
+        "Jangan gunakan tag itu di sembarang tempat! Ku geplak kamu...",
         { file: "https://i.imgur.com/FxfX5wL.png" }
       );
     }
