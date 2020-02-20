@@ -78,26 +78,34 @@ module.exports = {
         switch (args[0]) {
           case "help":
             return message.channel.send(
-              "```help: Here's the help then\ninfo <ID>: Fetching the info of the doujin ID\nrandom: Sent you a random doujin\nsearch <keyword>: Finding your doujin based on your keyword\n\nPastikan kamu menggunakan bot ini di Channel Degen. Nanti Cia marah lho```"
+              "```help: Here's the help then\ninfo <ID>: Fetching the info of the doujin ID\nrandom <number>: Sent you a random doujin\nsearch <keyword>: Finding your doujin based on your keyword\n\nPastikan kamu menggunakan bot ini di Channel Degen. Nanti Cia marah lho```"
             );
           case "info":
-            if (args[1]) {
-              await message.channel.send(
-                `Mencari data untuk doujin ini... ID: ${args[1]}`
-              );
-              return await getDoujin(args[1], message);
-            } else {
+            if (!args[1])
               return message.reply("Kamu perlu menambahkan 6-digit nuklir.");
-            }
-          case "random":
             await message.channel.send(
-              "Mencarikan doujin favorit yang pas untukmu"
+              `Mencari data untuk doujin ini... ID: ${args[1]}`
             );
-            const min = 150000;
-            const max = 301000;
-            const rand = min + Math.random() * (max - min);
-            const number = Math.floor(rand);
-            await getDoujin(number, message);
+            return await getDoujin(args[1], message);
+          case "random":
+            const timesRoll = parseInt(args[1]) || 1;
+            const maxRoll = 3;
+            if (timesRoll > maxRoll)
+              return message.reply(
+                `Maksimal yang bisa diberikan ${maxRoll} kali ya...`
+              );
+            await message.channel.send(
+              `Mencarikan${
+                timesRoll > 1 ? " " + timesRoll : ""
+              } doujin favorit yang pas untukmu`
+            );
+            for (let i = 0; i < timesRoll; ++i) {
+              const min = 150000;
+              const max = 301000;
+              const rand = min + Math.random() * (max - min);
+              const number = Math.floor(rand);
+              await getDoujin(number, message);
+            }
             return await message.channel.send("Semoga kamu suka ya~");
           case "search":
             const query = args.slice(1, args.length).join(" ");
