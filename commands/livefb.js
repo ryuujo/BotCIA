@@ -87,7 +87,7 @@ module.exports = {
       }
       const channel = message.guild.channels.get(textChannelID.live);
       await channel.send(
-        `${mention}\n**${vData.dataValues.fullName}** akan melakukan Livestream pada **${livestreamDateTime} WIB!**`,
+        `${mention}\n**${vData.dataValues.fullName}** akan melakukan Livestream di Facebook pada **${livestreamDateTime} WIB!**`,
         { embed: liveEmbed }
       );
       await Schedule.create({
