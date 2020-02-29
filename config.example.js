@@ -8,11 +8,13 @@ module.exports = {
     notification: "Notif Squad"
   },
   activity: "Use !! to start command",
+  guildID: "",
   textChannelID: {
     live: "",
     nh: "",
     rules: "",
     welcome: "",
-    roles: ""
+    roles: "",
+    cron: ""
   }
 };
