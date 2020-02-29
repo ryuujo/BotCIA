@@ -88,13 +88,13 @@ client.once("ready", async () => {
     }
 
     await console.log(
-      `Cron Job complete. Time sent on ${moment().format(
-        "dddd DD MMMM YYYY HH:mm:ss Z"
-      )}. Trying to exit... `
+      `Cron Job complete. Time sent on ${moment()
+        .utcOffset("+07:00")
+        .format("dddd DD MMMM YYYY HH:mm:ss Z")}. Trying to exit... `
     );
-    await client.destroy();
+    await client.destroy().then(console.log("Cron done"));
   } catch (err) {
-    client.destroy();
     console.log("Something error: ", err);
+    await client.destroy().then(console.log("Cron closed"));
   }
 });
