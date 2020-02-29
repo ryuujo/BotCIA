@@ -6,6 +6,7 @@ const { version } = require("./package.json");
 const Sequelize = require("sequelize");
 const database = require("./config/config.json");
 
+const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
 const commandFiles = fs
