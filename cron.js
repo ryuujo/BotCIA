@@ -29,7 +29,7 @@ module.exports = {
         include: "vliver"
       });
       if (schedule.length === 0) {
-        await message.send(
+        return await message.send(
           "Selamat pagi semuanya! Saat ini belum ada livestream yang akan berlangsung namun bakal aku kasih tau kalo misalkan ada.\nCek Twitter masing-masing vliver untuk info lebih lanjut ya..."
         );
       } else {
@@ -58,19 +58,13 @@ module.exports = {
               .format(timeFormat)}`
           }
         };
-        await message.send(
+        return await message.send(
           `Selamat pagi semuanya! Hari ini akan ada ${schedule.length} stream yang akan berlangsung hari ini\nStream lainnya akan bertambah sewaktu-waktu, jadi cek Twitter masing-masing vliver untuk info lebih lanjut ya`,
           {
             embed: liveEmbed
           }
         );
       }
-
-      await console.log(
-        `Cron Job complete. Time sent on ${moment()
-          .utcOffset("+07:00")
-          .format("dddd DD MMMM YYYY HH:mm:ss Z")}.`
-      );
     } catch (err) {
       console.log("Something error: ", err);
     }
