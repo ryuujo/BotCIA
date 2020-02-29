@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "cron": "^1.8.2",
     "discord.js": "^11.5.1",
     "fs": "0.0.1-security",
     "mariadb": "^2.2.0",
