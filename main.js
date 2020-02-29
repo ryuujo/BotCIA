@@ -1,10 +1,12 @@
 const fs = require("fs");
 const Discord = require("discord.js");
 const moment = require("moment");
+const Sequelize = require("sequelize");
+const CronJob = require('cron').CronJob;
 const config = require("./config.js");
 const { version } = require("./package.json");
-const Sequelize = require("sequelize");
 const database = require("./config/config.json");
+const cron = require('./cron.js')
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -46,6 +48,8 @@ client.once("ready", () => {
   console.log(
     "My Active Time was at " + moment().format("dddd DD MMMM YYYY HH:mm:ss Z")
   );
+  const job = new CronJob('0 20 15 * * *', () => cron.execute(client))
+  job.start()
 });
 
 client.on("message", message => {
