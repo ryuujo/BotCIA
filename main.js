@@ -48,7 +48,7 @@ client.once("ready", () => {
   console.log(
     "My Active Time was at " + moment().format("dddd DD MMMM YYYY HH:mm:ss Z")
   );
-  const job = new CronJob('0 20 15 * * *', () => cron.execute(client))
+  const job = new CronJob('0 0 7 * * *', () => cron.execute(client))
   job.start()
 });
 

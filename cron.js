@@ -9,7 +9,6 @@ const { Op } = Sequelize;
 
 module.exports = {
   execute: async client => {
-    console.log("cron executed");
     try {
       let guild = client.guilds.get(config.guildID);
       let message = guild.channels.get(config.textChannelID.cron);
@@ -31,7 +30,7 @@ module.exports = {
       });
       if (schedule.length === 0) {
         await message.send(
-          "Selamat sore semuanya! Belum ada livestream saat ini namun aku bakal kasih tau kalo misalkan ada.\nCek Twitter masing-masing vliver untuk info lebih lanjut ya..."
+          "Selamat pagi semuanya! Saat ini belum ada livestream yang akan berlangsung namun bakal aku kasih tau kalo misalkan ada.\nCek Twitter masing-masing vliver untuk info lebih lanjut ya..."
         );
       } else {
         const liveEmbed = {
@@ -60,13 +59,13 @@ module.exports = {
           }
         };
         await message.send(
-          `Selamat sore semuanya! Hari ini akan ada ${schedule.length} stream yang akan berlangsung hari ini\nStream lainnya akan bertambah sewaktu-waktu, jadi cek Twitter masing-masing vliver untuk info lebih lanjut ya`,
+          `Selamat pagi semuanya! Hari ini akan ada ${schedule.length} stream yang akan berlangsung hari ini\nStream lainnya akan bertambah sewaktu-waktu, jadi cek Twitter masing-masing vliver untuk info lebih lanjut ya`,
           {
             embed: liveEmbed
           }
         );
       }
-  
+
       await console.log(
         `Cron Job complete. Time sent on ${moment()
           .utcOffset("+07:00")
