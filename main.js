@@ -48,14 +48,20 @@ client.once("ready", () => {
   console.log(
     "My Active Time was at " + moment().format("dddd DD MMMM YYYY HH:mm:ss Z")
   );
-  const job = new CronJob("1 0 7 * * *", () => {
-    cron.execute(client);
-    console.log(
-      `Job executed. Next Cron Job will be on: ${job
-        .nextDates()
-        .utcOffset("+07:00")}`
-    );
-  });
+  const job = new CronJob(
+    "1 0 7 * * *",
+    () => {
+      cron.execute(client);
+      console.log(
+        `Job executed. Next Cron Job will be on: ${job
+          .nextDates()
+          .utcOffset("+07:00")}`
+      );
+    },
+    null,
+    true,
+    "Asia/Jakarta"
+  );
   job.start();
   console.log(`Next Cron Job will be on: ${job.nextDates()}`);
 });
