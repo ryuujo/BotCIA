@@ -66,6 +66,13 @@ module.exports = {
         };
       }
       const youtubeData = await fetchYoutube(youtubeId);
+      await Schedule.create({
+        title: youtubeData.title,
+        youtubeUrl: youtubeData.url,
+        dateTime: new Date(dateTime),
+        vliverID: vData.dataValues.id,
+        type: "live"
+      });
       const liveEmbed = {
         color: parseInt(vData.dataValues.color),
         title: `${vData.dataValues.fullName} akan melakukan Livestream!`,
@@ -85,10 +92,6 @@ module.exports = {
           {
             name: "Link Video Youtube",
             value: youtubeData.url
-          },
-          {
-            name: "Judul Livestream",
-            value: youtubeData.title
           }
         ],
         image: {
@@ -118,13 +121,6 @@ module.exports = {
         `${mention}\n**${vData.dataValues.fullName}** akan melakukan Livestream pada **${livestreamDateTime} WIB!**`,
         { embed: liveEmbed }
       );
-      await Schedule.create({
-        title: youtubeData.title,
-        youtubeUrl: youtubeData.url,
-        dateTime: new Date(dateTime),
-        vliverID: vData.dataValues.id,
-        type: "live"
-      });
       return await message.reply(
         `Informasi live sudah dikirim ke text channel tujuan.\nNama VLiver: ${vData.dataValues.fullName}\nJudul Livestream: ${youtubeData.title}\nJadwal live: ${livestreamDateTime} WIB / GMT+7`
       );
