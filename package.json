@@ -1,14 +1,16 @@
 {
   "name": "bot-cia",
-  "version": "1.9.4",
+  "version": "1.10.4",
   "main": "main.js",
   "license": "MIT",
   "scripts": {
     "start": "node main.js",
-    "prod": "git pull origin master && npm install && npm start"
+    "prod": "git pull origin master && npm install && npm start",
+    "cron": "node cron.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "cron": "^1.8.2",
     "discord.js": "^11.5.1",
     "fs": "0.0.1-security",
     "mariadb": "^2.2.0",
