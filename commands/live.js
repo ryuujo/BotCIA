@@ -94,7 +94,7 @@ module.exports = {
             value: youtubeData.url
           },
           {
-            name: "Judul Premiere",
+            name: "Judul Live",
             value: youtubeData.title
           }
         ],
