@@ -92,6 +92,10 @@ module.exports = {
           {
             name: "Link Video Youtube",
             value: youtubeData.url
+          },
+          {
+            name: "Judul Live",
+            value: youtubeData.title
           }
         ],
         image: {
