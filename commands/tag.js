@@ -195,7 +195,7 @@ module.exports = {
               return message.channel.send({ embed });
             } else {
               return message.channel.send(
-                "Tidak ada tag `" + args[0] + "` yang ditemukan"
+                "Tidak ada tag `" + args[1] + "` yang ditemukan"
               );
             }
           } catch (err) {
