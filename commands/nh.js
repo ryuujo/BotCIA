@@ -108,7 +108,7 @@ module.exports = {
         );
         for (let i = 0; i < timesRoll; ++i) {
           const min = 150000;
-          const max = 301000;
+          const max = 304000;
           const rand = min + Math.random() * (max - min);
           const number = Math.floor(rand);
           await getDoujin(number, message);
