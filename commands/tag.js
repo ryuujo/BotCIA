@@ -1,4 +1,5 @@
 const { Op } = require("sequelize");
+const moment = require("moment");
 const Tag = require("../models").Tag;
 const { roles } = require("../config.js");
 
@@ -6,8 +7,10 @@ module.exports = {
   name: "tag",
   description: "Just like Nadeko or Dyno, saving your tag for memes",
   async execute(message, args) {
+    moment.locale("id");
+    const timeFormat = "Do MMMM YYYY, HH:mm";
     const help =
-      "```HELP LIST\n1. create/add [keyword] [content]: Menambahkan tag baru\n2. edit [keyword] [content]: Mengupdate tag\n3. delete [keyword] : Menghapus tag\n4. list : Menampilkan list tag yang sudah dibuat olehmu\n5. tags: Menampilkan keseluruhan tag\n6. search [keyword] : Mencari tag berdasarkan keyword```";
+      "```HELP LIST\n1. create/add [keyword] [content]: Menambahkan tag baru\n2. edit [keyword] [content]: Mengupdate tag\n3. delete [keyword] : Menghapus tag\n4. list : Menampilkan list tag yang sudah dibuat olehmu\n5. tags: Menampilkan keseluruhan tag\n6. search [keyword] : Mencari tag berdasarkan keyword\n7. info [keyword] : Menampilkan informasi tag ```";
     if (args.length > 0) {
       switch (args[0]) {
         case "create":
@@ -160,8 +163,51 @@ module.exports = {
               "Ada sesuatu yang salah tapi itu bukan kamu: " + err.message
             );
           }
+        case "info":
+          try {
+            const tag = await Tag.findOne({ where: { command: args[1] } });
+            if (tag) {
+              const embed = {
+                title: `Info tag untuk ${tag.command}`,
+                fields: [
+                  {
+                    name: 'Tag Name',
+                    value: tag.command
+                  },
+                  {
+                    name: "Created By",
+                    value: tag.createdBy,
+                    inline: true
+                  },
+                  {
+                    name: "Created At",
+                    value: moment(tag.createdAt)
+                      .utcOffset("+07:00")
+                      .format(timeFormat),
+                    inline: true
+                  },
+                  {
+                    name: "Times used",
+                    value: tag.count
+                  }
+                ]
+              };
+              return message.channel.send({ embed });
+            } else {
+              return message.channel.send(
+                "Tidak ada tag `" + args[0] + "` yang ditemukan"
+              );
+            }
+          } catch (err) {
+            console.log(err);
+            return message.reply(
+              "Ada sesuatu yang salah tapi itu bukan kamu: " + err.message
+            );
+          }
         case "help":
           return message.channel.send(help);
+        case "tags":
+          return message.channel.send("Gunakan perintah `!!tags` saja");
         default:
           try {
             const tag = await Tag.findOne({ where: { command: args[0] } });
