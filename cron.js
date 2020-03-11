@@ -59,7 +59,7 @@ module.exports = {
           }
         };
         return await message.send(
-          `Selamat pagi semuanya! Hari ini akan ada ${schedule.length} stream yang akan berlangsung hari ini\nStream lainnya akan bertambah sewaktu-waktu, jadi cek Twitter masing-masing vliver untuk info lebih lanjut ya`,
+          `Selamat pagi semuanya! Hari ini akan ada ${schedule.length} stream yang akan berlangsung.\nStream lainnya akan bertambah sewaktu-waktu, jadi cek Twitter masing-masing vliver untuk info lebih lanjut ya`,
           {
             embed: liveEmbed
           }
