@@ -104,28 +104,26 @@ module.exports = {
         case "edit":
           try {
             const tag = await Tag.findOne({ where: { command: args[1] } });
-            if (tag) {
-              if (
-                tag.createdBy ===
-                message.author.username + "#" + message.author.discriminator
-              ) {
-                tag.response = args.slice(2, args.length).join(" ");
-                tag.updatedBy =
-                  message.author.username + "#" + message.author.discriminator;
-                await tag.save();
-                return message.channel.send(
-                  "Tag `" + args[1] + "` berhasil diubah!"
-                );
-              } else {
-                return message.reply("", {
-                  file: "https://i.imgur.com/4YNSGmG.jpg"
-                });
-              }
-            } else {
+            if (!tag) {
               return message.channel.send(
                 "Tidak ada tag `" + args[1] + "` yang ditemukan"
               );
             }
+            if (
+              tag.createdBy !==
+              message.author.username + "#" + message.author.discriminator
+            ) {
+              return message.reply("", {
+                file: "https://i.imgur.com/4YNSGmG.jpg"
+              });
+            }
+            tag.response = args.slice(2, args.length).join(" ");
+            tag.updatedBy =
+              message.author.username + "#" + message.author.discriminator;
+            await tag.save();
+            return message.channel.send(
+              "Tag `" + args[1] + "` berhasil diubah!"
+            );
           } catch (err) {
             console.log(err);
             return message.reply(
@@ -171,7 +169,7 @@ module.exports = {
                 title: `Info tag untuk ${tag.command}`,
                 fields: [
                   {
-                    name: 'Tag Name',
+                    name: "Tag Name",
                     value: tag.command
                   },
                   {
