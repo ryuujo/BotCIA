@@ -15,8 +15,12 @@ module.exports = {
       try {
         if (!data) {
           const embed = {
-            title: `Stream mendatang dari ${vliverName}`,
-            description: `Saat ini belum ada stream mendatang dari ${vliverName}.`,
+            title: vliverName
+              ? `Stream mendatang dari ${vliverName}`
+              : "Belum ada stream mendatang",
+            description: vliverName
+              ? `Saat ini belum ada stream mendatang dari ${vliverName}.`
+              : "Belum ada stream mendatang untuk saat ini",
             footer: {
               text: `${name} v${version} - This message was created on ${moment()
                 .utcOffset("+07:00")
@@ -85,7 +89,10 @@ module.exports = {
           raw: true,
           include: "vliver"
         });
-        return showEmbed(data, data["vliver.fullName"]);
+        if (!data) {
+          return showEmbed(data, null);
+        }
+        return showEmbed(data, data ? data["vliver.fullName"] : null);
       } else {
         const vliverFirstName = args[0].toLowerCase();
         const vData = await Vliver.findOne({
