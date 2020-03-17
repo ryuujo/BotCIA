@@ -1,5 +1,4 @@
 const moment = require("moment");
-const fetchYoutube = require("youtube-info");
 const { Op } = require("sequelize");
 const Schedule = require("../models").Schedule;
 const Vliver = require("../models").Vliver;
@@ -29,8 +28,6 @@ module.exports = {
           };
           return message.channel.send({ embed });
         }
-        const paramData = data.youtubeUrl.split("=");
-        const youtubeData = await fetchYoutube(paramData[1]);
         const embed = {
           title: `${
             data.type === "live" ? "Stream" : "Premiere"
@@ -57,9 +54,6 @@ module.exports = {
               value: data.title
             }
           ],
-          image: {
-            url: youtubeData.thumbnailUrl
-          },
           footer: {
             text: `${name} v${version} - This message was created on ${moment()
               .utcOffset("+07:00")

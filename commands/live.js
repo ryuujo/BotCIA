@@ -98,9 +98,6 @@ module.exports = {
             value: youtubeData.title
           }
         ],
-        image: {
-          url: youtubeData.thumbnailUrl
-        },
         footer: {
           text: `${name} v${version} - This message was created on ${moment()
             .utcOffset("+07:00")
