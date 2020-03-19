@@ -44,7 +44,7 @@ module.exports = {
                 )
                 .join("")}${
                 data.length - 5 > 0
-                  ? `*Dan ${data.length - 5} livestream lainnya...*`
+                  ? `***Dan ${data.length - 5} livestream lainnya...***`
                   : ""
               }`
             : "*Belum ada jadwal livestream untuk saat ini.*",
