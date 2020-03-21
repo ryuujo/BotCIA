@@ -54,6 +54,9 @@ module.exports = {
         case "azura":
           morning = "Zuramat Pagi semuanya!";
           break;
+        case "nara":
+          morning = "Auummm..."
+          break;  
         default:
           morning = "Selamat Pagi semuanya!";
       }
