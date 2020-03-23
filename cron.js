@@ -38,6 +38,9 @@ module.exports = {
         case "hana":
           morning = "Ohana! Ayo bangun!";
           break;
+        case "zea":
+          morning = "皆さん、おはようございます！！"
+          break; 
         case "taka":
           morning =
             "Selamat pagi semua, Eksekutif muda virtual Taka Radjiman di sini. Sebelum saya berangkat ngantor saya mau bajak BotCIA dulu.";
@@ -51,12 +54,15 @@ module.exports = {
         case "miyu":
           morning = "WOI! BANGUUUN!!";
           break;
+        case "Riksa":
+          morning = "Yo, selamat #pagi gengs";
+          break;
         case "azura":
           morning = "Zuramat Pagi semuanya!";
           break;
         case "nara":
-          morning = "Auummm..."
-          break;  
+          morning = "Auummm...";
+          break;
         default:
           morning = "Selamat Pagi semuanya!";
       }
