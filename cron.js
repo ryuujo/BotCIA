@@ -54,7 +54,7 @@ module.exports = {
         case "miyu":
           morning = "WOI! BANGUUUN!!";
           break;
-        case "Riksa":
+        case "riksa":
           morning = "Yo, selamat #pagi gengs";
           break;
         case "azura":
