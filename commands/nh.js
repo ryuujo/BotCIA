@@ -108,7 +108,7 @@ module.exports = {
         );
         for (let i = 0; i < timesRoll; ++i) {
           const min = 150000;
-          const max = 304000;
+          const max = 309000;
           const rand = min + Math.random() * (max - min);
           const number = Math.floor(rand);
           await getDoujin(number, message);
@@ -143,7 +143,7 @@ module.exports = {
             fields: [
               {
                 name: "More Results",
-                value: `https://nhent.ai/search/${query.split(" ").join("%20")}`
+                value: `https://nhent.ai/search/?q=${query.split(" ").join("%20")}\nhttps://nhentai.net/search/?q=${query.split(" ").join("%20")}`
               }
             ],
             footer: {
