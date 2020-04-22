@@ -20,38 +20,38 @@ module.exports = {
           author: {
             name: "nHentai Fetcher by BotCIA",
             icon_url:
-              "https://pbs.twimg.com/profile_images/733172726731415552/8P68F-_I_400x400.jpg"
+              "https://pbs.twimg.com/profile_images/733172726731415552/8P68F-_I_400x400.jpg",
           },
           title: data.title.english,
           url: `https://nhent.ai/g/${data.id}`,
           thumbnail: {
-            url: `https://t.nhent.ai/galleries/${data.media_id}/cover.${cover_type[this_type]}`
+            url: `https://t.nhent.ai/galleries/${data.media_id}/cover.${cover_type[this_type]}`,
           },
           fields: [
             {
               name: "ID",
-              value: data.id
+              value: data.id,
             },
             {
               name: "Tags",
-              value: data.tags.map(tag => `${tag.name}`).join(", ")
+              value: data.tags.map((tag) => `${tag.name}`).join(", "),
             },
             {
               name: "nHentai Link",
               value: `https://nhentai.net/g/${data.id}`,
-              inline: true
+              inline: true,
             },
             {
               name: "Mirror Link",
               value: `https://nhent.ai/g/${data.id}`,
-              inline: true
-            }
+              inline: true,
+            },
           ],
           footer: {
             text: `${name} v${version} - This message was created on ${moment()
               .utcOffset("+07:00")
-              .format(timeFormat)}`
-          }
+              .format(timeFormat)}`,
+          },
         };
         await message.reply({ embed: djEmbed });
       } catch (err) {
@@ -61,9 +61,9 @@ module.exports = {
 
     const timeFormat = "Do MMMM YYYY, HH:mm";
 
-    if (!message.member.roles.some(r => roles.nh.includes(r.name))) {
+    if (!message.member.roles.some((r) => roles.nh.includes(r.name))) {
       return await message.reply("", {
-        file: "https://i.imgur.com/4YNSGmG.jpg"
+        file: "https://i.imgur.com/4YNSGmG.jpg",
       });
     }
     if (message.channel.id !== textChannelID.nh) {
@@ -73,6 +73,8 @@ module.exports = {
         { file: "https://i.imgur.com/FxfX5wL.png" }
       );
     }
+    return message.reply("Hei! Kamu lagi puasa jangan buka-buka hal yang maksiat ya!");
+    // hapus return kalo udah lebaran
     if (args.length === 0) {
       return message.reply(
         "Kamu perlu menulis perintah setelah tanda `" +
@@ -125,7 +127,7 @@ module.exports = {
             author: {
               name: "nHentai Fetcher by BotCIA",
               icon_url:
-                "https://pbs.twimg.com/profile_images/733172726731415552/8P68F-_I_400x400.jpg"
+                "https://pbs.twimg.com/profile_images/733172726731415552/8P68F-_I_400x400.jpg",
             },
             title: `Results of ${query}`,
             description:
@@ -143,14 +145,18 @@ module.exports = {
             fields: [
               {
                 name: "More Results",
-                value: `https://nhent.ai/search/?q=${query.split(" ").join("%20")}\nhttps://nhentai.net/search/?q=${query.split(" ").join("%20")}`
-              }
+                value: `https://nhent.ai/search/?q=${query
+                  .split(" ")
+                  .join("%20")}\nhttps://nhentai.net/search/?q=${query
+                  .split(" ")
+                  .join("%20")}`,
+              },
             ],
             footer: {
               text: `${name} v${version} - This message was created on ${moment()
                 .utcOffset("+07:00")
-                .format(timeFormat)}`
-            }
+                .format(timeFormat)}`,
+            },
           };
           return message.channel.send({ embed: queryEmbed });
         } catch (err) {
@@ -165,5 +171,5 @@ module.exports = {
             "nh help` untuk pilihan perintah"
         );
     }
-  }
+  },
 };
