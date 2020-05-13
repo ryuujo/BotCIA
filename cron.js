@@ -74,7 +74,8 @@ module.exports = {
           schedule.length !== 0 ? schedule[0]['vliver.color'] : ''
         ),
         title: 'Upcoming Stream',
-        description: schedule
+        description: `${schedule
+          .slice(0, 5)
           .map(
             (d, i) =>
               `${i + 1}. __**${d['vliver.fullName']}**__ (${
@@ -87,7 +88,11 @@ module.exports = {
                 d.dateTime
               ).fromNow()}*)\n${d.youtubeUrl}\n\n`
           )
-          .join(''),
+          .join('')}${
+          schedule.length - 5 > 0
+            ? `***Dan ${schedule.length - 5} livestream lainnya...***`
+            : ''
+        }`,
         footer: {
           text: `${name} v${version} - This message was created on ${moment()
             .utcOffset('+07:00')
