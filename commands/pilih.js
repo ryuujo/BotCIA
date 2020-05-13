@@ -1,14 +1,14 @@
 module.exports = {
-  name: "pilih",
+  name: 'pilih',
   description:
-    "Let BotCIA choose between two things. But please take it with a grain of salt.",
+    'Let BotCIA choose between two things. But please take it with a grain of salt.',
   execute(message, args) {
-    const atauIndex = args.findIndex(arg => arg.toLowerCase() === "atau");
+    const atauIndex = args.findIndex((arg) => arg.toLowerCase() === 'atau');
     if (atauIndex > 0) {
-      const a = args.slice(0, atauIndex).join(" ");
-      const b = args.slice(atauIndex + 1, args.length).join(" ");
+      const a = args.slice(0, atauIndex).join(' ');
+      const b = args.slice(atauIndex + 1, args.length).join(' ');
       if (a.toLowerCase() === b.toLowerCase()) {
-        return message.channel.send("Hmm... Maksudnya gimana ya?");
+        return message.channel.send('Hmm... Maksudnya gimana ya?');
       }
       const min = 1;
       const max = 12;
@@ -26,16 +26,16 @@ module.exports = {
         case 9:
           return message.channel.send(`Aku pilih ${b}`);
         case 1:
-          return message.channel.send("Aku pilih keduanya");
+          return message.channel.send('Aku pilih keduanya');
         case 10:
-          return message.channel.send("Aku gak pilih keduanya");
+          return message.channel.send('Aku gak pilih keduanya');
         case 11:
-          return message.channel.send("Aku pilihnya kamu aja *wink*");
+          return message.channel.send('Aku pilihnya kamu aja *wink*');
       }
     } else {
       message.reply(
-        "Kamu perlu menambah kata `atau` agar aku bisa membandingkan kedua hal"
+        'Kamu perlu menambah kata `atau` agar aku bisa membandingkan kedua hal'
       );
     }
-  }
+  },
 };

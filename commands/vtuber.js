@@ -1,21 +1,21 @@
-const axios = require("axios");
+const axios = require('axios');
 
 module.exports = {
-  name: "vtuber",
-  description: "Menampilkan data dari Virtual Youtuber yang dipilih",
+  name: 'vtuber',
+  description: 'Menampilkan data dari Virtual Youtuber yang dipilih',
   execute(msg, args) {
-    let fields = ["Appearance", "Personality", "Background", "Trivia"];
+    let fields = ['Appearance', 'Personality', 'Background', 'Trivia'];
     if (args.length < 1) {
-      msg.channel.send("Silahkan tulis channel vtuber yang diinginkan");
+      msg.channel.send('Silahkan tulis channel vtuber yang diinginkan');
     } else {
       const URL = encodeURI(
         `https://virtualyoutuber.fandom.com/api/v1/Search/List?query=${args.join(
-          " "
+          ' '
         )}&limit=1`
       );
       axios.get(URL).then((response) => {
         if (response.data.items.length < 1) {
-          msg.channel.send("Virtual Youtuber tidak tidak ditemukan");
+          msg.channel.send('Virtual Youtuber tidak tidak ditemukan');
         } else {
           axios
             .get(
@@ -28,7 +28,7 @@ module.exports = {
                 },
                 fields: [
                   {
-                    name: "Description",
+                    name: 'Description',
                     value: res.data.sections[0].content[0].text,
                     inline: false,
                   },
@@ -36,17 +36,17 @@ module.exports = {
                 color: 3122943,
                 footer: {
                   icon_url:
-                    "https://i.dlpng.com/static/png/6965866_preview.png",
-                  text: "Powered by Fandom",
+                    'https://i.dlpng.com/static/png/6965866_preview.png',
+                  text: 'Powered by Fandom',
                 },
               };
               res.data.sections.shift();
               res.data.sections.map((res) => {
-                if (fields.includes(res.title.replace(/\s/g, ""))) {
-                  let contentText = "";
+                if (fields.includes(res.title.replace(/\s/g, ''))) {
+                  let contentText = '';
                   if (res.content.length > 0) {
                     res.content.map((content) => {
-                      if (content.type == "paragraph") {
+                      if (content.type == 'paragraph') {
                         contentText += `${content.text} \n`;
                       } else {
                         content.elements.slice(0, 7).map((element) => {
@@ -77,13 +77,15 @@ module.exports = {
                   msg.channel
                     .send({ embed: embed })
                     .catch((err) =>
-                      msg.channel.send(`Error limit saat menampilkan data vtuber`)
+                      msg.channel.send(
+                        `Error limit saat menampilkan data vtuber`
+                      )
                     );
                 });
             })
             .catch((err) => {
               console.log(err);
-              msg.channel.send("Error saat menampilkan data vtuber");
+              msg.channel.send('Error saat menampilkan data vtuber');
             });
         }
       });
