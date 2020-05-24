@@ -73,10 +73,6 @@ module.exports = {
         { file: 'https://i.imgur.com/FxfX5wL.png' }
       );
     }
-    return message.reply(
-      'Hei! Kamu lagi puasa jangan buka-buka hal yang maksiat ya!'
-    );
-    // hapus return kalo udah lebaran
     if (args.length === 0) {
       return message.reply(
         'Kamu perlu menulis perintah setelah tanda `' +
