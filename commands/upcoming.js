@@ -38,7 +38,9 @@ module.exports = {
           },
           fields: [
             {
-              name: 'Tanggal & Waktu Livestream',
+              name: `Tanggal & Waktu ${
+                data.type === 'live' ? 'Stream' : 'Premiere'
+              }`,
               value: `${moment(data.dateTime)
                 .utcOffset('+07:00')
                 .format(timeFormat)} GMT+7 / WIB\n(*${moment(
@@ -50,7 +52,7 @@ module.exports = {
               value: data.youtubeUrl,
             },
             {
-              name: 'Judul Live',
+              name: `Judul ${data.type === 'live' ? 'Stream' : 'Premiere'}`,
               value: data.title,
             },
           ],
