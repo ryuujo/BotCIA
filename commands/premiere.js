@@ -56,6 +56,12 @@ module.exports = {
     if (youtubeId === undefined) {
       return message.reply(messages);
     }
+    const exist = await Schedule.findOne({
+      where: { youtubeUrl: `https://www.youtube.com/watch?v=${youtubeId}` },
+    });
+    if (exist) {
+      return message.reply('Seseorang sudah mengupload ini terlebih dahulu');
+    }
     try {
       const vData = await Vliver.findOne({
         where: { name: vliverFirstName },
