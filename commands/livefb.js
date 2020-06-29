@@ -39,6 +39,12 @@ module.exports = {
     if (linkData[0] !== 'https:' || linkData[3] === '') {
       return message.reply(messages);
     }
+    const exist = await Schedule.findOne({
+      where: { youtubeUrl: args[3] },
+    });
+    if (exist) {
+      return message.reply('Seseorang sudah mengupload ini terlebih dahulu');
+    }
     try {
       const vData = await Vliver.findOne({
         where: { name: vliverFirstName },
