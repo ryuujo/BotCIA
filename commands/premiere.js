@@ -1,7 +1,7 @@
 const moment = require('moment');
-const fetchYoutube = require('youtube-info');
-const { roles, textChannelID, prefix } = require('../config.js');
 const { name, version } = require('../package.json');
+const { roles, textChannelID, prefix } = require('../config.js');
+const { youtube } = require('../config/youtube');
 const Vliver = require('../models').Vliver;
 const Schedule = require('../models').Schedule;
 
@@ -71,7 +71,22 @@ module.exports = {
           message: `Kamu menginput ${vliverFirstName} dan itu tidak ada di database kami`,
         };
       }
-      const youtubeData = await fetchYoutube(youtubeId);
+      const config = {
+        id: youtubeId,
+        part: 'snippet,liveStreamingDetails',
+        fields:
+          'pageInfo,items(snippet(title,thumbnails/standard/url),liveStreamingDetails)',
+      };
+      const youtubeData = await youtube.videos.list(config);
+      const youtubeInfo = youtubeData.data.items[0].snippet;
+      await Schedule.create({
+        title: youtubeInfo.title,
+        youtubeUrl: `https://www.youtube.com/watch?v=${youtubeId}`,
+        dateTime: new Date(dateTime),
+        vliverID: vData.dataValues.id,
+        type: 'premiere',
+        thumbnailUrl: youtubeInfo.thumbnails.standard.url,
+      });
       const liveEmbed = {
         color: parseInt(vData.dataValues.color),
         title: `${vData.dataValues.fullName} akan mengupload video baru!`,
@@ -90,13 +105,16 @@ module.exports = {
           },
           {
             name: 'Link Video Youtube',
-            value: youtubeData.url,
+            value: `https://www.youtube.com/watch?v=${youtubeId}`,
           },
           {
-            name: 'Judul Premiere',
-            value: youtubeData.title,
+            name: 'Judul Live',
+            value: youtubeInfo.title,
           },
         ],
+        image: {
+          url: youtubeInfo.thumbnails.standard.url,
+        },
         footer: {
           text: `${name} v${version} - This message was created on ${moment()
             .utcOffset('+07:00')
@@ -121,15 +139,8 @@ module.exports = {
         `${mention}\n**${vData.dataValues.fullName}** akan mengupload video baru pada **${livestreamDateTime} WIB!**`,
         { embed: liveEmbed }
       );
-      await Schedule.create({
-        title: youtubeData.title,
-        youtubeUrl: youtubeData.url,
-        dateTime: new Date(dateTime),
-        vliverID: vData.dataValues.id,
-        type: 'premiere',
-      });
       return await message.reply(
-        `Informasi premiere sudah dikirim ke text channel tujuan.\nNama VLiver: ${vData.fullName}\nJudul Premiere: ${youtubeData.title}\nJadwal Premiere: ${livestreamDateTime} WIB / GMT+7`
+        `Informasi premiere sudah dikirim ke text channel tujuan.\nNama VLiver: ${vData.fullName}\nJudul Premiere: ${youtubeInfo.title}\nJadwal Premiere: ${livestreamDateTime} WIB / GMT+7`
       );
     } catch (err) {
       message.reply(

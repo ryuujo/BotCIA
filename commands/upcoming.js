@@ -56,6 +56,9 @@ module.exports = {
               value: data.title,
             },
           ],
+          image: {
+            url: data.thumbnailUrl,
+          },
           footer: {
             text: `${name} v${version} - This message was created on ${moment()
               .utcOffset('+07:00')

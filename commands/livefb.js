@@ -102,6 +102,7 @@ module.exports = {
         dateTime: new Date(dateTime),
         vliverID: vData.dataValues.id,
         type: 'live',
+        thumbnailUrl: '',
       });
       return await message.reply(
         `Informasi live FB sudah dikirim ke text channel tujuan.\nNama VLiver: ${vData.dataValues.fullName}\nJadwal live: ${livestreamDateTime} WIB / GMT+7`

@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
       youtubeUrl: DataTypes.STRING,
       dateTime: DataTypes.DATE,
       vliverID: DataTypes.INTEGER,
-      type: DataTypes.ENUM("live", "premiere")
+      type: DataTypes.ENUM("live", "premiere"),
+      thumbnailUrl: DataTypes.STRING
     },
     {
       charset: "utf8",
