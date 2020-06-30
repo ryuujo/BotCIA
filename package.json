@@ -1,6 +1,6 @@
 {
   "name": "bot-cia",
-  "version": "1.13.7",
+  "version": "1.13.8",
   "main": "main.js",
   "license": "MIT",
   "scripts": {
@@ -13,6 +13,7 @@
     "cron": "^1.8.2",
     "discord.js": "^11.5.1",
     "fs": "0.0.1-security",
+    "googleapis": "^52.1.0",
     "mariadb": "^2.2.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",

@@ -1,20 +1,21 @@
 module.exports = {
-  prefix: "!!",
-  token: "",
+  prefix: '!!',
+  token: '',
   roles: {
-    admin: ["Moderator", "Owner"],
-    live: ["Moderator", "Member+", "Pawang BotCIA", "Owner"],
-    nh: ["Moderator", "Degen", "Pawang BotCIA", "Owner"],
-    notification: "Notif Squad"
+    admin: ['Moderator', 'Owner'],
+    live: ['Moderator', 'Member+', 'Pawang BotCIA', 'Owner'],
+    nh: ['Moderator', 'Degen', 'Pawang BotCIA', 'Owner'],
+    notification: 'Notif Squad',
   },
-  activity: "Use !! to start command",
-  guildID: "",
+  activity: 'Use !! to start command',
+  guildID: '',
   textChannelID: {
-    live: "",
-    nh: "",
-    rules: "",
-    welcome: "",
-    roles: "",
-    cron: ""
-  }
+    live: '',
+    nh: '',
+    rules: '',
+    welcome: '',
+    roles: '',
+    cron: '',
+  },
+  googleApi: '',
 };

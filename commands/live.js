@@ -1,7 +1,7 @@
 const moment = require('moment');
-const fetchYoutube = require('youtube-info');
 const { name, version } = require('../package.json');
 const { roles, textChannelID, prefix } = require('../config.js');
+const { youtube } = require('../config/youtube');
 const Vliver = require('../models').Vliver;
 const Schedule = require('../models').Schedule;
 
@@ -71,13 +71,21 @@ module.exports = {
           message: `Kamu menginput ${vliverFirstName} dan itu tidak ada di database kami`,
         };
       }
-      const youtubeData = await fetchYoutube(youtubeId);
+      const config = {
+        id: youtubeId,
+        part: 'snippet,liveStreamingDetails',
+        fields:
+          'pageInfo,items(snippet(title,thumbnails/standard/url),liveStreamingDetails)',
+      };
+      const youtubeData = await youtube.videos.list(config);
+      const youtubeInfo = youtubeData.data.items[0].snippet;
       await Schedule.create({
-        title: youtubeData.title,
-        youtubeUrl: youtubeData.url,
+        title: youtubeInfo.title,
+        youtubeUrl: `https://www.youtube.com/watch?v=${youtubeId}`,
         dateTime: new Date(dateTime),
         vliverID: vData.dataValues.id,
         type: 'live',
+        thumbnailUrl: youtubeInfo.thumbnails.standard.url,
       });
       const liveEmbed = {
         color: parseInt(vData.dataValues.color),
@@ -97,13 +105,16 @@ module.exports = {
           },
           {
             name: 'Link Video Youtube',
-            value: youtubeData.url,
+            value: `https://www.youtube.com/watch?v=${youtubeId}`,
           },
           {
             name: 'Judul Live',
-            value: youtubeData.title,
+            value: youtubeInfo.title,
           },
         ],
+        image: {
+          url: youtubeInfo.thumbnails.standard.url,
+        },
         footer: {
           text: `${name} v${version} - This message was created on ${moment()
             .utcOffset('+07:00')
@@ -129,10 +140,11 @@ module.exports = {
         { embed: liveEmbed }
       );
       return await message.reply(
-        `Informasi live sudah dikirim ke text channel tujuan.\nNama VLiver: ${vData.dataValues.fullName}\nJudul Livestream: ${youtubeData.title}\nJadwal live: ${livestreamDateTime} WIB / GMT+7`
+        `Informasi live sudah dikirim ke text channel tujuan.\nNama VLiver: ${vData.dataValues.fullName}\nJudul Livestream: ${youtubeInfo.title}\nJadwal live: ${livestreamDateTime} WIB / GMT+7`
       );
     } catch (err) {
-      message.reply(
+      console.log(err);
+      return message.reply(
         `Ada sesuatu yang salah, tapi itu bukan kamu: ${err.message}`
       );
     }
