@@ -32,17 +32,6 @@ module.exports = {
       'Mohon tunggu, sedang menyiapkan data untuk dikirimkan'
     );
     const timeFormat = 'Do MMMM YYYY, HH:mm';
-    /* const dateSplit = args[2].split('/');
-    const date =
-      dateSplit[1] + '/' + dateSplit[0] + '/' + moment().format('YYYY');
-    const dateTime = Date.parse(`${date} ${args[3]}`);
-    const livestreamDateTime = moment(dateTime)
-      .utcOffset('+07:00')
-      .format(timeFormat);
-    const livestreamDateTimeJapan = moment(dateTime)
-      .utcOffset('+09:00')
-      .format(timeFormat);
-    const vliverFirstName = args[1].toLowerCase(); */
     const linkData = args[1].split('/');
     let youtubeId;
     if (linkData[0] !== 'https:' || linkData[3] === '') {
