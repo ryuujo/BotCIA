@@ -14,12 +14,12 @@ module.exports = {
     const messages =
       'Tulis formatnya seperti ini ya:\n ```' +
       prefix +
-      'announce [live/premiere] [Nama depan vliver] [Tanggal Livestream (DD/MM)] [Waktu Livestream dalam WIB / GMT+7 (HH:MM)] [Link Video Youtube]```';
+      'announce [live/premiere] [Link Video Youtube]```';
 
     if (!message.member.roles.some((r) => roles.live.includes(r.name))) {
       return message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
     }
-    if (args.length !== 5) {
+    if (args.length !== 2) {
       return message.reply(messages);
     }
     if (
@@ -31,8 +31,8 @@ module.exports = {
     message.channel.send(
       'Mohon tunggu, sedang menyiapkan data untuk dikirimkan'
     );
-    const timeFormat = 'Do MMMM YYYY, HH:mm Z';
-    const dateSplit = args[2].split('/');
+    const timeFormat = 'Do MMMM YYYY, HH:mm';
+    /* const dateSplit = args[2].split('/');
     const date =
       dateSplit[1] + '/' + dateSplit[0] + '/' + moment().format('YYYY');
     const dateTime = Date.parse(`${date} ${args[3]}`);
@@ -42,8 +42,8 @@ module.exports = {
     const livestreamDateTimeJapan = moment(dateTime)
       .utcOffset('+09:00')
       .format(timeFormat);
-    const vliverFirstName = args[1].toLowerCase();
-    const linkData = args[4].split('/');
+    const vliverFirstName = args[1].toLowerCase(); */
+    const linkData = args[1].split('/');
     let youtubeId;
     if (linkData[0] !== 'https:' || linkData[3] === '') {
       return message.reply(messages);
@@ -75,26 +75,36 @@ module.exports = {
       );
     }
     try {
-      const vData = await Vliver.findOne({
-        where: { name: vliverFirstName },
-      });
-      if (!vData) {
-        throw {
-          message: `Kamu menginput ${vliverFirstName} dan itu tidak ada di database kami`,
-        };
-      }
       const config = {
         id: youtubeId,
         part: 'snippet,liveStreamingDetails',
         fields:
-          'pageInfo,items(snippet(title,thumbnails/standard/url),liveStreamingDetails)',
+          'pageInfo,items(snippet(title,thumbnails/standard/url,channelTitle,channelId),liveStreamingDetails)',
       };
       const youtubeData = await youtube.videos.list(config);
       const youtubeInfo = youtubeData.data.items[0].snippet;
+      const youtubeLive = youtubeData.data.items[0].liveStreamingDetails;
+
+      const vData = await Vliver.findOne({
+        where: {
+          channelURL: `https://www.youtube.com/channel/${youtubeInfo.channelId}`,
+        },
+      });
+      if (!vData) {
+        throw {
+          message: `Channel ${youtubeInfo.channelTitle} tidak ada di database kami. Channel ID: ${youtubeInfo.channelId}`,
+        };
+      }
+      const videoDateTime = moment(youtubeLive.scheduledStartTime)
+        .utcOffset('+07:00')
+        .format(timeFormat);
+      const videoDateTimeJapan = moment(youtubeLive.scheduledStartTime)
+        .utcOffset('+09:00')
+        .format(timeFormat);
       await Schedule.create({
         title: youtubeInfo.title,
         youtubeUrl: `https://www.youtube.com/watch?v=${youtubeId}`,
-        dateTime: new Date(dateTime),
+        dateTime: new Date(videoDateTime),
         vliverID: vData.dataValues.id,
         type: args[0].toLowerCase(),
         thumbnailUrl: youtubeInfo.thumbnails.standard.url,
@@ -119,7 +129,7 @@ module.exports = {
             name: `Tanggal & Waktu ${
               args[0].toLowerCase() === 'live' ? 'live' : 'premiere'
             }`,
-            value: `${livestreamDateTime} GMT+7 / WIB \n${livestreamDateTimeJapan} GMT+9 / JST`,
+            value: `${videoDateTime} UTC+7 / WIB\n${videoDateTimeJapan} UTC+9 / JST`,
           },
           {
             name: 'Link Video Youtube',
@@ -156,7 +166,7 @@ module.exports = {
       }
       const channel = message.guild.channels.get(textChannelID.live);
       await channel.send(
-        `${mention}\n**${vData.dataValues.fullName}** akan melakukan Livestream pada **${livestreamDateTime} WIB!**`,
+        `${mention}\n**${vData.dataValues.fullName}** akan melakukan Livestream pada **${videoDateTime} WIB!**`,
         { embed: liveEmbed }
       );
       return await message.reply(
@@ -164,7 +174,7 @@ module.exports = {
           vData.dataValues.fullName
         }\nJudul Livestream: ${
           youtubeInfo.title
-        }\nJadwal live: ${livestreamDateTime} WIB / GMT+7`
+        }\nJadwal live: ${videoDateTime} WIB`
       );
     } catch (err) {
       return message.reply(
