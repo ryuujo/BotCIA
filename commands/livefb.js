@@ -43,7 +43,13 @@ module.exports = {
       where: { youtubeUrl: args[3] },
     });
     if (exist) {
-      return message.reply('Seseorang sudah mengupload ini terlebih dahulu');
+      return message.reply(
+        `Seseorang sudah mengupload ini terlebih dahulu pada ${moment(
+          exist.createdAt
+        )
+          .utcOffset('+07:00')
+          .format(timeFormat)}`
+      );
     }
     try {
       const vData = await Vliver.findOne({

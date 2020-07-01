@@ -60,7 +60,13 @@ module.exports = {
       where: { youtubeUrl: `https://www.youtube.com/watch?v=${youtubeId}` },
     });
     if (exist) {
-      return message.reply('Seseorang sudah mengupload ini terlebih dahulu');
+      return message.reply(
+        `Seseorang sudah mengupload ini terlebih dahulu pada ${moment(
+          exist.createdAt
+        )
+          .utcOffset('+07:00')
+          .format(timeFormat)}`
+      );
     }
     try {
       const vData = await Vliver.findOne({
@@ -108,7 +114,7 @@ module.exports = {
             value: `https://www.youtube.com/watch?v=${youtubeId}`,
           },
           {
-            name: 'Judul Live',
+            name: 'Judul Video',
             value: youtubeInfo.title,
           },
         ],
