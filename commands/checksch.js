@@ -77,9 +77,7 @@ module.exports = {
       exist.thumbnailUrl = youtubeInfo.thumbnails.standard.url;
       exist.dateTime = new Date(videoDateTime);
       await exist.save();
-      return await message.reply(
-        'Informasi sudah diubah dan sudah di announce kembali'
-      );
+      return await message.reply('Informasi sudah diubah!');
     } catch (err) {
       console.log(err);
       return message.reply(
