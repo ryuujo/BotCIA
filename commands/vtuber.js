@@ -15,7 +15,7 @@ module.exports = {
       );
       axios.get(URL).then((response) => {
         if (response.data.items.length < 1) {
-          msg.channel.send('Virtual Youtuber tidak tidak ditemukan');
+          msg.channel.send('Virtual Youtuber tidak ditemukan');
         } else {
           axios
             .get(
