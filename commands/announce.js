@@ -125,7 +125,7 @@ module.exports = {
             value: `https://www.youtube.com/watch?v=${youtubeId}`,
           },
           {
-            name: `Judul Live ${
+            name: `Judul ${
               args[0].toLowerCase() === 'live' ? 'Live' : 'Video'
             }`,
             value: youtubeInfo.title,
