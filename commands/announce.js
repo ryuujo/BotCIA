@@ -12,7 +12,7 @@ module.exports = {
   async execute(message, args) {
     moment.locale('id');
     const messages =
-      'Tulis formatnya seperti ini ya:\n ```' +
+      'Tulis formatnya seperti ini ya: ```' +
       prefix +
       'announce [live/premiere] [Link Video Youtube]```';
 

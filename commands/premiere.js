@@ -18,6 +18,11 @@ module.exports = {
     if (!message.member.roles.some((r) => roles.live.includes(r.name))) {
       return message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
     }
+    return message.reply(
+      'Fitur `!!premiere` sudah tidak dapat digunakan kembali, silahkan gunakan `!!announce` atau `!!collab`'
+    );
+
+    /* This feature already deprecated. I save this code for something useful soon */
     if (args.length !== 4) {
       return message.reply(messages);
     }
