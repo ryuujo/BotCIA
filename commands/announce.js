@@ -85,10 +85,12 @@ module.exports = {
           message: `Channel ${youtubeInfo.channelTitle} tidak ada di database kami. Channel ID: ${youtubeInfo.channelId}`,
         };
       }
-      const videoDateTime = moment(youtubeLive.scheduledStartTime)
-        .utcOffset('+07:00');
-      const videoDateTimeJapan = moment(youtubeLive.scheduledStartTime)
-        .utcOffset('+09:00');
+      const videoDateTime = moment(youtubeLive.scheduledStartTime).utcOffset(
+        '+07:00'
+      );
+      const videoDateTimeJapan = moment(
+        youtubeLive.scheduledStartTime
+      ).utcOffset('+09:00');
       await Schedule.create({
         title: youtubeInfo.title,
         youtubeUrl: `https://www.youtube.com/watch?v=${youtubeId}`,
