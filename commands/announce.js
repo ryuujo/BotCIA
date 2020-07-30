@@ -32,7 +32,7 @@ module.exports = {
       'Mohon tunggu, sedang menyiapkan data untuk dikirimkan'
     );
     const timeFormat = 'Do MMMM YYYY, HH:mm';
-    const timeForDB = 'DD MM YYYY, HH:mm';
+    const timeForDB = 'MM DD YYYY, HH:mm';
     const linkData = args[1].split('/');
     let youtubeId;
     if (linkData[0] !== 'https:' || linkData[3] === '') {

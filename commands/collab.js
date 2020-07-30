@@ -32,7 +32,7 @@ module.exports = {
       'Mohon tunggu, sedang menyiapkan data untuk dikirimkan'
     );
     const timeFormat = 'Do MMMM YYYY, HH:mm';
-    const timeForDB = 'DD MM YYYY, HH:mm';
+    const timeForDB = 'MM DD YYYY, HH:mm';
     const vliverFirstName = args[1].toLowerCase();
     const linkData = args[2].split('/');
     let youtubeId;
@@ -77,17 +77,19 @@ module.exports = {
       const youtubeLive = youtubeData.data.items[0].liveStreamingDetails;
 
       const vData = await Vliver.findOne({
-        where: { name: vliverFirstName }
+        where: { name: vliverFirstName },
       });
       if (!vData) {
         throw {
           message: `Kamu menginput ${vliverFirstName} dan itu tidak ada di database kami`,
         };
       }
-      const videoDateTime = moment(youtubeLive.scheduledStartTime)
-        .utcOffset('+07:00');
-      const videoDateTimeJapan = moment(youtubeLive.scheduledStartTime)
-        .utcOffset('+09:00');
+      const videoDateTime = moment(youtubeLive.scheduledStartTime).utcOffset(
+        '+07:00'
+      );
+      const videoDateTimeJapan = moment(
+        youtubeLive.scheduledStartTime
+      ).utcOffset('+09:00');
       await Schedule.create({
         title: youtubeInfo.title,
         youtubeUrl: `https://www.youtube.com/watch?v=${youtubeId}`,
