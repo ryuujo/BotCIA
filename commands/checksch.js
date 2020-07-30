@@ -23,6 +23,7 @@ module.exports = {
     }
     message.channel.send('Mohon tunggu, sedang menyiapkan data untuk diupdate');
     const timeFormat = 'Do MMMM YYYY, HH:mm';
+    const timeForDB = 'MM DD YYYY, HH:mm';
     const linkData = args[0].split('/');
     let youtubeId;
     if (linkData[0] !== 'https:' || linkData[3] === '') {
@@ -71,11 +72,10 @@ module.exports = {
         );
       }
       const videoDateTime = moment(youtubeLive.scheduledStartTime)
-        .utcOffset('+07:00')
-        .format(timeFormat);
+        .utcOffset('+07:00');
       exist.title = youtubeInfo.title;
       exist.thumbnailUrl = youtubeInfo.thumbnails.standard.url;
-      exist.dateTime = new Date(videoDateTime);
+      exist.dateTime = new Date(videoDateTime.format(timeForDB));
       await exist.save();
       return await message.reply('Informasi sudah diubah!');
     } catch (err) {
