@@ -32,6 +32,7 @@ module.exports = {
       'Mohon tunggu, sedang menyiapkan data untuk dikirimkan'
     );
     const timeFormat = 'Do MMMM YYYY, HH:mm';
+    const timeForDB = 'DD MM YYYY, HH:mm';
     const vliverFirstName = args[1].toLowerCase();
     const linkData = args[2].split('/');
     let youtubeId;
@@ -84,15 +85,13 @@ module.exports = {
         };
       }
       const videoDateTime = moment(youtubeLive.scheduledStartTime)
-        .utcOffset('+07:00')
-        .format(timeFormat);
+        .utcOffset('+07:00');
       const videoDateTimeJapan = moment(youtubeLive.scheduledStartTime)
-        .utcOffset('+09:00')
-        .format(timeFormat);
+        .utcOffset('+09:00');
       await Schedule.create({
         title: youtubeInfo.title,
         youtubeUrl: `https://www.youtube.com/watch?v=${youtubeId}`,
-        dateTime: new Date(videoDateTime),
+        dateTime: new Date(videoDateTime.format(timeForDB)),
         vliverID: vData.dataValues.id,
         type: args[0].toLowerCase(),
         thumbnailUrl: youtubeInfo.thumbnails.standard.url,
@@ -117,7 +116,11 @@ module.exports = {
             name: `Tanggal & Waktu ${
               args[0].toLowerCase() === 'live' ? 'live' : 'premiere'
             }`,
-            value: `${videoDateTime} UTC+7 / WIB\n${videoDateTimeJapan} UTC+9 / JST`,
+            value: `${videoDateTime.format(
+              timeFormat
+            )} UTC+7 / WIB\n${videoDateTimeJapan.format(
+              timeFormat
+            )} UTC+9 / JST`,
           },
           {
             name: 'Link Video Youtube',
@@ -154,7 +157,11 @@ module.exports = {
       }
       const channel = message.guild.channels.get(textChannelID.live);
       await channel.send(
-        `${mention}\n**${vData.dataValues.fullName}** akan melakukan Livestream pada **${videoDateTime} WIB!**`,
+        `${mention}\n**${
+          vData.dataValues.fullName
+        }** akan melakukan Livestream pada **${videoDateTime.format(
+          timeFormat
+        )} WIB!**`,
         { embed: liveEmbed }
       );
       return await message.reply(
@@ -162,7 +169,7 @@ module.exports = {
           vData.dataValues.fullName
         }\nJudul Livestream: ${
           youtubeInfo.title
-        }\nJadwal live: ${videoDateTime} WIB`
+        }\nJadwal live: ${videoDateTime.format(timeFormat)} WIB`
       );
     } catch (err) {
       return message.reply(
