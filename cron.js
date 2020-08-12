@@ -49,13 +49,13 @@ module.exports = {
           morning = 'EEEEEEeeeeeeeeeEEeeEEeE...';
           break;
         case 'amicia':
-          morning = 'Hoaaaammm... Selamat Pagi semuanya!';
+          morning = 'Iyeeeeyyy... Selamat Pagi semuanya!';
           break;
         case 'miyu':
           morning = 'WOI! BANGUUUN!!';
           break;
         case 'riksa':
-          morning = 'Yo, selamat #pagi gengs';
+          morning = 'Kamu pikir saya akan ngomong selamat pagi? KAMU SALAH!';
           break;
         case 'azura':
           morning = 'Zuramat Pagi semuanya!';
@@ -66,8 +66,14 @@ module.exports = {
         case 'nara':
           morning = 'Auummm...';
           break;
+        case 'etna':
+          morning = 'DUUUUAAAAAARRRRRR!!!!!';
+          break;
+        case 'bobon':
+          morning = 'Halo selamat pagi semuanya! Om di sini.';
+          break;
         default:
-          morning = 'Selamat Pagi semuanya!';
+          morning = 'Halo guys, Staff-san di sini. Dan';
       }
       const liveEmbed = {
         color: parseInt(
@@ -100,7 +106,7 @@ module.exports = {
         },
       };
       return await message.send(
-        `${morning} Hari ini ada ${schedule.length} stream yang akan berlangsung.\nStream lainnya akan bertambah sewaktu-waktu, jadi cek Twitter masing-masing vliver untuk info lebih lanjut ya`,
+        `${morning} Hari ini ada ${schedule.length} stream yang akan berlangsung.\nStream lainnya akan bertambah dan berubah sewaktu-waktu, jadi cek Twitter masing-masing vliver untuk info lebih lanjut ya`,
         {
           embed: liveEmbed,
         }
