@@ -61,7 +61,7 @@ module.exports = {
           morning = 'Zuramat Pagi semuanya!';
           break;
         case 'layla':
-          morning = 'Selaymat pagi semuanya!';
+          morning = 'Selamat pagi! Adalah benar kalau';
           break;
         case 'nara':
           morning = 'Auummm...';
@@ -71,6 +71,9 @@ module.exports = {
           break;
         case 'bobon':
           morning = 'Halo selamat pagi semuanya! Om di sini.';
+          break;
+        case 'siska':
+          morning = 'Hey kamu. Iya, kamu yang selalu ada di hatiku. Selamat pagi!';
           break;
         default:
           morning = 'Halo guys, Staff-san di sini. Dan';

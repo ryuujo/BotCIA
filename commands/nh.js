@@ -8,6 +8,10 @@ module.exports = {
   name: 'nh',
   description: 'Something NSFW that you would like',
   async execute(message, args) {
+    return message.channel.send("Feature is deprecated due to broken API.")
+
+    /* No code used after this. I just want to archive it.*/ 
+    
     const getDoujin = async (number, message) => {
       try {
         let { data } = await axios.get(
