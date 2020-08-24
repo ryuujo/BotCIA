@@ -17,6 +17,7 @@
     "mariadb": "^2.2.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",
+    "nana-api": "^1.1.2",
     "sequelize": "^5.21.4",
     "sequelize-cli": "^5.5.1"
   },

@@ -1,6 +1,8 @@
 const axios = require('axios');
 const { RichEmbed } = require('discord.js');
 const moment = require('moment');
+const NanaAPI = require('nana-api');
+const nana = new NanaAPI();
 const { roles, textChannelID, prefix } = require('../config.js');
 const { name, version } = require('../package.json');
 
@@ -8,15 +10,11 @@ module.exports = {
   name: 'nh',
   description: 'Something NSFW that you would like',
   async execute(message, args) {
-    return message.channel.send("Feature is deprecated due to broken API.")
-
-    /* No code used after this. I just want to archive it.*/ 
-    
+    let data = await nana.g('177013');
+    console.log(data);
+    return;
     const getDoujin = async (number, message) => {
       try {
-        let { data } = await axios.get(
-          'https://nhtai-api.glitch.me/api/id?id=' + number
-        );
         const cover_type = { j: 'jpg', p: 'png' };
         const this_type = data.images.thumbnail.t;
         const djEmbed = {
@@ -121,6 +119,8 @@ module.exports = {
       case 'search':
         const query = args.slice(1, args.length).join(' ');
         try {
+          return message.channel.send('Feature not available for now.');
+
           const { data } = await axios.get(
             `https://nhtai-api.glitch.me/api/search?query=${query}&page=1`
           );
