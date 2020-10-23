@@ -61,7 +61,7 @@ module.exports = {
           morning = 'Zuramat Pagi semuanya!';
           break;
         case 'layla':
-          morning = 'Selamat pagi! Adalah benar kalau';
+          morning = 'KABONGA!!!';
           break;
         case 'nara':
           morning = 'Auummm...';
