@@ -1,31 +1,25 @@
 const moment = require('moment');
 const { Op } = require('sequelize');
 const Schedule = require('../models').Schedule;
+const Vliver = require('../models').Vliver;
 const { name, version } = require('../package.json');
 
 module.exports = {
   name: 'schedule',
   description: 'Check upcoming schedule',
-  async execute(message) {
+  async execute(message, args) {
     moment.locale('id');
     const timeFormat = 'Do MMMM YYYY, HH:mm';
-    try {
-      const data = await Schedule.findAll({
-        where: {
-          dateTime: {
-            [Op.gt]: new Date().setMinutes(new Date().getMinutes() - 30),
-          },
-        },
-        order: [
-          ['dateTime', 'ASC'],
-          ['id', 'ASC'],
-        ],
-        raw: true,
-        include: 'vliver',
-      });
-      const liveEmbed = {
+
+    const scheduleEmbed = (data, vliverName, avatar) => {
+      const embed = {
         color: parseInt(data.length !== 0 ? data[0]['vliver.color'] : ''),
-        title: 'Upcoming Stream',
+        title: vliverName
+          ? `Upcoming Stream dari ${vliverName}`
+          : 'Upcoming Stream',
+        thumbnail: {
+          url: avatar,
+        },
         description:
           data.length !== 0
             ? `${data
@@ -55,10 +49,60 @@ module.exports = {
         },
       };
       return message.channel.send('List Stream/Premiere yang akan datang: ', {
-        embed: liveEmbed,
+        embed,
       });
+    };
+
+    try {
+      if (!args[0]) {
+        const data = await Schedule.findAll({
+          where: {
+            dateTime: {
+              [Op.gt]: new Date().setMinutes(new Date().getMinutes() - 30),
+            },
+          },
+          order: [
+            ['dateTime', 'ASC'],
+            ['id', 'ASC'],
+          ],
+          raw: true,
+          include: 'vliver',
+        });
+        return scheduleEmbed(
+          data,
+          null,
+          null
+        );
+      } else {
+        const vliverFirstName = args[0].toLowerCase();
+        const vData = await Vliver.findOne({
+          where: { name: vliverFirstName },
+        });
+        if (!vData) {
+          throw {
+            message: `Kamu menginput ${vliverFirstName} dan itu tidak ada di database kami`,
+          };
+        }
+        const data = await Schedule.findAll({
+          where: {
+            dateTime: {
+              [Op.gt]: new Date().setMinutes(new Date().getMinutes() - 30),
+            },
+            vliverID: vData.id,
+          },
+          order: [
+            ['dateTime', 'ASC'],
+            ['id', 'ASC'],
+          ],
+          raw: true,
+          include: 'vliver',
+        });
+        return scheduleEmbed(data, vData.fullName, vData.avatarURL);
+      }
     } catch (e) {
-      console.log(e);
+      return message.reply(
+        `Ada sesuatu yang salah, tapi itu bukan kamu: ${e.message}`
+      );
     }
   },
 };

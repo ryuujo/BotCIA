@@ -94,7 +94,11 @@ module.exports = {
         if (!data) {
           return showEmbed(data, null);
         }
-        return showEmbed(data, data ? data['vliver.fullName'] : null);
+        return showEmbed(
+          data,
+          data ? data['vliver.fullName'] : null,
+          data ? data['vliver.avatarURL'] : null
+        );
       } else {
         const vliverFirstName = args[0].toLowerCase();
         const vData = await Vliver.findOne({
