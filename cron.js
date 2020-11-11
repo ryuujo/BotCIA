@@ -33,51 +33,8 @@ module.exports = {
           'Selamat pagi semuanya! Saat ini belum ada livestream yang akan berlangsung namun bakal dikasih tau kalo misalkan ada.\nCek Twitter masing-masing vliver untuk info lebih lanjut ya...'
         );
       }
-      const morning = schedule[0]['vliver.morningMessage'];
-      /* switch (schedule[0]['vliver.name']) {
-        case 'hana':
-          morning = 'Ohana! Ayo bangun!';
-          break;
-        case 'zea':
-          morning = 'Launching CronZEA.exe...\n皆さん、おはようございます！！';
-          break;
-        case 'taka':
-          morning =
-            'Selamat pagi semua, Eksekutif muda virtual Taka Radjiman di sini. Etto... Sebelum saya berangkat ngantor saya mau bajak BotCIA dulu.';
-          break;
-        case 'rai':
-          morning = 'EEEEEEeeeeeeeeeEEeeEEeE...';
-          break;
-        case 'amicia':
-          morning = 'Iyeeeeyyy... Selamat Pagi semuanya!';
-          break;
-        case 'miyu':
-          morning = 'WOI! BANGUUUN!!';
-          break;
-        case 'riksa':
-          morning = 'Kamu pikir saya akan ngomong selamat pagi? KAMU SALAH!';
-          break;
-        case 'azura':
-          morning = 'Zuramat Pagi semuanya!';
-          break;
-        case 'layla':
-          morning = 'KABONGA!!!';
-          break;
-        case 'nara':
-          morning = 'Auummm...';
-          break;
-        case 'etna':
-          morning = 'DUUUUAAAAAARRRRRR BORGAAAARRR!!!!!';
-          break;
-        case 'bobon':
-          morning = 'Halo guys, Om Bobon di sini. Dan';
-          break;
-        case 'siska':
-          morning = 'Hey kamu. Iya, kamu yang selalu ada di hatiku. Selamat pagi!';
-          break;
-        default:
-          morning = 'Halo guys, Staff-san di sini.';
-      } */
+      const morning =
+        schedule[0]['vliver.morningMessage'] || 'Selamat Pagi Semuanya!';
       const liveEmbed = {
         color: parseInt(
           schedule.length !== 0 ? schedule[0]['vliver.color'] : ''
