@@ -1,21 +1,23 @@
-"use strict";
+'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Vliver = sequelize.define(
-    "Vliver",
+    'Vliver',
     {
       name: DataTypes.STRING,
       fullName: DataTypes.STRING,
       fanName: DataTypes.STRING,
       color: DataTypes.STRING,
       avatarURL: DataTypes.STRING,
-      channelURL: DataTypes.STRING
+      channelURL: DataTypes.STRING,
+      morningMessage: DataTypes.STRING,
+      scheduleMessage: DataTypes.STRING,
     },
     {
-      charset: "utf8",
-      collate: "utf8_unicode_ci"
+      charset: 'utf8',
+      collate: 'utf8_unicode_ci',
     }
   );
-  Vliver.associate = function(models) {
+  Vliver.associate = function (models) {
     // associations can be defined here
   };
   return Vliver;

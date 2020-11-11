@@ -1,6 +1,6 @@
 const moment = require('moment');
 const { name, version } = require('../package.json');
-const { roles, textChannelID, prefix } = require('../config.js');
+const { textChannelID, prefix } = require('../config.js');
 const { youtube } = require('../config/youtube');
 const Vliver = require('../models').Vliver;
 const Schedule = require('../models').Schedule;
@@ -16,7 +16,7 @@ module.exports = {
       prefix +
       'collab [live/premiere] [Vtuber name] [Link Video Youtube]```';
 
-    if (!message.member.roles.some((r) => roles.live.includes(r.name))) {
+    if (message.channel.id !== textChannelID.announce) {
       return message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
     }
     if (args.length !== 3) {
@@ -75,6 +75,17 @@ module.exports = {
       const youtubeData = await youtube.videos.list(config);
       const youtubeInfo = youtubeData.data.items[0].snippet;
       const youtubeLive = youtubeData.data.items[0].liveStreamingDetails;
+
+      const vFind = await Vliver.findOne({
+        where: {
+          channelURL: `https://www.youtube.com/channel/${youtubeInfo.channelId}`,
+        },
+      });
+      if (vFind) {
+        throw {
+          message: `Channel ${youtubeInfo.channelTitle} sudah ada di database kami. Silahkan gunakan command \`!!announce\` Channel ID: ${youtubeInfo.channelId}`,
+        };
+      }
 
       const vData = await Vliver.findOne({
         where: { name: vliverFirstName },
@@ -159,11 +170,13 @@ module.exports = {
       }
       const channel = message.guild.channels.get(textChannelID.live);
       await channel.send(
-        `${mention}\n**${
+        `${mention}\n${
+          vData.dataValues.scheduleMessage || 'Ada konten baru!'
+        } **${
           vData.dataValues.fullName
-        }** akan melakukan Livestream pada **${videoDateTime.format(
-          timeFormat
-        )} WIB!**`,
+        }** akan melakukan Livestream di channel **${
+          youtubeInfo.channelTitle
+        }** pada **${videoDateTime.format(timeFormat)} WIB!**`,
         { embed: liveEmbed }
       );
       return await message.reply(

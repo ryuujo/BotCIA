@@ -30,54 +30,11 @@ module.exports = {
       });
       if (schedule.length === 0) {
         return await message.send(
-          'Selamat pagi semuanya! Saat ini belum ada livestream yang akan berlangsung namun bakal aku kasih tau kalo misalkan ada.\nCek Twitter masing-masing vliver untuk info lebih lanjut ya...'
+          `Selamat pagi semuanya! Saat ini belum ada livestream yang akan berlangsung namun bakal dikasih tau kalo misalkan ada.\nCek <#${config.textChannelID.live}> untuk info lebih lanjut ya...`
         );
       }
-      let morning;
-      switch (schedule[0]['vliver.name']) {
-        case 'hana':
-          morning = 'Ohana! Ayo bangun!';
-          break;
-        case 'zea':
-          morning = 'Launching CronZEA.exe...\n皆さん、おはようございます！！';
-          break;
-        case 'taka':
-          morning =
-            'Selamat pagi semua, Eksekutif muda virtual Taka Radjiman di sini. Etto... Sebelum saya berangkat ngantor saya mau bajak BotCIA dulu.';
-          break;
-        case 'rai':
-          morning = 'EEEEEEeeeeeeeeeEEeeEEeE...';
-          break;
-        case 'amicia':
-          morning = 'Iyeeeeyyy... Selamat Pagi semuanya!';
-          break;
-        case 'miyu':
-          morning = 'WOI! BANGUUUN!!';
-          break;
-        case 'riksa':
-          morning = 'Kamu pikir saya akan ngomong selamat pagi? KAMU SALAH!';
-          break;
-        case 'azura':
-          morning = 'Zuramat Pagi semuanya!';
-          break;
-        case 'layla':
-          morning = 'KABONGA!!!';
-          break;
-        case 'nara':
-          morning = 'Auummm...';
-          break;
-        case 'etna':
-          morning = 'DUUUUAAAAAARRRRRR!!!!!';
-          break;
-        case 'bobon':
-          morning = 'Halo selamat pagi semuanya! Om di sini.';
-          break;
-        case 'siska':
-          morning = 'Hey kamu. Iya, kamu yang selalu ada di hatiku. Selamat pagi!';
-          break;
-        default:
-          morning = 'Halo guys, Staff-san di sini. Dan';
-      }
+      const morning =
+        schedule[0]['vliver.morningMessage'] || 'Selamat Pagi Semuanya!';
       const liveEmbed = {
         color: parseInt(
           schedule.length !== 0 ? schedule[0]['vliver.color'] : ''
@@ -109,7 +66,7 @@ module.exports = {
         },
       };
       return await message.send(
-        `${morning} Hari ini ada ${schedule.length} stream yang akan berlangsung.\nStream lainnya akan bertambah dan berubah sewaktu-waktu, jadi cek Twitter masing-masing vliver untuk info lebih lanjut ya`,
+        `${morning} Hari ini ada ${schedule.length} stream yang akan berlangsung.\nStream lainnya akan bertambah dan berubah sewaktu-waktu, jadi cek <#${config.textChannelID.live}> untuk info lebih lanjut ya`,
         {
           embed: liveEmbed,
         }

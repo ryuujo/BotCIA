@@ -1,6 +1,6 @@
 const moment = require('moment');
 const { name, version } = require('../package.json');
-const { roles, textChannelID, prefix } = require('../config.js');
+const { textChannelID, prefix } = require('../config.js');
 const { youtube } = require('../config/youtube');
 const Vliver = require('../models').Vliver;
 const Schedule = require('../models').Schedule;
@@ -16,7 +16,7 @@ module.exports = {
       prefix +
       'announce [live/premiere] [Link Video Youtube]```';
 
-    if (!message.member.roles.some((r) => roles.live.includes(r.name))) {
+    if (message.channel.id !== textChannelID.announce) {
       return message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
     }
     if (args.length !== 2) {
@@ -82,7 +82,7 @@ module.exports = {
       });
       if (!vData) {
         throw {
-          message: `Channel ${youtubeInfo.channelTitle} tidak ada di database kami. Channel ID: ${youtubeInfo.channelId}`,
+          message: `Channel ${youtubeInfo.channelTitle} tidak ada di database kami. Silahkan gunakan command \`!!collab\` Channel ID: ${youtubeInfo.channelId}`,
         };
       }
       const videoDateTime = moment(youtubeLive.scheduledStartTime).utcOffset(
@@ -160,7 +160,9 @@ module.exports = {
       }
       const channel = message.guild.channels.get(textChannelID.live);
       await channel.send(
-        `${mention}\n**${
+        `${mention}\n${
+          vData.dataValues.scheduleMessage || 'Ada konten baru!'
+        } **${
           vData.dataValues.fullName
         }** akan melakukan Livestream pada **${videoDateTime.format(
           timeFormat

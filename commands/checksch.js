@@ -1,7 +1,6 @@
 const moment = require('moment');
-const { roles, prefix } = require('../config.js');
+const { textChannelID, prefix } = require('../config.js');
 const { youtube } = require('../config/youtube');
-const Vliver = require('../models').Vliver;
 const Schedule = require('../models').Schedule;
 
 module.exports = {
@@ -15,7 +14,7 @@ module.exports = {
       prefix +
       'checksch [Link Video Youtube]```';
 
-    if (!message.member.roles.some((r) => roles.live.includes(r.name))) {
+    if (message.channel.id !== textChannelID.announce) {
       return message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
     }
     if (args.length > 1) {
