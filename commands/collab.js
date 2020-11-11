@@ -1,6 +1,6 @@
 const moment = require('moment');
 const { name, version } = require('../package.json');
-const { roles, textChannelID, prefix } = require('../config.js');
+const { textChannelID, prefix } = require('../config.js');
 const { youtube } = require('../config/youtube');
 const Vliver = require('../models').Vliver;
 const Schedule = require('../models').Schedule;
@@ -75,6 +75,17 @@ module.exports = {
       const youtubeData = await youtube.videos.list(config);
       const youtubeInfo = youtubeData.data.items[0].snippet;
       const youtubeLive = youtubeData.data.items[0].liveStreamingDetails;
+
+      const vFind = await Vliver.findOne({
+        where: {
+          channelURL: `https://www.youtube.com/channel/${youtubeInfo.channelId}`,
+        },
+      });
+      if (vFind) {
+        throw {
+          message: `Channel ${youtubeInfo.channelTitle} sudah ada di database kami. Silahkan gunakan command \`!!announce\` Channel ID: ${youtubeInfo.channelId}`,
+        };
+      }
 
       const vData = await Vliver.findOne({
         where: { name: vliverFirstName },

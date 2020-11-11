@@ -10,7 +10,7 @@ module.exports = {
   async execute(message, args) {
     moment.locale('id');
     const timeFormat = 'Do MMMM YYYY, HH:mm';
-    const showEmbed = async (data, vliverName) => {
+    const showEmbed = async (data, vliverName, avatar) => {
       try {
         if (!data) {
           const embed = {
@@ -18,8 +18,11 @@ module.exports = {
               ? `Stream mendatang dari ${vliverName}`
               : 'Belum ada stream mendatang',
             description: vliverName
-              ? `Saat ini belum ada stream mendatang dari ${vliverName}.`
+              ? `Belum ada stream mendatang dari ${vliverName} untuk saat ini.`
               : 'Belum ada stream mendatang untuk saat ini',
+            thumbnail: {
+              url: avatar,
+            },
             footer: {
               text: `${name} v${version} - This message was created on ${moment()
                 .utcOffset('+07:00')
@@ -34,7 +37,7 @@ module.exports = {
           } mendatang dari ${vliverName}`,
           color: parseInt(data['vliver.color']),
           thumbnail: {
-            url: data['vliver.avatarURL'],
+            url: avatar,
           },
           fields: [
             {
@@ -116,7 +119,7 @@ module.exports = {
           raw: true,
           include: 'vliver',
         });
-        return showEmbed(data, vData.fullName);
+        return showEmbed(data, vData.fullName, vData.avatarURL);
       }
     } catch (err) {
       message.reply(

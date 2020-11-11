@@ -1,6 +1,6 @@
 const moment = require('moment');
 const { name, version } = require('../package.json');
-const { roles, textChannelID, prefix } = require('../config.js');
+const { textChannelID, prefix } = require('../config.js');
 const { youtube } = require('../config/youtube');
 const Vliver = require('../models').Vliver;
 const Schedule = require('../models').Schedule;
@@ -82,7 +82,7 @@ module.exports = {
       });
       if (!vData) {
         throw {
-          message: `Channel ${youtubeInfo.channelTitle} tidak ada di database kami. Channel ID: ${youtubeInfo.channelId}`,
+          message: `Channel ${youtubeInfo.channelTitle} tidak ada di database kami. Silahkan gunakan command \`!!collab\` Channel ID: ${youtubeInfo.channelId}`,
         };
       }
       const videoDateTime = moment(youtubeLive.scheduledStartTime).utcOffset(
