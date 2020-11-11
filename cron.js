@@ -30,7 +30,7 @@ module.exports = {
       });
       if (schedule.length === 0) {
         return await message.send(
-          'Selamat pagi semuanya! Saat ini belum ada livestream yang akan berlangsung namun bakal dikasih tau kalo misalkan ada.\nCek Twitter masing-masing vliver untuk info lebih lanjut ya...'
+          `Selamat pagi semuanya! Saat ini belum ada livestream yang akan berlangsung namun bakal dikasih tau kalo misalkan ada.\nCek <#${config.textChannelID.live}> untuk info lebih lanjut ya...`
         );
       }
       const morning =
@@ -66,7 +66,7 @@ module.exports = {
         },
       };
       return await message.send(
-        `${morning} Hari ini ada ${schedule.length} stream yang akan berlangsung.\nStream lainnya akan bertambah dan berubah sewaktu-waktu, jadi cek Twitter masing-masing vliver untuk info lebih lanjut ya`,
+        `${morning} Hari ini ada ${schedule.length} stream yang akan berlangsung.\nStream lainnya akan bertambah dan berubah sewaktu-waktu, jadi cek <#${config.textChannelID.live}> untuk info lebih lanjut ya`,
         {
           embed: liveEmbed,
         }
