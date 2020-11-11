@@ -16,7 +16,7 @@ module.exports = {
       prefix +
       'announce [live/premiere] [Link Video Youtube]```';
 
-    if (!message.member.roles.some((r) => roles.live.includes(r.name))) {
+    if (message.channel.id !== textChannelID.announce) {
       return message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
     }
     if (args.length !== 2) {
@@ -160,7 +160,9 @@ module.exports = {
       }
       const channel = message.guild.channels.get(textChannelID.live);
       await channel.send(
-        `${mention}\n**${
+        `${mention}\n${
+          vData.dataValues.scheduleMessage || 'Ada konten baru!'
+        } **${
           vData.dataValues.fullName
         }** akan melakukan Livestream pada **${videoDateTime.format(
           timeFormat

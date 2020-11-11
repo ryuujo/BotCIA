@@ -11,6 +11,7 @@ module.exports = {
   guildID: '',
   textChannelID: {
     live: '',
+    announce: '',
     nh: '',
     rules: '',
     welcome: '',

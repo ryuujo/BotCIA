@@ -16,7 +16,7 @@ module.exports = {
       prefix +
       'collab [live/premiere] [Vtuber name] [Link Video Youtube]```';
 
-    if (!message.member.roles.some((r) => roles.live.includes(r.name))) {
+    if (message.channel.id !== textChannelID.announce) {
       return message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
     }
     if (args.length !== 3) {
@@ -159,11 +159,13 @@ module.exports = {
       }
       const channel = message.guild.channels.get(textChannelID.live);
       await channel.send(
-        `${mention}\n**${
+        `${mention}\n${
+          vData.dataValues.scheduleMessage || 'Ada konten baru!'
+        } **${
           vData.dataValues.fullName
-        }** akan melakukan Livestream pada **${videoDateTime.format(
-          timeFormat
-        )} WIB!**`,
+        }** akan melakukan Livestream di channel **${
+          youtubeInfo.channelTitle
+        }** pada **${videoDateTime.format(timeFormat)} WIB!**`,
         { embed: liveEmbed }
       );
       return await message.reply(

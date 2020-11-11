@@ -30,11 +30,11 @@ module.exports = {
       });
       if (schedule.length === 0) {
         return await message.send(
-          'Selamat pagi semuanya! Saat ini belum ada livestream yang akan berlangsung namun bakal aku kasih tau kalo misalkan ada.\nCek Twitter masing-masing vliver untuk info lebih lanjut ya...'
+          'Selamat pagi semuanya! Saat ini belum ada livestream yang akan berlangsung namun bakal dikasih tau kalo misalkan ada.\nCek Twitter masing-masing vliver untuk info lebih lanjut ya...'
         );
       }
-      let morning;
-      switch (schedule[0]['vliver.name']) {
+      const morning = schedule[0]['vliver.morningMessage'];
+      /* switch (schedule[0]['vliver.name']) {
         case 'hana':
           morning = 'Ohana! Ayo bangun!';
           break;
@@ -77,7 +77,7 @@ module.exports = {
           break;
         default:
           morning = 'Halo guys, Staff-san di sini.';
-      }
+      } */
       const liveEmbed = {
         color: parseInt(
           schedule.length !== 0 ? schedule[0]['vliver.color'] : ''
