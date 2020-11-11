@@ -67,13 +67,13 @@ module.exports = {
           morning = 'Auummm...';
           break;
         case 'etna':
-          morning = 'DUUUUAAAAAARRRRRR!!!!!';
+          morning = 'DUUUUAAAAAARRRRRR BORGAAAARRR!!!!!';
           break;
         case 'bobon':
-          morning = 'Halo selamat pagi semuanya! Om di sini.';
+          morning = 'Halo guys, Om Bobon di sini. Dan';
           break;
         default:
-          morning = 'Halo guys, Staff-san di sini. Dan';
+          morning = 'Halo guys, Staff-san di sini.';
       }
       const liveEmbed = {
         color: parseInt(
