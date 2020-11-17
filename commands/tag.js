@@ -105,7 +105,11 @@ module.exports = {
               title: 'Tag Search Results',
               description:
                 result.length !== 0
-                  ? result.map((res) => res.dataValues.command).join(', ')
+                  ? result
+                      .map((res) =>
+                        res.nsfw ? `_${res.command}_` : res.command
+                      )
+                      .join(', ')
                   : '*Tidak ada hasil yang ditampilkan*',
               fields: [{ name: 'Total Tags', value: totalRes.count }],
             };
