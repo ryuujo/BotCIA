@@ -67,7 +67,11 @@ module.exports = {
               title: message.author.username + ' Tag Lists',
               description:
                 lists.length !== 0
-                  ? lists.map((list) => list.dataValues.command).join(', ')
+                  ? lists
+                      .map((list) =>
+                        list.nsfw ? `_${list.command}_` : list.command
+                      )
+                      .join(', ')
                   : '*Tidak ada tags yang ditampilkan*',
               fields: [{ name: 'Total Tags', value: listRes.count }],
             };
@@ -193,7 +197,6 @@ module.exports = {
                 {
                   name: 'Created By',
                   value: tag.createdBy,
-                  inline: true,
                 },
                 {
                   name: 'Times used',
@@ -203,6 +206,11 @@ module.exports = {
                 {
                   name: 'NSFW',
                   value: tag.nsfw,
+                  inline: true,
+                },
+                {
+                  name: 'ID',
+                  value: tag.id,
                   inline: true,
                 },
                 {
@@ -253,11 +261,21 @@ module.exports = {
               'Tidak ada tag `' + args[1] + '` yang ditemukan'
             );
           }
-          tag.nsfw = !tag.nsfw;
-          await tag.save();
-          return message.channel.send(
-            'Tag `' + args[1] + '` sudah diset menjadi `' + tag.nsfw + '`'
-          );
+          if (
+            tag.createdBy ===
+              message.author.username + '#' + message.author.discriminator ||
+            message.member.roles.some((r) => roles.live.includes(r.name))
+          ) {
+            tag.nsfw = !tag.nsfw;
+            await tag.save();
+            return message.channel.send(
+              'Tag `' + args[1] + '` sudah diset menjadi `' + tag.nsfw + '`'
+            );
+          } else {
+            return message.reply('', {
+              file: 'https://i.imgur.com/4YNSGmG.jpg',
+            });
+          }
         default:
           try {
             const tag = await Tag.findOne({ where: { command: args[0] } });
