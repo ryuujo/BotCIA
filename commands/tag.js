@@ -238,6 +238,7 @@ module.exports = {
           try {
             const tags = await Tag.findAll({
               order: [['count', 'DESC']],
+              where: { nsfw: false },
             });
             const rank = tags.slice(0, 10);
             const rankEmbed = {
