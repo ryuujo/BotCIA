@@ -2,14 +2,18 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const moment = require('moment');
 const Sequelize = require('sequelize');
+const express = require('express');
+
 const CronJob = require('cron').CronJob;
 const config = require('./config.js');
-const { version } = require('./package.json');
+const { version, apiVersion } = require('./package.json');
 const database = require('./config/config.json');
 const cron = require('./cron.js');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
+
+const app = express();
 
 const commandFiles = fs
   .readdirSync('./commands')
@@ -89,6 +93,16 @@ client.on('message', (message) => {
     console.error(error);
     message.reply('There was an error trying to execute that command!');
   }
+});
+
+app.get('/', (req, res) => {
+  res.send(
+    `Hello World!<br>Current BotCia version: ${version}<br>Current BotCia API version: ${apiVersion}`
+  );
+});
+
+app.listen(config.expressPort, () => {
+  console.log(`BotCIA API listening at http://localhost:${config.expressPort}`);
 });
 
 client.login(config.token);
