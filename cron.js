@@ -27,6 +27,7 @@ module.exports = {
         ],
         raw: true,
         include: 'vliver',
+        limit: 5,
       });
       if (schedule.length === 0) {
         return await message.send(
