@@ -9,7 +9,7 @@ const config = require('./config.js');
 const { version, apiVersion } = require('./package.json');
 const database = require('./config/config.json');
 const cron = require('./cron.js');
-const vliverAPI = require('./api/vliver');
+const apiRoutes = require('./api/routes');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -102,7 +102,7 @@ app.get('/', (req, res) => {
   );
 });
 
-app.get('/api/vtuber', vliverAPI.list);
+app.use('/api', apiRoutes);
 
 app.listen(config.expressPort, () => {
   console.log(`BotCIA API listening at http://localhost:${config.expressPort}`);
