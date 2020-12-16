@@ -162,11 +162,11 @@ module.exports = {
       await channel.send(
         `${mention}\n${
           vData.dataValues.scheduleMessage || 'Ada konten baru!'
-        } **${
-          vData.dataValues.fullName
-        }** akan melakukan Livestream pada **${videoDateTime.format(
-          timeFormat
-        )} WIB!**`,
+        } **${vData.dataValues.fullName}** akan ${
+          args[0].toLowerCase() === 'live'
+            ? 'melakukan Livestream'
+            : 'mengupload video baru'
+        } pada **${videoDateTime.format(timeFormat)} WIB!**`,
         { embed: liveEmbed }
       );
       return await message.reply(

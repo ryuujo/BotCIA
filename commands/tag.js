@@ -271,7 +271,7 @@ module.exports = {
               message.author.username + '#' + message.author.discriminator ||
             message.member.roles.some((r) => roles.live.includes(r.name))
           ) {
-            tag.nsfw = !tag.nsfw;
+            tag.nsfw = true;
             await tag.save();
             return message.channel.send(
               'Tag `' + args[1] + '` sudah diset menjadi `' + tag.nsfw + '`'
