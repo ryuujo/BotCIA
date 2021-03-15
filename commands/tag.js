@@ -117,6 +117,33 @@ module.exports = {
               'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
             );
           }
+        case 'claim':
+          const tagVal = await Tag.findAndCountAll({
+            where: {
+              createdBy:
+                message.author.username + '#' + message.author.discriminator,
+            },
+          });
+          if (tagVal.count == 0) {
+            return message.channel.send(
+              'Tag yang dicari tidak ada / Sudah diklaim'
+            );
+          }
+          for (i = 0; i < tagVal.count; i++) {
+            const tag = await Tag.findOne({
+              where: {
+                createdBy:
+                  message.author.username + '#' + message.author.discriminator,
+              },
+            });
+            tag.createdBy = message.author.id;
+            await tag.save();
+          }
+          return message.channel.send(
+            `Tag milik ${
+              message.author.username + '#' + message.author.discriminator
+            } sudah diklaim`
+          );
         case 'edit':
           if (!args[1] || !args[2]) {
             return message.reply('Isi keyword dan kontennya ya...');
@@ -259,8 +286,7 @@ module.exports = {
             );
           }
           if (
-            tag.createdBy ===
-              message.author.username + '#' + message.author.discriminator ||
+            tag.createdBy === message.author.id ||
             message.member.roles.some((r) => roles.live.includes(r.name))
           ) {
             tag.nsfw = !tag.nsfw;
