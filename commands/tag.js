@@ -31,13 +31,12 @@ module.exports = {
             if (tag) {
               return message.channel.send('Tag `' + args[1] + '` sudah ada');
             }
+            console.log(message.author.id);
             await Tag.create({
               command: args[1],
               response: args.slice(2, args.length).join(' '),
-              createdBy:
-                message.author.username + '#' + message.author.discriminator,
-              updatedBy:
-                message.author.username + '#' + message.author.discriminator,
+              createdBy: message.author.id,
+              updatedBy: message.author.id,
             });
             return await message.channel.send(
               'Tag `' + args[1] + '` berhasil dibuat!'
@@ -52,15 +51,13 @@ module.exports = {
           try {
             const lists = await Tag.findAll({
               where: {
-                createdBy:
-                  message.author.username + '#' + message.author.discriminator,
+                createdBy: message.author.id,
               },
               order: [['command', 'ASC']],
             });
             const listRes = await Tag.findAndCountAll({
               where: {
-                createdBy:
-                  message.author.username + '#' + message.author.discriminator,
+                createdBy: message.author.id,
               },
             });
             const listEmbed = {
@@ -131,17 +128,13 @@ module.exports = {
                 'Tidak ada tag `' + args[1] + '` yang ditemukan'
               );
             }
-            if (
-              tag.createdBy !==
-              message.author.username + '#' + message.author.discriminator
-            ) {
+            if (tag.createdBy !== message.author.id) {
               return message.reply('', {
                 file: 'https://i.imgur.com/4YNSGmG.jpg',
               });
             }
             tag.response = args.slice(2, args.length).join(' ');
-            tag.updatedBy =
-              message.author.username + '#' + message.author.discriminator;
+            tag.updatedBy = message.author.id;
             await tag.save();
             return message.channel.send(
               'Tag `' + args[1] + '` berhasil diubah!'
@@ -164,8 +157,7 @@ module.exports = {
               );
             }
             if (
-              tag.createdBy ===
-                message.author.username + '#' + message.author.discriminator ||
+              tag.createdBy === message.author.id ||
               message.member.roles.some((r) => roles.live.includes(r.name))
             ) {
               await Tag.destroy({ where: { command: args[1] } });
