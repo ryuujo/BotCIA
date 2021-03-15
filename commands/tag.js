@@ -219,7 +219,7 @@ module.exports = {
                 },
                 {
                   name: 'Created By',
-                  value: tag.createdBy,
+                  value: /* tag.createdBy */ 'Update soon',
                 },
                 {
                   name: 'Times used',
@@ -266,7 +266,7 @@ module.exports = {
                 .map(
                   (r, i) =>
                     `${i + 1}. **${r.command}** - Created by **${
-                      r.createdBy
+                      /* r.createdBy */ `Update soon`
                     }**\nUsed **${r.count}** times`
                 )
                 .join('\n\n'),
