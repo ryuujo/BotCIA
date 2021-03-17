@@ -4,20 +4,16 @@ module.exports = {
   roles: {
     admin: ['Moderator', 'Owner'],
     live: ['Moderator', 'Member+', 'Pawang BotCIA', 'Owner'],
-    nh: ['Moderator', 'Degen', 'Pawang BotCIA', 'Owner'],
-    notification: 'Notif Squad',
   },
   activity: 'Use !! to start command',
   guildID: '',
   textChannelID: {
     live: '',
     announce: '',
-    nh: '',
     rules: '',
     welcome: '',
     roles: '',
     cron: '',
   },
   googleApi: '',
-  expressPort: '',
 };
