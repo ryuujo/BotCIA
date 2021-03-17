@@ -78,7 +78,6 @@ module.exports = {
       await exist.save();
       return await message.reply('Informasi sudah diubah!');
     } catch (err) {
-      console.log(err);
       return message.reply(
         `Ada sesuatu yang salah, tapi itu bukan kamu: ${err.message}`
       );

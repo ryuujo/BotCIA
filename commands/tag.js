@@ -31,7 +31,6 @@ module.exports = {
             if (tag) {
               return message.channel.send('Tag `' + args[1] + '` sudah ada');
             }
-            console.log(message.author.id);
             await Tag.create({
               command: args[1],
               response: args.slice(2, args.length).join(' '),
@@ -42,7 +41,6 @@ module.exports = {
               'Tag `' + args[1] + '` berhasil dibuat!'
             );
           } catch (err) {
-            console.log(err);
             return message.reply(
               `Ada sesuatu yang salah, tapi itu bukan kamu: ${err.message}`
             );
@@ -74,7 +72,6 @@ module.exports = {
             };
             message.reply('tag list', { embed: listEmbed });
           } catch (err) {
-            console.log(err);
             return message.reply(
               'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
             );
@@ -112,7 +109,6 @@ module.exports = {
             };
             return message.channel.send({ embed: resultEmbed });
           } catch (err) {
-            console.log(err);
             return message.reply(
               'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
             );
@@ -167,7 +163,6 @@ module.exports = {
               'Tag `' + args[1] + '` berhasil diubah!'
             );
           } catch (err) {
-            console.log(err);
             return message.reply(
               'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
             );
@@ -197,7 +192,6 @@ module.exports = {
               });
             }
           } catch (err) {
-            console.log(err);
             return message.reply(
               'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
             );
@@ -246,7 +240,6 @@ module.exports = {
             };
             return message.channel.send({ embed });
           } catch (err) {
-            console.log(err);
             return message.reply(
               'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
             );
@@ -273,7 +266,6 @@ module.exports = {
             };
             return message.channel.send({ embed: rankEmbed });
           } catch (err) {
-            console.log(err);
             return message.reply(
               'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
             );
@@ -316,7 +308,6 @@ module.exports = {
             await tag.save();
             return message.channel.send(tag.response);
           } catch (err) {
-            console.log(err);
             return message.reply(
               'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
             );
