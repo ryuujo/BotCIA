@@ -8,7 +8,7 @@ module.exports = {
   name: 'upcoming',
   description: 'Shows upcoming livestream from now or based on Vliver',
   async execute(message, args) {
-    //moment.locale('id');
+    moment.locale('id');
     const timeFormat = 'Do MMMM YYYY, HH:mm';
     const showEmbed = async (data, vliverName, avatar) => {
       try {
@@ -45,7 +45,7 @@ module.exports = {
                 data.type === 'live' ? 'Stream' : 'Premiere'
               }`,
               value: `${moment(data.dateTime)
-                //.utcOffset('+07:00')
+                .utcOffset('+07:00')
                 .format(timeFormat)} GMT+7 / WIB\n(*${moment(
                 data.dateTime
               ).fromNow()}*)`,
@@ -77,6 +77,7 @@ module.exports = {
     };
 
     try {
+      console.log(new Date())
       if (!args[0]) {
         const data = await Schedule.findOne({
           where: {
