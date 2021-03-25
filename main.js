@@ -49,6 +49,7 @@ client.once('ready', () => {
   console.log(
     'My Active Time was at ' + moment().format('dddd DD MMMM YYYY HH:mm:ss Z')
   );
+  console.log('My Active Time JS version ' + new Date())
   const job = new CronJob(
     '0 0 8 * * *',
     () => {

@@ -45,6 +45,7 @@ module.exports = {
                 data.type === 'live' ? 'Stream' : 'Premiere'
               }`,
               value: `${moment(data.dateTime)
+                .utcOffset('+07:00')
                 .format(timeFormat)} GMT+7 / WIB\n(*${moment(
                 data.dateTime
               ).fromNow()}*)`,
