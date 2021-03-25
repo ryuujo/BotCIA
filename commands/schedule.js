@@ -8,7 +8,7 @@ module.exports = {
   name: 'schedule',
   description: 'Check upcoming schedule',
   async execute(message, args) {
-    moment.locale('id');
+    //moment.locale('id');
     const timeFormat = 'Do MMMM YYYY, HH:mm';
 
     const scheduleEmbed = (data, vliverName, avatar) => {
@@ -31,7 +31,7 @@ module.exports = {
                     })\nJudul Stream:** ${
                       d.title
                     }**\nTanggal dan Waktu: **${moment(d.dateTime)
-                      .utcOffset('+07:00')
+                      //.utcOffset('+07:00')
                       .format(timeFormat)} WIB / GMT+7** (*${moment(
                       d.dateTime
                     ).fromNow()}*)\n${d.youtubeUrl}\n\n`
