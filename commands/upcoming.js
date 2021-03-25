@@ -77,12 +77,12 @@ module.exports = {
     };
 
     try {
-      console.log(new Date())
       if (!args[0]) {
         const data = await Schedule.findOne({
           where: {
             dateTime: {
-              [Op.gt]: new Date().setMinutes(new Date().getMinutes() - 10),
+              //[Op.gt]: new Date().setMinutes(new Date().getMinutes() - 10),
+              [Op.gt]: moment(),
             },
           },
           order: [
