@@ -77,6 +77,7 @@ module.exports = {
     };
 
     try {
+      console.log(moment())
       if (!args[0]) {
         const data = await Schedule.findOne({
           where: {
