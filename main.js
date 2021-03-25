@@ -30,7 +30,7 @@ const sequelize = new Sequelize(
     dialect: database.development.dialect,
     logging: false,
     dialectOptions: {
-      timezone: 'etc/GMT+7',
+      timezone: 'Asia/Jakarta',
     },
   }
 );
