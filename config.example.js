@@ -14,6 +14,10 @@ module.exports = {
     welcome: '',
     roles: '',
     cron: '',
+    rant: {
+      from: '',
+      to: '',
+    },
   },
   googleApi: '',
 };
