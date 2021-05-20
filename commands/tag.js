@@ -6,7 +6,7 @@ const { roles } = require('../config.js');
 module.exports = {
   name: 'tag',
   description: 'Just like Nadeko or Dyno, saving your tag for memes',
-  async execute(message, args) {
+  async execute(message, args, client) {
     moment.locale('id');
     const timeFormat = 'Do MMMM YYYY, HH:mm';
     const help =
@@ -204,6 +204,14 @@ module.exports = {
                 'Tidak ada tag `' + args[1] + '` yang ditemukan'
               );
             }
+            const user = await client.fetchUser(tag.createdBy);
+            let tagUser;
+            if (user) {
+              tagUser = user.username + '#' + user.discriminator;
+            } else {
+              tagUser = 'User not found';
+            }
+            console.log(client.fetchUser(tag.createdBy));
             const embed = {
               title: `Info tag untuk ${tag.command}`,
               fields: [
@@ -213,7 +221,7 @@ module.exports = {
                 },
                 {
                   name: 'Created By',
-                  value: /* tag.createdBy */ 'Update soon',
+                  value: tagUser,
                 },
                 {
                   name: 'Times used',
