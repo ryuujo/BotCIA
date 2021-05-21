@@ -211,7 +211,6 @@ module.exports = {
             } else {
               tagUser = 'User not found';
             }
-            console.log(client.fetchUser(tag.createdBy));
             const embed = {
               title: `Info tag untuk ${tag.command}`,
               fields: [
@@ -266,7 +265,6 @@ module.exports = {
                 const user = await client
                   .fetchUser(r.createdBy)
                   .then((result) => result);
-                //console.log(user)
                 let tagUser;
                 if (user) {
                   tagUser = user.username + '#' + user.discriminator;
@@ -278,7 +276,6 @@ module.exports = {
                   createdBy: tagUser,
                   count: r.count,
                 };
-                //console.log(rankData) //it results good object
                 return rankData;
               })
             );
