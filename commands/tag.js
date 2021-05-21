@@ -261,13 +261,35 @@ module.exports = {
               where: { nsfw: false },
             });
             const rank = tags.slice(0, 10);
+            const rankTags = await Promise.all(
+              rank.map(async (r) => {
+                const user = await client
+                  .fetchUser(r.createdBy)
+                  .then((result) => result);
+                //console.log(user)
+                let tagUser;
+                if (user) {
+                  tagUser = user.username + '#' + user.discriminator;
+                } else {
+                  tagUser = 'User not found';
+                }
+                const rankData = {
+                  command: r.command,
+                  createdBy: tagUser,
+                  count: r.count,
+                };
+                //console.log(rankData) //it results good object
+                return rankData;
+              })
+            );
+
             const rankEmbed = {
               title: 'Top 10 Most Used Tags',
-              description: rank
+              description: rankTags
                 .map(
                   (r, i) =>
                     `${i + 1}. **${r.command}** - Created by **${
-                      /* r.createdBy */ `Update soon`
+                      r.createdBy
                     }**\nUsed **${r.count}** times`
                 )
                 .join('\n\n'),
