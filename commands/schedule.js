@@ -58,7 +58,8 @@ module.exports = {
         const data = await Schedule.findAll({
           where: {
             dateTime: {
-              [Op.gt]: new Date().setMinutes(new Date().getMinutes() - 30),
+              //[Op.gt]: new Date().setMinutes(new Date().getMinutes() - 30),
+              [Op.gt]: moment(),
             },
           },
           order: [

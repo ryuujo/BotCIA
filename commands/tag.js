@@ -6,7 +6,7 @@ const { roles } = require('../config.js');
 module.exports = {
   name: 'tag',
   description: 'Just like Nadeko or Dyno, saving your tag for memes',
-  async execute(message, args) {
+  async execute(message, args, client) {
     moment.locale('id');
     const timeFormat = 'Do MMMM YYYY, HH:mm';
     const help =
@@ -204,6 +204,13 @@ module.exports = {
                 'Tidak ada tag `' + args[1] + '` yang ditemukan'
               );
             }
+            const user = await client.fetchUser(tag.createdBy);
+            let tagUser;
+            if (user) {
+              tagUser = user.username + '#' + user.discriminator;
+            } else {
+              tagUser = 'User not found';
+            }
             const embed = {
               title: `Info tag untuk ${tag.command}`,
               fields: [
@@ -213,7 +220,7 @@ module.exports = {
                 },
                 {
                   name: 'Created By',
-                  value: /* tag.createdBy */ 'Update soon',
+                  value: tagUser,
                 },
                 {
                   name: 'Times used',
@@ -253,13 +260,33 @@ module.exports = {
               where: { nsfw: false },
             });
             const rank = tags.slice(0, 10);
+            const rankTags = await Promise.all(
+              rank.map(async (r) => {
+                const user = await client
+                  .fetchUser(r.createdBy)
+                  .then((result) => result);
+                let tagUser;
+                if (user) {
+                  tagUser = user.username + '#' + user.discriminator;
+                } else {
+                  tagUser = 'User not found';
+                }
+                const rankData = {
+                  command: r.command,
+                  createdBy: tagUser,
+                  count: r.count,
+                };
+                return rankData;
+              })
+            );
+
             const rankEmbed = {
               title: 'Top 10 Most Used Tags',
-              description: rank
+              description: rankTags
                 .map(
                   (r, i) =>
                     `${i + 1}. **${r.command}** - Created by **${
-                      /* r.createdBy */ `Update soon`
+                      r.createdBy
                     }**\nUsed **${r.count}** times`
                 )
                 .join('\n\n'),

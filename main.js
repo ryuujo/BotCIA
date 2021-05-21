@@ -5,12 +5,13 @@ const Sequelize = require('sequelize');
 
 const CronJob = require('cron').CronJob;
 const config = require('./config.js');
-const { version, apiVersion } = require('./package.json');
+const { name, version } = require('./package.json');
 const database = require('./config/config.json');
 const cron = require('./cron.js');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
+const timeFormat = 'Do MMMM YYYY, HH:mm';
 
 const commandFiles = fs
   .readdirSync('./commands')
@@ -30,7 +31,7 @@ const sequelize = new Sequelize(
     dialect: database.development.dialect,
     logging: false,
     dialectOptions: {
-      timezone: 'etc/GMT+7',
+      timezone: 'Asia/Jakarta',
     },
   }
 );
@@ -49,6 +50,7 @@ client.once('ready', () => {
   console.log(
     'My Active Time was at ' + moment().format('dddd DD MMMM YYYY HH:mm:ss Z')
   );
+  console.log('My Active Time JS version ' + new Date());
   const job = new CronJob(
     '0 0 8 * * *',
     () => {
@@ -68,6 +70,7 @@ client.once('ready', () => {
 });
 
 client.on('message', (message) => {
+  // Welcome Message
   if (
     message.content === '!verify' &&
     message.channel.id === config.textChannelID.rules
@@ -78,6 +81,24 @@ client.on('message', (message) => {
     );
   }
 
+  // Basically Rant Anonym
+
+  if (message.channel.id === config.textChannelID.rant.from) {
+    const curhatCorner = message.guild.channels.get(
+      config.textChannelID.rant.to
+    );
+    const rantEmbed = {
+      title: 'This is an anonymous message',
+      description: message.content,
+      footer: {
+        text: `${name} v${version} - This message was created on ${moment()
+          .utcOffset('+07:00')
+          .format(timeFormat)}`,
+      },
+    };
+    curhatCorner.send('', { embed: rantEmbed });
+  }
+
   if (!message.content.startsWith(config.prefix) || message.author.bot) return;
 
   const args = message.content.slice(config.prefix.length).split(/ +/);
@@ -85,7 +106,7 @@ client.on('message', (message) => {
   if (!client.commands.has(command)) return;
 
   try {
-    client.commands.get(command).execute(message, args);
+    client.commands.get(command).execute(message, args, client);
   } catch (error) {
     console.error(error);
     message.reply('There was an error trying to execute that command!');
