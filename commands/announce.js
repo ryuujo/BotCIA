@@ -69,7 +69,7 @@ module.exports = {
         id: youtubeId,
         part: 'snippet,liveStreamingDetails',
         fields:
-          'pageInfo,items(snippet(title,thumbnails/standard/url,channelTitle,channelId),liveStreamingDetails)',
+          'pageInfo,items(snippet(title,thumbnails,channelTitle,channelId),liveStreamingDetails)',
       };
       const youtubeData = await youtube.videos.list(config);
       const youtubeInfo = youtubeData.data.items[0].snippet;
