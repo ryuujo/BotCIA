@@ -91,7 +91,6 @@ module.exports = {
       const videoDateTimeJapan = moment(
         youtubeLive.scheduledStartTime
       ).utcOffset('+09:00');
-      console.log(youtubeInfo.thumbnails)
       await Schedule.create({
         title: youtubeInfo.title,
         youtubeUrl: `https://www.youtube.com/watch?v=${youtubeId}`,
