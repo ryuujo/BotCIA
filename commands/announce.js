@@ -97,7 +97,7 @@ module.exports = {
         dateTime: new Date(videoDateTime.format(timeForDB)),
         vliverID: vData.dataValues.id,
         type: args[0].toLowerCase(),
-        thumbnailUrl: youtubeInfo.thumbnails.standard.url,
+        thumbnailUrl: youtubeInfo.thumbnails.high.url,
       });
       const liveEmbed = {
         color: parseInt(vData.dataValues.color),
@@ -137,7 +137,7 @@ module.exports = {
           },
         ],
         image: {
-          url: youtubeInfo.thumbnails.standard.url,
+          url: youtubeInfo.thumbnails.high.url,
         },
         footer: {
           text: `${name} v${version} - This message was created on ${moment()
