@@ -97,6 +97,7 @@ client.on('message', (message) => {
       },
     };
     curhatCorner.send('', { embed: rantEmbed });
+    message.delete()
   }
 
   if (!message.content.startsWith(config.prefix) || message.author.bot) return;
