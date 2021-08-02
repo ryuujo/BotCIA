@@ -81,22 +81,29 @@ client.on('message', (message) => {
     );
   }
 
-  // Basically Rant Anonym
-
-  if (message.channel.id === config.textChannelID.rant.from) {
-    const curhatCorner = message.guild.channels.get(
-      config.textChannelID.rant.to
-    );
-    const rantEmbed = {
-      title: 'This is an anonymous message',
-      description: message.content,
-      footer: {
-        text: `${name} v${version} - This message was created on ${moment()
-          .utcOffset('+07:00')
-          .format(timeFormat)}`,
-      },
-    };
-    curhatCorner.send('', { embed: rantEmbed });
+  switch (message.channel.id) {
+    case config.textChannelID.rant.from:
+      const curhatCorner = message.guild.channels.get(
+        config.textChannelID.rant.to
+      );
+      const rantEmbed = {
+        title: 'This is an anonymous message',
+        description: message.content,
+        footer: {
+          text: `${name} v${version} - This message was created on ${moment()
+            .utcOffset('+07:00')
+            .format(timeFormat)}`,
+        },
+      };
+      setTimeout(() => curhatCorner.send('', { embed: rantEmbed }), 3000);
+      message.delete();
+      break;
+    case config.textChannelID.pakTaka:
+      setTimeout(() => message.react('🇵'), 0);
+      setTimeout(() => message.react('🇦'), 1000);
+      setTimeout(() => message.react('🇰'), 2000);
+      setTimeout(() => message.react('⁉️'), 3000);
+      break;
   }
 
   if (!message.content.startsWith(config.prefix) || message.author.bot) return;
