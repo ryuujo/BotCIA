@@ -12,7 +12,7 @@ module.exports = {
     const curhatCorner = message.guild.channels.get(
       config.textChannelID.rant.to
     );
-    skeyGenerate = uuid.v4().slice(0,8);
+    skeyGenerate = uuid.v4().slice(0, 8);
     //gunakan .split('-').join('') kalau butuh uuid lebih dari 8 karakter
     await Curhat.create({
       skey: skeyGenerate,
@@ -29,7 +29,10 @@ module.exports = {
           .format(timeFormat)} - ${skeyGenerate}`,
       },
     };
-    setTimeout(() => curhatCorner.send('', { embed: rantEmbed }), 5000);
+    setTimeout(
+      () => curhatCorner.send('', { embed: rantEmbed }),
+      config.rantDelay
+    );
     message.delete();
   },
 };
