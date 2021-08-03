@@ -17,7 +17,10 @@ module.exports = {
     rant: {
       from: '',
       to: '',
+      track: ''
     },
+    pakTaka: ''
   },
+  rantDelay: 5000,
   googleApi: '',
 };
