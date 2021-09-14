@@ -26,7 +26,7 @@ module.exports = {
       footer: {
         text: `${name} v${version} - This message was created on ${moment()
           .utcOffset('+07:00')
-          .format(timeFormat)} - ${skeyGenerate}`,
+          .format(timeFormat)}`,
       },
     };
     setTimeout(
