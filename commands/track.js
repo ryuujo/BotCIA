@@ -7,7 +7,7 @@ module.exports = {
   description: 'Tracking curhat anonym',
   async execute(message, args, client) {
     if (message.channel.id !== textChannelID.rant.track) {
-      return message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
+      return
     }
     if (!args[0]) {
       return message.channel.send('Mau nyari apa hayoo?');
