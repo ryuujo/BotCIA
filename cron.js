@@ -10,8 +10,8 @@ const { Op } = Sequelize;
 module.exports = {
   execute: async (client) => {
     try {
-      let guild = client.guilds.get(config.guildID);
-      let message = guild.channels.get(config.textChannelID.cron);
+      let guild = client.guilds.cache.get(config.guildID);
+      let message = guild.channels.cache.get(config.textChannelID.cron);
       moment.locale('id');
       const timeFormat = 'Do MMMM YYYY, HH:mm';
       const schedule = await Schedule.findAll({
@@ -30,7 +30,7 @@ module.exports = {
       });
       if (schedule.length === 0) {
         return await message.send(
-          `Selamat pagi semuanya! Saat ini belum ada livestream yang akan berlangsung namun bakal dikasih tau kalo misalkan ada.\nCek <#${config.textChannelID.live}> untuk info lebih lanjut ya...`
+          `Selamat pagi semuanya! Saat ini belum ada livestream yang akan berlangsung.\nCek <#${config.textChannelID.live}> untuk info lebih lanjut ya...`
         );
       }
       const morning =
@@ -66,9 +66,9 @@ module.exports = {
         },
       };
       return await message.send(
-        `${morning} Hari ini ada ${schedule.length} stream yang akan berlangsung.\nStream lainnya akan bertambah dan berubah sewaktu-waktu, jadi cek <#${config.textChannelID.live}> untuk info lebih lanjut ya`,
         {
-          embed: liveEmbed,
+          content: `${morning} Hari ini ada ${schedule.length} stream yang akan berlangsung.\nStream lainnya akan bertambah dan berubah sewaktu-waktu, jadi cek <#${config.textChannelID.live}> untuk info lebih lanjut ya`,
+          embeds: [liveEmbed],
         }
       );
     } catch (err) {

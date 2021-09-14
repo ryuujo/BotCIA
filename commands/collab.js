@@ -17,7 +17,9 @@ module.exports = {
       'collab [live/premiere] [Vtuber name] [Link Video Youtube]```';
 
     if (message.channel.id !== textChannelID.announce) {
-      return message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
+      return message.reply({
+        files: [{ attachment: 'https://i.imgur.com/4YNSGmG.jpg' }],
+      });
     }
     if (args.length !== 3) {
       return message.reply(messages);
@@ -157,7 +159,7 @@ module.exports = {
       };
       let mention = '';
       if (vData.dataValues.fanName || vData.dataValues.fanName === '') {
-        const roleId = message.guild.roles.find(
+        const roleId = message.guild.roles.cache.find(
           (r) => r.name === vData.dataValues.fanName
         );
         if (roleId) {
@@ -168,7 +170,7 @@ module.exports = {
       } else {
         mention = '@here';
       }
-      const channel = message.guild.channels.get(textChannelID.live);
+      const channel = message.guild.channels.cache.get(textChannelID.live);
       await channel.send(
         `${mention}\n${
           vData.dataValues.scheduleMessage || 'Ada konten baru!'

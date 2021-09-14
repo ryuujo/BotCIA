@@ -14,8 +14,11 @@ module.exports = {
       'Tulis formatnya seperti ini ya:\n> ```' +
       prefix +
       'live [Nama depan vliver] [Tanggal Livestream (DD/MM)] [Waktu Livestream dalam WIB / GMT+7 (HH:MM)] [Link Video Facebook]```';
-    if (!message.member.roles.some((r) => roles.live.includes(r.name))) {
-      return message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
+    if (message.channel.id !== textChannelID.announce) {
+      return message.reply({
+        content: ' ',
+        files: [{ attachment: 'https://i.imgur.com/4YNSGmG.jpg' }],
+      });
     }
     if (args.length !== 4) {
       return message.reply(messages);
@@ -86,7 +89,7 @@ module.exports = {
       };
       let mention = '';
       if (vData.dataValues.fanName || vData.dataValues.fanName === '') {
-        const roleId = message.guild.roles.find(
+        const roleId = message.guild.roles.cache.find(
           (r) => r.name === vData.dataValues.fanName
         );
         if (roleId) {
@@ -97,11 +100,11 @@ module.exports = {
       } else {
         mention = '@here';
       }
-      const channel = message.guild.channels.get(textChannelID.live);
-      await channel.send(
-        `${mention}\n**${vData.dataValues.fullName}** akan melakukan Livestream di Facebook pada **${livestreamDateTime} WIB!**`,
-        { embed: liveEmbed }
-      );
+      const channel = message.guild.channels.cache.get(textChannelID.live);
+      await channel.send({
+        content: `${mention}\n**${vData.dataValues.fullName}** akan melakukan Livestream di Facebook pada **${livestreamDateTime} WIB!**`,
+        embeds: [liveEmbed],
+      });
       await Schedule.create({
         title: `Facebook Live from ${vData.dataValues.fullName}`,
         youtubeUrl: args[3],
