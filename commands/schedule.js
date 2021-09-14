@@ -48,8 +48,9 @@ module.exports = {
             .format(timeFormat)}`,
         },
       };
-      return message.channel.send('List Stream/Premiere yang akan datang: ', {
-        embed,
+      return message.channel.send({
+        content: 'List Stream/Premiere yang akan datang: ',
+        embeds: [embed],
       });
     };
 
@@ -69,11 +70,7 @@ module.exports = {
           raw: true,
           include: 'vliver',
         });
-        return scheduleEmbed(
-          data,
-          null,
-          null
-        );
+        return scheduleEmbed(data, null, null);
       } else {
         const vliverFirstName = args[0].toLowerCase();
         const vData = await Vliver.findOne({

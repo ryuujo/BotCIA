@@ -17,7 +17,9 @@ module.exports = {
       'announce [live/premiere] [Link Video Youtube]```';
 
     if (message.channel.id !== textChannelID.announce) {
-      return message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
+      return message.reply({
+        files: [{ attachment: 'https://i.imgur.com/4YNSGmG.jpg' }],
+      });
     }
     if (args.length !== 2) {
       return message.reply(messages);
@@ -147,7 +149,7 @@ module.exports = {
       };
       let mention = '';
       if (vData.dataValues.fanName || vData.dataValues.fanName === '') {
-        const roleId = message.guild.roles.find(
+        const roleId = message.guild.roles.cache.find(
           (r) => r.name === vData.dataValues.fanName
         );
         if (roleId) {
@@ -158,17 +160,17 @@ module.exports = {
       } else {
         mention = '@here';
       }
-      const channel = message.guild.channels.get(textChannelID.live);
-      await channel.send(
-        `${mention}\n${
+      const channel = message.guild.channels.cache.get(textChannelID.live);
+      await channel.send({
+        content: `${mention}\n${
           vData.dataValues.scheduleMessage || 'Ada konten baru!'
         } **${vData.dataValues.fullName}** akan ${
           args[0].toLowerCase() === 'live'
             ? 'melakukan Livestream'
             : 'mengupload video baru'
         } pada **${videoDateTime.format(timeFormat)} WIB!**`,
-        { embed: liveEmbed }
-      );
+        embeds: [liveEmbed]
+      })
       return await message.reply(
         `Informasi ${args[0].toLowerCase()} sudah dikirim ke text channel tujuan.\nNama VLiver: ${
           vData.dataValues.fullName

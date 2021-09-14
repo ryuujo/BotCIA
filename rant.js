@@ -9,7 +9,7 @@ const timeFormat = 'Do MMMM YYYY, HH:mm';
 
 module.exports = {
   execute: async (message) => {
-    const curhatCorner = message.guild.channels.get(
+    const curhatCorner = message.guild.channels.cache.get(
       config.textChannelID.rant.to
     );
     skeyGenerate = uuid.v4().slice(0, 8);
@@ -30,7 +30,7 @@ module.exports = {
       },
     };
     setTimeout(
-      () => curhatCorner.send('', { embed: rantEmbed }),
+      () => curhatCorner.send({ content: ' ', embeds: [rantEmbed] }),
       config.rantDelay
     );
     message.delete();

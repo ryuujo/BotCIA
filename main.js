@@ -10,7 +10,7 @@ const database = require('./config/config.json');
 const cron = require('./cron.js');
 const rant = require('./rant.js');
 
-const client = new Discord.Client();
+const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
 client.commands = new Discord.Collection();
 
 const commandFiles = fs
@@ -75,7 +75,7 @@ client.on('message', (message) => {
     message.content === '!verify' &&
     message.channel.id === config.textChannelID.rules
   ) {
-    const channel = message.guild.channels.get(config.textChannelID.welcome);
+    const channel = message.guild.channels.cache.get(config.textChannelID.welcome);
     channel.send(
       `Selamat datang dan selamat bergabung di server kami, <@${message.author.id}>! Jangan lupa untuk ambil role di <#${config.textChannelID.roles}> ya...\n\nWelcome abroad to our Server! Don't forget to take roles at <#${config.textChannelID.roles}>`
     );

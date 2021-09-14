@@ -37,14 +37,14 @@ module.exports = {
         },
         {
           name: 'Tanggal Kirim',
-          value: moment(data.createdAt),
+          value: moment(data.createdAt).toString(),
         },
         {
           name: 'Isi Pesan',
-          value: `${data.message.slice(0,200)}...`,
+          value: `${data.message.slice(0,200)}${data.message.length > 200 ? '...': ''}`,
         },
       ],
     };
-    await message.channel.send('', { embed: embed });
+    await message.channel.send({ embeds: [embed] });
   },
 };

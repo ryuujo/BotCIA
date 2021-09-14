@@ -152,8 +152,8 @@ module.exports = {
               );
             }
             if (tag.createdBy !== message.author.id) {
-              return message.reply('', {
-                file: 'https://i.imgur.com/4YNSGmG.jpg',
+              return message.reply({
+                files: [{ attachment: 'https://i.imgur.com/4YNSGmG.jpg' }],
               });
             }
             tag.response = args.slice(2, args.length).join(' ');
@@ -180,15 +180,15 @@ module.exports = {
             }
             if (
               tag.createdBy === message.author.id ||
-              message.member.roles.some((r) => roles.live.includes(r.name))
+              message.member.roles.cache.some((r) => roles.live.includes(r.name))
             ) {
               await Tag.destroy({ where: { command: args[1] } });
               return message.channel.send(
                 'Tag `' + args[1] + '` berhasil dihapus'
               );
             } else {
-              return message.reply('', {
-                file: 'https://i.imgur.com/4YNSGmG.jpg',
+              return message.reply({
+                files: [{ attachment: 'https://i.imgur.com/4YNSGmG.jpg' }],
               });
             }
           } catch (err) {
@@ -306,7 +306,7 @@ module.exports = {
           }
           if (
             tag.createdBy === message.author.id ||
-            message.member.roles.some((r) => roles.live.includes(r.name))
+            message.member.roles.cache.some((r) => roles.live.includes(r.name))
           ) {
             tag.nsfw = true;
             await tag.save();
@@ -314,8 +314,8 @@ module.exports = {
               'Tag `' + args[1] + '` sudah diset menjadi `' + tag.nsfw + '`'
             );
           } else {
-            return message.reply('', {
-              file: 'https://i.imgur.com/4YNSGmG.jpg',
+            return message.reply({
+              files: [{ attachment: 'https://i.imgur.com/4YNSGmG.jpg' }],
             });
           }
         default:

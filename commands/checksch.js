@@ -15,7 +15,9 @@ module.exports = {
       'checksch [Link Video Youtube]```';
 
     if (message.channel.id !== textChannelID.announce) {
-      return message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
+      return message.reply({
+        files: [{ attachment: 'https://i.imgur.com/4YNSGmG.jpg' }],
+      });
     }
     if (args.length > 1) {
       return message.reply(messages);

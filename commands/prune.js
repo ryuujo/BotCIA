@@ -4,8 +4,10 @@ module.exports = {
   name: 'prune',
   description: 'Prune up to 99 messages.',
   execute(message, args) {
-    if (!message.member.roles.some((r) => roles.admin.includes(r.name))) {
-      return message.reply('', { file: 'https://i.imgur.com/4YNSGmG.jpg' });
+    if (!message.member.roles.cache.some((r) => roles.admin.includes(r.name))) {
+      return message.reply({
+        files: [{ attachment: 'https://i.imgur.com/4YNSGmG.jpg' }],
+      });
     }
     const amount = parseInt(args[0]) + 1;
     if (isNaN(amount)) {
