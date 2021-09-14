@@ -30,7 +30,6 @@ module.exports = {
       },
     };
     setTimeout(
-      //() => curhatCorner.send('', { embed: rantEmbed }),
       () => curhatCorner.send({ content: ' ', embeds: [rantEmbed] }),
       config.rantDelay
     );
