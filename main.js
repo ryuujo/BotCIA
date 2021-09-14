@@ -85,12 +85,6 @@ client.on('message', (message) => {
     case config.textChannelID.rant.from:
       rant.execute(message);
       break;
-    case config.textChannelID.pakTaka:
-      setTimeout(() => message.react('🇵'), 0);
-      setTimeout(() => message.react('🇦'), 1000);
-      setTimeout(() => message.react('🇰'), 2000);
-      setTimeout(() => message.react('⁉️'), 3000);
-      break;
   }
 
   if (!message.content.startsWith(config.prefix) || message.author.bot) return;
