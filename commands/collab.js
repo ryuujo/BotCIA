@@ -174,9 +174,7 @@ module.exports = {
       await channel.send({
         content: `${mention}\n${
           vData.dataValues.scheduleMessage || 'Ada konten baru!'
-        } **${
-          vData.dataValues.fullName
-        }** akan melakukan Livestream di channel **${
+        } **${vData.dataValues.fullName}** akan melakukan collab Livestream di channel **${
           youtubeInfo.channelTitle
         }** pada **${videoDateTime.format(timeFormat)} WIB!**`,
         embeds: [liveEmbed],
