@@ -169,8 +169,8 @@ module.exports = {
             ? 'melakukan Livestream'
             : 'mengupload video baru'
         } pada **${videoDateTime.format(timeFormat)} WIB!**`,
-        embeds: [liveEmbed]
-      })
+        embeds: [liveEmbed],
+      });
       return await message.reply(
         `Informasi ${args[0].toLowerCase()} sudah dikirim ke text channel tujuan.\nNama VLiver: ${
           vData.dataValues.fullName

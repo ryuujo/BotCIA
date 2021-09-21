@@ -171,16 +171,16 @@ module.exports = {
         mention = '@here';
       }
       const channel = message.guild.channels.cache.get(textChannelID.live);
-      await channel.send(
-        `${mention}\n${
+      await channel.send({
+        content: `${mention}\n${
           vData.dataValues.scheduleMessage || 'Ada konten baru!'
         } **${
           vData.dataValues.fullName
         }** akan melakukan Livestream di channel **${
           youtubeInfo.channelTitle
         }** pada **${videoDateTime.format(timeFormat)} WIB!**`,
-        { embed: liveEmbed }
-      );
+        embeds: [liveEmbed],
+      });
       return await message.reply(
         `Informasi ${args[0].toLowerCase()} sudah dikirim ke text channel tujuan.\nNama VLiver: ${
           vData.dataValues.fullName
