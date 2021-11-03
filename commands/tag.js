@@ -180,7 +180,9 @@ module.exports = {
             }
             if (
               tag.createdBy === message.author.id ||
-              message.member.roles.cache.some((r) => roles.live.includes(r.name))
+              message.member.roles.cache.some((r) =>
+                roles.live.includes(r.name)
+              )
             ) {
               await Tag.destroy({ where: { command: args[1] } });
               return message.channel.send(
@@ -204,7 +206,7 @@ module.exports = {
                 'Tidak ada tag `' + args[1] + '` yang ditemukan'
               );
             }
-            const user = await client.fetchUser(tag.createdBy);
+            const user = await client.users.fetch(tag.createdBy);
             let tagUser;
             if (user) {
               tagUser = user.username + '#' + user.discriminator;
@@ -224,28 +226,29 @@ module.exports = {
                 },
                 {
                   name: 'Times used',
-                  value: tag.count,
+                  value: tag.count.toString(),
                   inline: true,
                 },
                 {
                   name: 'NSFW',
-                  value: tag.nsfw,
+                  value: tag.nsfw.toString(),
                   inline: true,
                 },
                 {
                   name: 'ID',
-                  value: tag.id,
+                  value: tag.id.toString(),
                   inline: true,
                 },
                 {
                   name: 'Created At',
                   value: moment(tag.createdAt)
                     .utcOffset('+07:00')
-                    .format(timeFormat),
+                    .format(timeFormat)
+                    .toString(),
                 },
               ],
             };
-            return message.channel.send({ embed });
+            return message.channel.send({ embeds: [embed] });
           } catch (err) {
             return message.reply(
               'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
@@ -262,8 +265,8 @@ module.exports = {
             const rank = tags.slice(0, 10);
             const rankTags = await Promise.all(
               rank.map(async (r) => {
-                const user = await client
-                  .fetchUser(r.createdBy)
+                const user = await client.users
+                  .fetch(r.createdBy)
                   .then((result) => result);
                 let tagUser;
                 if (user) {
@@ -291,7 +294,7 @@ module.exports = {
                 )
                 .join('\n\n'),
             };
-            return message.channel.send({ embed: rankEmbed });
+            return message.channel.send({ embeds: [rankEmbed] });
           } catch (err) {
             return message.reply(
               'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
