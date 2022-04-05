@@ -31,7 +31,6 @@ module.exports = {
                     })\nJudul Stream:** ${
                       d.title
                     }**\nTanggal dan Waktu: **${moment(d.dateTime)
-                      .utcOffset('+07:00')
                       .format(timeFormat)} WIB / GMT+7** (*${moment(
                       d.dateTime
                     ).fromNow()}*)\n${d.youtubeUrl}\n\n`
