@@ -60,7 +60,7 @@ module.exports = {
           where: {
             dateTime: {
               //[Op.gt]: new Date().setMinutes(new Date().getMinutes() - 30),
-              [Op.gt]: moment().utcOffset('+07:00'),
+              [Op.gt]: moment(),
             },
           },
           order: [
@@ -84,7 +84,7 @@ module.exports = {
         const data = await Schedule.findAll({
           where: {
             dateTime: {
-              [Op.gt]: moment().utcOffset('+07:00'),
+              [Op.gt]:  new Date().setMinutes(new Date().getMinutes() - 10),
             },
             vliverID: vData.id,
           },
