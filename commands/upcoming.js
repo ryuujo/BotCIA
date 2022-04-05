@@ -81,7 +81,7 @@ module.exports = {
           where: {
             dateTime: {
               //[Op.gt]: new Date().setMinutes(new Date().getMinutes() - 10),
-              [Op.gt]: moment(),
+              [Op.gt]: moment().utcOffset('+07:00'),
             },
           },
           order: [

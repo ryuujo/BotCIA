@@ -56,12 +56,11 @@ module.exports = {
 
     try {
       if (!args[0]) {
-        console.log(moment());
         const data = await Schedule.findAll({
           where: {
             dateTime: {
               //[Op.gt]: new Date().setMinutes(new Date().getMinutes() - 30),
-              [Op.gt]: moment(),
+              [Op.gt]: moment().utcOffset('+07:00'),
             },
           },
           order: [
