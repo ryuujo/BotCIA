@@ -30,10 +30,11 @@ module.exports = {
                       d.type
                     })\nJudul Stream:** ${
                       d.title
-                    }**\nTanggal dan Waktu: **${moment(d.dateTime)
-                      .format(timeFormat)} WIB / GMT+7** (*${moment(
-                      d.dateTime
-                    ).fromNow()}*)\n${d.youtubeUrl}\n\n`
+                    }**\nTanggal dan Waktu: **${moment(d.dateTime).format(
+                      timeFormat
+                    )} WIB / GMT+7** (*${moment(d.dateTime).fromNow()}*)\n${
+                      d.youtubeUrl
+                    }\n\n`
                 )
                 .join('')}${
                 data.length - 5 > 0
@@ -55,6 +56,7 @@ module.exports = {
 
     try {
       if (!args[0]) {
+        console.log(moment());
         const data = await Schedule.findAll({
           where: {
             dateTime: {
