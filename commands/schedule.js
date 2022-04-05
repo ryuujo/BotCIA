@@ -55,8 +55,6 @@ module.exports = {
     };
 
     try {
-      console.log(moment().utcOffset('+07:00'));
-      console.log(moment());
       if (!args[0]) {
         const data = await Schedule.findAll({
           where: {
