@@ -10,7 +10,7 @@ module.exports = {
     moment.locale('id');
     const timeFormat = 'Do MMMM YYYY, HH:mm';
     const help =
-      '```HELP LIST\n1. create/add [keyword] [content]: Menambahkan tag baru\n2. edit [keyword] [content]: Mengupdate tag\n3. delete [keyword] : Menghapus tag\n4. list : Menampilkan list tag yang sudah dibuat olehmu\n5. tags: Menampilkan keseluruhan tag\n6. search [keyword] : Mencari tag berdasarkan keyword\n7. info [keyword] : Menampilkan informasi tag ```';
+      '```HELP LIST\n1. create/add [keyword] [content]: Menambahkan tag baru\n2. edit [keyword] [content]: Mengupdate tag\n3. delete [keyword] : Menghapus tag\n4. list : Menampilkan list tag yang sudah dibuat olehmu\n6. info [keyword] : Menampilkan informasi tag\n7. rank : Menampilkan informasi penggunaan tag terbanyak di server```';
     const checkMinLength = (keyword) => {
       if (keyword.length < 3) {
         message.reply('Keyword tag minimal 3 karakter ya...');
@@ -68,9 +68,9 @@ module.exports = {
                       )
                       .join(', ')
                   : '*Tidak ada tags yang ditampilkan*',
-              fields: [{ name: 'Total Tags', value: listRes.count }],
+              fields: [{ name: 'Total Tags', value: listRes.count.toString() }],
             };
-            message.reply('tag list', { embed: listEmbed });
+            message.reply({ content: 'Tag List', embeds: [listEmbed] });
           } catch (err) {
             return message.reply(
               'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
@@ -105,41 +105,19 @@ module.exports = {
                       )
                       .join(', ')
                   : '*Tidak ada hasil yang ditampilkan*',
-              fields: [{ name: 'Total Tags', value: totalRes.count }],
+              fields: [
+                { name: 'Total Tags', value: totalRes.count.toString() },
+              ],
             };
-            return message.channel.send({ embed: resultEmbed });
+            return message.channel.send({
+              content: 'Tag Search Results',
+              embeds: [resultEmbed],
+            });
           } catch (err) {
             return message.reply(
               'Ada sesuatu yang salah tapi itu bukan kamu: ' + err.message
             );
           }
-        case 'claim':
-          const tagVal = await Tag.findAndCountAll({
-            where: {
-              createdBy:
-                message.author.username + '#' + message.author.discriminator,
-            },
-          });
-          if (tagVal.count == 0) {
-            return message.channel.send(
-              'Tag yang dicari tidak ada / Sudah diklaim'
-            );
-          }
-          for (i = 0; i < tagVal.count; i++) {
-            const tag = await Tag.findOne({
-              where: {
-                createdBy:
-                  message.author.username + '#' + message.author.discriminator,
-              },
-            });
-            tag.createdBy = message.author.id;
-            await tag.save();
-          }
-          return message.channel.send(
-            `Tag milik ${
-              message.author.username + '#' + message.author.discriminator
-            } sudah diklaim`
-          );
         case 'edit':
           if (!args[1] || !args[2]) {
             return message.reply('Isi keyword dan kontennya ya...');

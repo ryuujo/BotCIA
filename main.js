@@ -69,7 +69,7 @@ client.once('ready', () => {
   console.log(`Next Cron Job will be on: ${job.nextDates()}`);
 });
 
-client.on('message', (message) => {
+client.on('messageCreate', (message) => {
   // Welcome Message
   if (
     message.content === '!verify' &&
