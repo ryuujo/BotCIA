@@ -8,7 +8,6 @@ const config = require('./config.js');
 const { name, version } = require('./package.json');
 const database = require('./config/config.json');
 const cron = require('./cron.js');
-const rant = require('./rant.js');
 
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
 client.commands = new Discord.Collection();
@@ -79,12 +78,6 @@ client.on('messageCreate', (message) => {
     channel.send(
       `Selamat datang dan selamat bergabung di server kami, <@${message.author.id}>! Jangan lupa untuk ambil role di <#${config.textChannelID.roles}> ya...\n\nWelcome abroad to our Server! Don't forget to take roles at <#${config.textChannelID.roles}>`
     );
-  }
-
-  switch (message.channel.id) {
-    case config.textChannelID.rant.from:
-      rant.execute(message);
-      break;
   }
 
   if (!message.content.startsWith(config.prefix) || message.author.bot) return;
