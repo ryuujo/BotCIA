@@ -84,7 +84,7 @@ module.exports = {
         const data = await Schedule.findAll({
           where: {
             dateTime: {
-              [Op.gt]:  new Date().setMinutes(new Date().getMinutes() - 10),
+              [Op.gt]: new Date().setMinutes(new Date().getMinutes() - 10),
             },
             vliverID: vData.id,
           },
