@@ -3,7 +3,6 @@ const { Op } = require('sequelize');
 const Schedule = require('../models').Schedule;
 const Vliver = require('../models').Vliver;
 const { name, version } = require('../package.json');
-// const { ButtonPaginator } = require('@psibean/discord.js-pagination');
 
 module.exports = {
   name: 'schedule',
@@ -55,14 +54,10 @@ module.exports = {
         };
         listEmbeds.push(embed);
       });
-      
       return message.channel.send({
         content: 'List Stream/Premiere yang akan datang: ',
         embeds: listEmbeds,
       });
-      /* Will work on this later
-      const selectPaginator = new ButtonPaginator(message, { listEmbeds });
-      selectPaginator.send(); */
     };
 
     try {
