@@ -12,45 +12,73 @@ module.exports = {
     const timeFormat = 'Do MMMM YYYY, HH:mm';
 
     const scheduleEmbed = (data, vliverName, avatar) => {
-      const embed = {
-        color: parseInt(data.length !== 0 ? data[0]['vliver.color'] : ''),
-        title: vliverName
-          ? `Upcoming Stream dari ${vliverName}`
-          : 'Upcoming Stream',
-        thumbnail: {
-          url: avatar,
+      const newData = [];
+      for (let i = 0; i < data.length; i += 5) {
+        const chunk = data.slice(i, i + 5);
+        newData.push(chunk);
+      }
+      let listEmbeds = [
+        {
+          title: vliverName
+            ? `Jadwal stream dari ${vliverName}`
+            : 'Jadwal Stream',
+          thumbnail: {
+            url: avatar,
+          },
+          description: vliverName
+            ? `Belum ada jadwal stream dari ${vliverName} untuk saat ini`
+            : 'Belum ada jadwal stream untuk saat ini',
+          footer: {
+            text: `${name} v${version} - This message was created on ${moment()
+              .utcOffset('+07:00')
+              .format(timeFormat)}`,
+          },
         },
-        description:
-          data.length !== 0
-            ? `${data
-                .slice(0, 5)
-                .map(
-                  (d, i) =>
-                    `${i + 1}. __**${d['vliver.fullName']}**__ (${
-                      d.type
-                    })\nJudul Stream:** ${
-                      d.title
-                    }**\nTanggal dan Waktu: **${moment(d.dateTime).format(
-                      timeFormat
-                    )} WIB / GMT+7** (*${moment(d.dateTime).fromNow()}*)\n${
-                      d.youtubeUrl
-                    }\n\n`
-                )
-                .join('')}${
-                data.length - 5 > 0
-                  ? `***Dan ${data.length - 5} livestream lainnya...***`
-                  : ''
-              }`
-            : '*Belum ada jadwal livestream untuk saat ini.*',
-        footer: {
-          text: `${name} v${version} - This message was created on ${moment()
-            .utcOffset('+07:00')
-            .format(timeFormat)}`,
-        },
-      };
+      ];
+
+      if (data.length !== 0) {
+        listEmbeds = [];
+        newData.slice(0, 10).map((data, index) => {
+          const embed = {
+            color: parseInt(data.length !== 0 ? data[0]['vliver.color'] : ''),
+            title: vliverName
+              ? `Jadwal stream dari ${vliverName}`
+              : 'Jadwal Stream',
+            thumbnail: {
+              url: avatar,
+            },
+            description:
+              data.length !== 0
+                ? `${data
+                    .map(
+                      (d, i) =>
+                        `${i + 1}. __**${d['vliver.fullName']}**__ (${
+                          d.type
+                        })\nJudul Stream:** ${
+                          d.title
+                        }**\nTanggal dan Waktu: **${moment(d.dateTime).format(
+                          timeFormat
+                        )} WIB / GMT+7** (*${moment(d.dateTime).fromNow()}*)\n${
+                          d.youtubeUrl
+                        }\n\n`
+                    )
+                    .join('')}`
+                : '*Belum ada jadwal stream untuk saat ini*',
+            footer: {
+              text: `Page ${index + 1} of ${
+                newData.length
+              } | ${name} v${version} - This message was created on ${moment()
+                .utcOffset('+07:00')
+                .format(timeFormat)}`,
+            },
+          };
+          listEmbeds.push(embed);
+        });
+      }
+
       return message.channel.send({
         content: 'List Stream/Premiere yang akan datang: ',
-        embeds: [embed],
+        embeds: listEmbeds,
       });
     };
 
